@@ -96,34 +96,27 @@ python 3DCNN_gui.py
 ```
 
 The GUI provides:
+All steps can be done easily with guided parameters setting using the GUI interface. 
 - **Molecular Optimization:** SMILES → optimized 3D structures
 - **2D Projection Generation:** Multi-angle image stacks
 - **Model Training:** Architecture and hyperparameter configuration
 - **Inference:** CCS prediction on unseen molecules
 
 ### Command-Line Tools
-
-#### Parameter Optimization
-```bash
-python experiment_runner.py \
-  --input data/smiles.csv \
-  --output results/ \
-  --resolutions 32 64 128 \
-  --rotations 3 5 10 \
-  --replicates 5
-```
-
-#### Batch Inference
-```bash
-python batch_inference.py \
-  --model models/optimal_3dcnn.h5 \
-  --projections data/projections/ \
-  --output predictions.csv
-```
-
+- **TO DO: in future version** , currently to make the users familiar with all steps and avoid any confusion in parameters setting, only GUI version is available.
 ---
 
 ## Experimental Workflow
+
+### Sample pre-processing (for both Training and inference)
+**Pre-processing Step #1:** Select the CSV or XLS files contanining sample IDs, SMILES, Adduct information to create standard 3D image dataset
+**Pre-processing Step #2:** Select the subsequent 3D image dataset to creat final 2D training dataset angle projection dataset. 
+
+**This 2D projection dataset along with the original SampleID CSV/XLS file is used for training/testing and inference/external validation (if unknown)**
+
+###  Optimization of Training Models 
+** There is no golden rule to idetify best model training/optimiation parameters in deep learnining/machine learnining. We suggest conducting two step experimentation to: (i) First identlty a potentially suitable parameters using random sampling for model training (ii) Using 4-fold cross-validation with the observed most accurate parameters configuration for model optimization. Finally use thwe optimized model for inference. Additionaly, the optimized model parameteres can be used to train on entire train/test dataset and futher validated on external validation dataset to access the real-world generalization of the optimized model. 
+
 
 ### Experiment 1: Resolution & Rotation Optimization
 - Resolution range: **8×8 to 192×192**
