@@ -36,9 +36,9 @@
 - **PyQt5-based graphical interface**
 - End-to-end pipeline from SMILES input to CCS prediction
 - Modular workflow tabs:
-  - Molecular Optimization
-  - 2D Projection Generation
-  - Model Training
+  - Molecular Structure Optimization and 3D Structrue construction 
+  - Multi-view 2D Projection dataset Generation
+  - Model Training /Parameter optimization/ Corss-validation
   - Inference
 
 ### Comprehensive Evaluation
@@ -57,7 +57,9 @@
 ### Prerequisites
 - **Python ≥ 3.7** (tested with TensorFlow 2.10)
 - Supported OS: **Windows 10/11**, **Ubuntu 20.04/22.04**
+- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0 and cUDNN 8.5+ for proper running of GPU-version
 
+  
 ### Hardware Recommendations
 - **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM)
 - **RAM:** ≥ 16 GB (can run smoothly in 12 GB ram for low resoultion models ) 
@@ -67,6 +69,7 @@
 ```bash
 git clone https://github.com/vivekmathema/Deep3DCCS.git
 cd Deep3DCCS
+Deep3DCCS > run_3dccs.bat (for windows)  |  Deep3DCCS > python3 3dcnn_main.py  (for linux)
 ```
 
 ### Core Dependencies
