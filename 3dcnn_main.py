@@ -804,11 +804,13 @@ class MyApp(BaseClass):
     # the batch K-fold run code
     def confrim_train_3cnn_kfold(self, cmd_mode = False):
 
+        self.post_train_evalulation == True
+
         if self.qm.question(self,'CDCCS',"Start train K-fold 3DCCS model", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
 
         #============================================================== # loop through all files datasets     
-        self.cur_train_res = 32 # strat optimium pixels
+        self.cur_train_res = self.img_dim # 32 # strat with optimium pixels
         #==============================================================
 
         # List all files in the directory and filter for CSV files
@@ -825,22 +827,35 @@ class MyApp(BaseClass):
             self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                     # for inference & filter results
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
             print(colored(f"\nCurrently training on : {cur_file}", "white"))
-        #==============================================================         
-            for mol_res in [32]: #[8,64,128,16]:                                                  # Train for different resoultion of the 2D image in pixelx x pixels 
+        #============================================================== 
+        
+            if self.use_multipixel_flag:
+                try:
+                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText.strip().split(",")]
+                    print(colored(f"\n Batch processing for image dimension(s): {multi_image_dims}", "green" ))
+                except:
+                    print(colored(f"\n Multi pixels not found. Using single image dimension {self.img_dim}", "red" ))
+                    multi_image_dims = [self.img_dim]
+            else:
+                print(colored(f"\nCurrently training single pixel resoultion : {self.img_dim}x{self.img_dim} pixels", "white"))
+                multi_image_dims = [self.img_dim]
+
+
+            for mol_res in multi_image_dims: #[8,64,128,16]:                                                  # Train for different resoultion of the 2D image in pixelx x pixels 
 
                 self.image_dim_slider.setValue(mol_res)
-                print(colored(f"\nTraini3ng for Pixel : {mol_res}", "white"))
+                print(colored(f"\nTraining for pixel(s) : {mol_res} pixels", "white"))
                 self.cur_train_res = mol_res                                                  # set the vfal for cur mol resoultion3
-                for cur_run in range(3):                                                     # run for each resoultion 3 times
+                for cur_run in range(self.exp_counter):                                                     # run for each resoultion 3 times
                     print(colored(f"\n#---------------| Running simulation No#.{cur_run+1}/5:\n", "yellow"))
-                    self.random_seed_slider.setValue(random.randint(-9999999,9999999))        # 1985 
+                    self.random_seed_slider.setValue(random.randint(0,9999999))        # 1985 
                     set_random_seed(self.random_seed_slider.value()) 
                     self.update_gui_vars()
                     #=========== Sow current configuration
                     self.console_show_store_vars()
                     #===========Load data
                     self.start_time = time.time()
-                    self.run_mode = "Loading 3DCNN k-fold training data"
+                    self.run_mode = "k-Fold training mode"
                     self.select_gpu(init =False)
                     self.clear_gpu_mem()                                                                                  # clear gpu memory
                     self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
@@ -855,7 +870,7 @@ class MyApp(BaseClass):
         #============================================================== # ==========================
         self.cur_train_res = 32
         #============================================================== # loop through all files datasets  
-        self.post_train_evalulation = True  
+        self.post_train_evalulation = True                                                                    # for inference on validatio nset afetr training (automatically)
 
         # List all files in the directory and filter for CSV files
         current_folder = os.path.join(cur_path ,"datasets")
@@ -872,15 +887,25 @@ class MyApp(BaseClass):
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
             print(colored(f"\nCurrently training on : {cur_file}", "white"))
         #============================================================== #======@###########################################################################################################
-        
-            for mol_res in [32]:#  [8,16,32,64,128]:                                                  # Train for different resoultion of the 2D image in pixelx x pixels 
+            if self.use_multipixel_flag:
+                try:
+                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText.strip().split(",")]
+                    print(colored(f"\n Batch processing for image dimension(s): {multi_image_dims}", "green" ))
+                except:
+                    print(colored(f"\n Multi pixels not found. Using single image dimension {self.img_dim}", "red" ))
+                    multi_image_dims = [self.img_dim]
+            else:
+                print(colored(f"\nCurrently training single pixel resoultion : {self.img_dim}x{self.img_dim} pixels", "white"))
+                multi_image_dims = [self.img_dim]
+
+            for mol_res in multi_image_dims: #[8,64,128,16]:                                                  # Train for different resoultion of the 2D image in pixelx x pixels         
 
                 self.image_dim_slider.setValue(mol_res)
-                print(colored(f"\nTraining resoultion : {mol_res} x {mol_res}", "white"))
+                print(colored(f"\nCurrently training resoultion : {mol_res} x {mol_res} pixels", "white"))
                 self.cur_train_res = mol_res                                                  # set the vfal for cur mol resoultion3
-                for cur_run in range(3):                                                     # run for each resoultion 3 times
+                for cur_run in range(self.exp_counter):                                                     # run for each resoultion 3 times
                     print(colored(f"\n#---------------| Running simulation No#.{cur_run+1}/5:\n", "yellow"))
-                    self.random_seed_slider.setValue(random.randint(-9999999,9999999))        # 1985 
+                    self.random_seed_slider.setValue(random.randint(0,99999999))        # 1985 
                     set_random_seed(self.random_seed_slider.value()) 
                     self.update_gui_vars()
                     #=========== Sow current configuration
@@ -1038,6 +1063,7 @@ class MyApp(BaseClass):
 
     def alternate_process_data_and_models(self):
         """
+
         Perform simple K-Fold cross-validation (no nested CV).
         Trains and evaluates a 3DCNN regression model on each fold,
         computes metrics, and saves:
@@ -1048,6 +1074,9 @@ class MyApp(BaseClass):
         self.start_time = time.time()
         self.run_mode = "Train 3DCNN model K-Fold mode"
 
+
+        self.dataset_path  = self.train_2d_projection_dirpath.toPlainText()
+        self.csv_file_path = self.train_msdata.toPlainText()
         # Load data
         self.data, self.exp_ccs, self.exp_extract_mass, self.exp_mz_ratio = self.load_data( self.dataset_path, self.csv_file_path )
 
@@ -1156,7 +1185,7 @@ class MyApp(BaseClass):
             print(colored("___________________________________________________", "green"))
 
             # conduct inference
-            self.inference_3dccs_kfold(post_train_evalulation=True, kfold=f"_kfold={fold}_")
+            self.inference_3dccs_kfold(post_train_evalulation=True, kfold=f"_kfold={fold}_") # for k-fold here
 
             self.clear_gpu_mem()
             fold += 1
@@ -1245,7 +1274,7 @@ class MyApp(BaseClass):
         
         self.num_train_samples = int(self.train_percent * self.num_samples)
         self.num_val_samples   = int(self.val_percent   * self.num_samples)
-        self.num_test_samples  = int(self.test_percent  * self.num_samples) # that's why in infernece we uise index for self.num_test_samples as : self.num_train_samples + self.num_val_samples
+        self.num_test_samples  = int(self.test_percent  * self.num_samples) # that's why in infernece we use index for self.num_test_samples as : self.num_train_samples + self.num_val_samples
         
         # ============== divide the shuffled self.data based on train, test and validatio samles
         self.train_data            = self.data[:self.num_train_samples]                   # Experimental 2d Projections 
@@ -1741,7 +1770,7 @@ class MyApp(BaseClass):
         self.train_time = timed_elapsed_in_min(start_time = self.train_start_time)  # colpute train time 
 
         #os.makedirs(self.evaluations_dir, exist_ok=True)
-        print(colored(f"\nTraining completd in  {self.train_time} minutes:", "yellow"))
+        print(colored(f"\nTraining completd in {self.train_time} minutes:", "yellow"))
         #==================
                         
         if self.test_percent > 1:                                    # only do inference for post_train_evalulation if there is validation datsset
@@ -2000,9 +2029,9 @@ class MyApp(BaseClass):
         # Prepare data dictionary for json file
         data = {
             "Results of inference": {
-                "Source datafile"       : self.smile_msdata_filepath.toPlainText(),
-                "Inf. model used"       : self.trained_model.toPlainText(),
-                "Inf. model resoultion" : f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels", # (just for now) f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels",
+                "Inf. source datafile"  : self.smile_msdata_filepath.toPlainText(),
+                "Trained model used  "  : self.trained_model.toPlainText(),
+                "Inf. model resolution" : f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels", # (just for now) f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels",
                 "Inf. model rotation"   : f"{find_matching_rotation(self.trained_model.toPlainText())}.",
                 "Surface binarization"  : self.inf_pixel_threshold_value.value(),
                 "Inf. pixel dims."      : f"{self.inf_img_dim.currentText()}x{self.inf_img_dim.currentText()} pixels",
@@ -2083,20 +2112,27 @@ class MyApp(BaseClass):
 
     def inference_3dccs_kfold(self, post_train_evalulation = True , kfold = ""): 
 
-        self.reg_model_fname =  self.trained_model.toPlainText()                        # Load model if it exists, load weights
+        if post_train_evalulation == True:  # do not conduct if not post-rpocessing
+            pass 
+        else:
+            return
 
-        # make Evaluation directory
-        os.makedirs(self.evaluations_dir, exist_ok = True) 
+
+        self.reg_model_fname =  self.trained_model.toPlainText()                        # Load model if it exists, load weights
+        
+        os.makedirs(self.evaluations_dir, exist_ok = True)                              # make Evaluation directory
 
         if os.path.isfile(self.reg_model_fname):
             print(colored( f"#Loading configuration from : {self.reg_model_fname}" , "yellow"))
 
-            self.regression_model = self.create_3dcnn_regression_model()
+            self.regression_model = self.create_3dcnn_regression_model()                # laod model archicture
+
             if self.loss_func == "Huber":
                 model_loss_func = Huber(delta=1.0)
             if self.loss_func == "MSE":
                 model_loss_func = "mse"
             # Compile the models
+
             self.regression_model.compile(optimizer=tf.keras.optimizers.Adam(lr=self.learning_rate),   # Import Huber Loss
                                             loss=model_loss_func, metrics=['mean_squared_error',       # loss='mean_squared_error'
                                                                            'mean_absolute_error',
@@ -2105,12 +2141,10 @@ class MyApp(BaseClass):
             self.regression_model.load_weights(self.reg_model_fname)
             self.model_config = os.path.splitext(self.reg_model_fname)[0] +".cfg"    # same name with .cfg as extension during inference   
             
-
-
-        
+       
         #====================================================== MODEL EVALUATION =======================================
 
-        # Evaluate the model on the k fold validatio nset based on the [self.val_idx]
+        # Evaluate the model on the k fold validation set based on the [self.val_idx]
         mse = self.regression_model.evaluate(ccs3d.data[self.val_idx], ccs3d.exp_ccs[self.val_idx], batch_size=1)
         print("Mean Squared Error (MSE) on Test Set:", mse)
 

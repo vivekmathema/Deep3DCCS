@@ -148,6 +148,8 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.random_seed        = self.random_seed_slider.value() # 1985            # set the seed for tensoeflow and rnadom np 
         self.use_thresthold_gui = self.use_gui_thresholding_flag.isChecked()        # True by default
         self.set_precision      = self.set_precision_slider.value() #               # set precision for calculation
+        self.exp_counter        = self.exp_count.value()
+        self.use_multipixel_flag = self.use_multipixel.isChecked()                  # for multi pixels
         #====================== TRAINING HYPER PARAMETERS
         # Load the dataset and CSV file paths
         if self.post_train_evalulation == True:                                                                                 # for training purpose only
@@ -195,7 +197,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.found_sample_names = []                               # holds the anmes of real sampels names in dataset
         self.val_abs_err_lst    = []                               # holds the values for absolute valiadtio nerror list
         self.avgabs_per_err_lst = []                               # absolute validation percentage error
-        self.best_val_accuracy  = 1000000                          # A validation accuracy (start with high huge random number)
+        self.best_val_accuracy  = 10000                            # A validation accuracy (start with high huge random number)
         self.min_perc_error     = 10000                            # start with a random huge number
         #==================================
         self.num_rotation       = self.num_rotation_slider.value() # 5 Default 
@@ -517,7 +519,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def select_gpu(self, init = False):    
         
         if init == True:                                                            # Initalizing the GPU scan on start  
-            print(colored("#TensorFlow version:%s"%str(tf.__version__), "blue"))    # Check if TensorFlow is installed and print its version
+            #print(colored("#TensorFlow version:%s"%str(tf.__version__), "blue"))    # Check if TensorFlow is installed and print its version
             self.use_processor.clear()                                              # Clear GPU
 
             gpus = tf.config.experimental.list_physical_devices('GPU')              # Check if CUDA (GPU support) is available and print GPU information
@@ -563,39 +565,3 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
                 pass
 
 
-
-    def select_gpu(self, init = False):    
-        
-        if init == True:                                                            # Initalizing the GPU scan on start  
-            print(colored("#TensorFlow version:%s"%str(tf.__version__), "blue"))    # Check if TensorFlow is installed and print its version
-            self.use_processor.clear()                                              # Clar GPU
-
-            gpus = tf.config.experimental.list_physical_devices('GPU')              # Check if CUDA (GPU support) is available and print GPU information
-            if gpus:
-                print("#CUDA is available. Listing GPUs...")
-                print("_________________________________________________\n")
-                available_gpu_names = [gpu.name for gpu in gpus]                    # List available GPUs and their names
-                for i, gpu_name in enumerate(available_gpu_names):                  # add GPUs and CPUs to teh list
-                    self.use_processor.addItem(f"{i}::GPU--{gpu_name}")
-                    print(colored(f"[ GPU {i}::GPU--{gpu_name}", "green"))
-                self.use_processor.addItem("-1::CPU--CPU")                          # By default ass CPU at end
-                print("_________________________________________________")
-                return 0, gpus[0].name
-            else:                                                                   # only add CPU and resturn
-                print("#CUDA is not available. Using CPU. Processing will be very slow...")
-                self.use_processor.addItem("0::CPU--CPU")
-                os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
-                return "/CPU:0", "CPU"
-
-        #self.use_processor.setCurrentIndex(0)
-        gpu_index =self.use_processor.currentText().split("::")[0]          # get GPU index at current selected text
-        gpu_name = self.use_processor.currentText().split("--")[1]          # get GPU name at curren tselected text
-
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_index)                 # set GPU device for processing 3DCNN tensor operations
-
-        if gpu_index == -1:
-            print(colored("Warning! Using CPU. Processing will be very slow...", "red"))
-        else:          
-            print(colored(f"#GPU processor   : {gpu_index} | {gpu_name}", "yellow"))
-
-        return gpu_index, gpu_name

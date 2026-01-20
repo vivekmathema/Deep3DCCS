@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
-    <height>812</height>
+    <width>966</width>
+    <height>817</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,7 +79,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -215,7 +215,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_All_Lipids_5rot.xlsx&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
             <widget class="QTextBrowser" name="set_optimized_mol_datapath">
@@ -1067,30 +1067,12 @@ p, li { white-space: pre-wrap; }
           <property name="lineWidth">
            <number>1</number>
           </property>
-          <widget class="QLabel" name="label_5">
+          <widget class="QTextBrowser" name="mult_pixel">
            <property name="geometry">
             <rect>
-             <x>10</x>
-             <y>5</y>
-             <width>231</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Angles of rotation(s)</string>
-           </property>
-          </widget>
-          <widget class="QTextBrowser" name="train_msdata_2">
-           <property name="geometry">
-            <rect>
-             <x>240</x>
+             <x>210</x>
              <y>2</y>
-             <width>171</width>
+             <width>201</width>
              <height>25</height>
             </rect>
            </property>
@@ -1099,7 +1081,26 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;32,64,128,192,244&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;8,32,64&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="use_multipixel">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>181</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Use batch image dimesnions</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
            </property>
           </widget>
          </widget>
@@ -1110,7 +1111,7 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>130</y>
+            <y>140</y>
             <width>421</width>
             <height>541</height>
            </rect>
@@ -1124,147 +1125,11 @@ p, li { white-space: pre-wrap; }
           <property name="lineWidth">
            <number>2</number>
           </property>
-          <widget class="QLabel" name="label_6">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>121</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Train epoch</string>
-           </property>
-          </widget>
-          <widget class="QSpinBox" name="spinBox">
-           <property name="geometry">
-            <rect>
-             <x>320</x>
-             <y>20</y>
-             <width>81</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>3</number>
-           </property>
-           <property name="maximum">
-            <number>9999</number>
-           </property>
-           <property name="value">
-            <number>250</number>
-           </property>
-          </widget>
-          <widget class="QSlider" name="train_epoch_slider">
-           <property name="geometry">
-            <rect>
-             <x>131</x>
-             <y>20</y>
-             <width>181</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>3</number>
-           </property>
-           <property name="maximum">
-            <number>5000</number>
-           </property>
-           <property name="value">
-            <number>250</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksBelow</enum>
-           </property>
-           <property name="tickInterval">
-            <number>250</number>
-           </property>
-          </widget>
-          <widget class="QSlider" name="batch_size_slider">
-           <property name="geometry">
-            <rect>
-             <x>130</x>
-             <y>50</y>
-             <width>181</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>2</number>
-           </property>
-           <property name="maximum">
-            <number>1024</number>
-           </property>
-           <property name="singleStep">
-            <number>4</number>
-           </property>
-           <property name="value">
-            <number>8</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksBelow</enum>
-           </property>
-           <property name="tickInterval">
-            <number>32</number>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_12">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>50</y>
-             <width>121</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Batch size</string>
-           </property>
-          </widget>
-          <widget class="QSpinBox" name="spinBox_3">
-           <property name="geometry">
-            <rect>
-             <x>320</x>
-             <y>50</y>
-             <width>81</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>2</number>
-           </property>
-           <property name="maximum">
-            <number>1024</number>
-           </property>
-           <property name="singleStep">
-            <number>4</number>
-           </property>
-           <property name="value">
-            <number>8</number>
-           </property>
-          </widget>
           <widget class="QLabel" name="label_15">
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>185</y>
+             <y>240</y>
              <width>301</width>
              <height>21</height>
             </rect>
@@ -1282,7 +1147,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>315</x>
-             <y>185</y>
+             <y>240</y>
              <width>81</width>
              <height>24</height>
             </rect>
@@ -1310,7 +1175,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>220</y>
+             <y>275</y>
              <width>221</width>
              <height>16</height>
             </rect>
@@ -1328,7 +1193,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>229</x>
-             <y>220</y>
+             <y>275</y>
              <width>181</width>
              <height>21</height>
             </rect>
@@ -1358,24 +1223,11 @@ p, li { white-space: pre-wrap; }
             </property>
            </item>
           </widget>
-          <widget class="Line" name="line">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>100</y>
-             <width>415</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
           <widget class="Line" name="line_2">
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>205</y>
+             <y>215</y>
              <width>415</width>
              <height>20</height>
             </rect>
@@ -1388,7 +1240,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>270</y>
+             <y>330</y>
              <width>415</width>
              <height>20</height>
             </rect>
@@ -1401,7 +1253,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>230</x>
-             <y>250</y>
+             <y>305</y>
              <width>181</width>
              <height>21</height>
             </rect>
@@ -1435,7 +1287,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>250</y>
+             <y>305</y>
              <width>221</width>
              <height>16</height>
             </rect>
@@ -1449,87 +1301,13 @@ p, li { white-space: pre-wrap; }
             <string>Model loss function</string>
            </property>
           </widget>
-          <widget class="QLabel" name="label_13">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>80</y>
-             <width>121</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Image dimension</string>
-           </property>
-          </widget>
-          <widget class="QSlider" name="horizontalSlider_4">
-           <property name="geometry">
-            <rect>
-             <x>131</x>
-             <y>80</y>
-             <width>181</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>2</number>
-           </property>
-           <property name="maximum">
-            <number>512</number>
-           </property>
-           <property name="singleStep">
-            <number>8</number>
-           </property>
-           <property name="value">
-            <number>224</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksBelow</enum>
-           </property>
-           <property name="tickInterval">
-            <number>16</number>
-           </property>
-          </widget>
-          <widget class="QSpinBox" name="image_dim_slider">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="geometry">
-            <rect>
-             <x>320</x>
-             <y>80</y>
-             <width>81</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="minimum">
-            <number>2</number>
-           </property>
-           <property name="maximum">
-            <number>512</number>
-           </property>
-           <property name="singleStep">
-            <number>8</number>
-           </property>
-           <property name="value">
-            <number>224</number>
-           </property>
-          </widget>
           <widget class="QTabWidget" name="tabWidget_4">
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>290</y>
+             <y>345</y>
              <width>401</width>
-             <height>231</height>
+             <height>191</height>
             </rect>
            </property>
            <property name="tabShape">
@@ -1724,7 +1502,7 @@ p, li { white-space: pre-wrap; }
                <number>40</number>
               </property>
               <property name="value">
-               <number>0</number>
+               <number>20</number>
               </property>
              </widget>
              <widget class="QLabel" name="label_11">
@@ -1830,7 +1608,7 @@ p, li { white-space: pre-wrap; }
                <number>40</number>
               </property>
               <property name="value">
-               <number>0</number>
+               <number>20</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -2049,19 +1827,6 @@ p, li { white-space: pre-wrap; }
                <string>Data precision</string>
               </property>
              </widget>
-             <widget class="Line" name="line_5">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>160</y>
-                <width>391</width>
-                <height>16</height>
-               </rect>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
             </widget>
            </widget>
           </widget>
@@ -2069,7 +1834,7 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>5</x>
-             <y>112</y>
+             <y>150</y>
              <width>405</width>
              <height>68</height>
             </rect>
@@ -2226,26 +1991,317 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </widget>
+          <widget class="QFrame" name="frame_24">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>405</width>
+             <height>131</height>
+            </rect>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QSpinBox" name="spinBox_3">
+            <property name="geometry">
+             <rect>
+              <x>319</x>
+              <y>40</y>
+              <width>81</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>1024</number>
+            </property>
+            <property name="singleStep">
+             <number>4</number>
+            </property>
+            <property name="value">
+             <number>8</number>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_12">
+            <property name="geometry">
+             <rect>
+              <x>8</x>
+              <y>40</y>
+              <width>121</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Batch size</string>
+            </property>
+           </widget>
+           <widget class="QSlider" name="horizontalSlider_4">
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>70</y>
+              <width>181</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>512</number>
+            </property>
+            <property name="singleStep">
+             <number>8</number>
+            </property>
+            <property name="value">
+             <number>224</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+            <property name="tickInterval">
+             <number>16</number>
+            </property>
+           </widget>
+           <widget class="QSlider" name="batch_size_slider">
+            <property name="geometry">
+             <rect>
+              <x>129</x>
+              <y>40</y>
+              <width>181</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>1024</number>
+            </property>
+            <property name="singleStep">
+             <number>4</number>
+            </property>
+            <property name="value">
+             <number>8</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+            <property name="tickInterval">
+             <number>32</number>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_13">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>70</y>
+              <width>121</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Image dimension</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_6">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>10</y>
+              <width>121</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Train epoch</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_24">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>100</y>
+              <width>121</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Experiment count</string>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="exp_count">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>319</x>
+              <y>100</y>
+              <width>81</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>200</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="spinBox">
+            <property name="geometry">
+             <rect>
+              <x>319</x>
+              <y>10</y>
+              <width>81</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+            <property name="value">
+             <number>25</number>
+            </property>
+           </widget>
+           <widget class="QSlider" name="train_epoch_slider">
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>10</y>
+              <width>181</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <number>5000</number>
+            </property>
+            <property name="value">
+             <number>25</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+            <property name="tickInterval">
+             <number>250</number>
+            </property>
+           </widget>
+           <widget class="QSpinBox" name="image_dim_slider">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>319</x>
+              <y>70</y>
+              <width>81</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>512</number>
+            </property>
+            <property name="singleStep">
+             <number>8</number>
+            </property>
+            <property name="value">
+             <number>224</number>
+            </property>
+           </widget>
+           <widget class="QSlider" name="exp_count_slider">
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>100</y>
+              <width>181</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>200</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>3</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+            <property name="tickInterval">
+             <number>10</number>
+            </property>
+           </widget>
+          </widget>
           <zorder>line_2</zorder>
-          <zorder>label_6</zorder>
-          <zorder>spinBox</zorder>
-          <zorder>train_epoch_slider</zorder>
-          <zorder>batch_size_slider</zorder>
-          <zorder>label_12</zorder>
-          <zorder>spinBox_3</zorder>
           <zorder>label_15</zorder>
           <zorder>relu_alpha_box</zorder>
           <zorder>label_16</zorder>
           <zorder>cls_optimizer_type</zorder>
-          <zorder>line</zorder>
           <zorder>line_7</zorder>
           <zorder>model_loss_func</zorder>
           <zorder>label_23</zorder>
-          <zorder>label_13</zorder>
-          <zorder>horizontalSlider_4</zorder>
-          <zorder>image_dim_slider</zorder>
           <zorder>tabWidget_4</zorder>
           <zorder>frame_8</zorder>
+          <zorder>frame_24</zorder>
          </widget>
          <widget class="QFrame" name="frame_9">
           <property name="geometry">
@@ -3089,7 +3145,7 @@ p, li { white-space: pre-wrap; }
             <string>Train 3DCNN model based on selected parameters</string>
            </property>
            <property name="text">
-            <string>Batch Train (all resoultion)</string>
+            <string>Batch Train </string>
            </property>
            <property name="default">
             <bool>false</bool>
@@ -3238,7 +3294,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_All_Lipids_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="train_2d_projection_dirpath">
@@ -3255,7 +3311,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_All_Lipids_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/METLIN_MmHm_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QLabel" name="label_2">
@@ -3360,7 +3416,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;D:/3DCCS_2025/datasets/SIMPC_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/SIMPC_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="inference_projection_path">
@@ -3377,7 +3433,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;D:/3DCCS_2025/datasets/SIMPC_MmHm_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./SIMPC_MmHm_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QLabel" name="label_9">
@@ -3443,7 +3499,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;D:/3DCCS_2025/evaluations/METLIN_MmHm_5rot_32x32_20250919105028/METLIN_MmHm_5rot_kfold=2_model_ckpt.h5&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./evaluations/METLIN_MmHm_5rot_32x32_20250919105028/METLIN_MmHm_5rot_kfold=2_model_ckpt.h5&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </widget>
@@ -4504,7 +4560,7 @@ p, li { white-space: pre-wrap; }
              </rect>
             </property>
             <property name="text">
-             <string>Select the model resoultion</string>
+             <string>Select the image rotation(s)</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -5164,7 +5220,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>960</width>
+     <width>966</width>
      <height>26</height>
     </rect>
    </property>
@@ -5570,102 +5626,6 @@ p, li { white-space: pre-wrap; }
  <resources/>
  <connections>
   <connection>
-   <sender>image_dim_slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>horizontalSlider_4</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>339</x>
-     <y>310</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>301</x>
-     <y>310</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider_4</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>image_dim_slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>315</x>
-     <y>310</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>363</x>
-     <y>310</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_3</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>batch_size_slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>338</x>
-     <y>280</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>312</x>
-     <y>280</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>train_epoch_slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spinBox</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>306</x>
-     <y>250</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>388</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>batch_size_slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spinBox_3</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>314</x>
-     <y>280</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>368</x>
-     <y>280</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>train_epoch_slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>250</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>294</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>max_cutoff_slider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>spinBox_11</receiver>
@@ -5816,12 +5776,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>304</x>
-     <y>371</y>
+     <x>308</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>369</x>
-     <y>373</y>
+     <x>373</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -5832,12 +5792,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>352</x>
-     <y>365</y>
+     <x>356</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>251</x>
-     <y>365</y>
+     <x>255</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -5848,12 +5808,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>299</x>
-     <y>573</y>
+     <x>305</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
-     <x>356</x>
-     <y>573</y>
+     <x>362</x>
+     <y>648</y>
     </hint>
    </hints>
   </connection>
@@ -5865,11 +5825,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>307</x>
-     <y>543</y>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
-     <x>378</x>
-     <y>543</y>
+     <x>384</x>
+     <y>618</y>
     </hint>
    </hints>
   </connection>
@@ -5880,12 +5840,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>306</x>
-     <y>603</y>
+     <x>307</x>
+     <y>678</y>
     </hint>
     <hint type="destinationlabel">
-     <x>378</x>
-     <y>603</y>
+     <x>384</x>
+     <y>678</y>
     </hint>
    </hints>
   </connection>
@@ -5896,12 +5856,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>329</x>
-     <y>573</y>
+     <x>335</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
-     <x>277</x>
-     <y>573</y>
+     <x>283</x>
+     <y>648</y>
     </hint>
    </hints>
   </connection>
@@ -5912,12 +5872,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>328</x>
-     <y>603</y>
+     <x>334</x>
+     <y>678</y>
     </hint>
     <hint type="destinationlabel">
-     <x>246</x>
-     <y>603</y>
+     <x>252</x>
+     <y>678</y>
     </hint>
    </hints>
   </connection>
@@ -5928,28 +5888,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>323</x>
-     <y>543</y>
+     <x>329</x>
+     <y>618</y>
     </hint>
     <hint type="destinationlabel">
-     <x>272</x>
-     <y>543</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>train_epoch_slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>325</x>
-     <y>237</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>292</x>
-     <y>237</y>
+     <x>278</x>
+     <y>618</y>
     </hint>
    </hints>
   </connection>
@@ -5992,12 +5936,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>319</x>
-     <y>369</y>
+     <x>323</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>375</x>
-     <y>371</y>
+     <x>379</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -6008,12 +5952,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>373</x>
-     <y>369</y>
+     <x>377</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>305</x>
-     <y>369</y>
+     <x>309</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -6024,12 +5968,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>287</x>
-     <y>642</y>
+     <x>293</x>
+     <y>718</y>
     </hint>
     <hint type="destinationlabel">
-     <x>323</x>
-     <y>646</y>
+     <x>329</x>
+     <y>718</y>
     </hint>
    </hints>
   </connection>
@@ -6040,12 +5984,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>319</x>
-     <y>638</y>
+     <x>325</x>
+     <y>718</y>
     </hint>
     <hint type="destinationlabel">
-     <x>281</x>
-     <y>638</y>
+     <x>287</x>
+     <y>718</y>
     </hint>
    </hints>
   </connection>
@@ -6190,6 +6134,54 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>664</x>
      <y>431</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_13</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lr_decay_freq</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>330</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exp_count</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>exp_count_slider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exp_count_slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>exp_count</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>336</y>
     </hint>
    </hints>
   </connection>
