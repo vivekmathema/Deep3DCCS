@@ -86,8 +86,6 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.zoom_dial.valueChanged.connect(lambda mode_inference: self.preview_img_binarization(False)) 
         self.pixel_threshold_value.valueChanged.connect(lambda mode_inference: self.preview_img_binarization(False)) 
         
-        self.inf_zoom_dial.valueChanged.connect(lambda mode_inference: self.preview_img_binarization(True))              # [IMP] makes transfer the function parameter value via connect!
-        self.inf_pixel_threshold_value.valueChanged.connect(lambda mode_inference: self.preview_img_binarization(True))  # [IMP] makes transfer the function parameter value via connect!
         #=========
         self.list_optimized_mols.setStyleSheet("QListWidget { background-color: lightyellow; }")
         self.projection_2d_list.setStyleSheet("QListWidget  { background-color: lightyellow; }")
@@ -121,7 +119,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.btn_process_2d_projection.clicked.connect(self.projection_2d)
         self.projection_2d_list.itemDoubleClicked.connect(self.preview_2d_projections)
 
-        self.gpu_index, self.gpu_name = self.select_gpu(init = True) #Call the function to get the GPU index and name of GPU device 
+        self.gpu_index, self.gpu_name = self.select_gpu(init = True) #Call the function to get the GPU index and name of GPU device firs time
         self.preview_img_binarization()                              # activate preview
         self.preview_img_binarization(lambda mode_inference: self.preview_img_binarization(True))                       # activate preview for inference as well
 
@@ -137,7 +135,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.sample_limit        = None  
         self.min_cutoff_weight   = self.min_cutoff_slider.value() if self.flag_min_cutoff.isChecked() else 0     
         self.max_cutoff_weight   = self.max_cutoff_slider.value() if self.flag_max_cutoff.isChecked() else 10000
-        #================================================
+        #=============================================
         self.relu_alpha         = self.relu_alpha_box.value()
         self.activation_func    = self.cls_optimizer_type.currentText()
         self.loss_func          = self.model_loss_func.currentText()
@@ -150,6 +148,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.set_precision      = self.set_precision_slider.value() #               # set precision for calculation
         self.exp_counter        = self.exp_count.value()
         self.use_multipixel_flag = self.use_multipixel.isChecked()                  # for multi pixels
+
         #====================== TRAINING HYPER PARAMETERS
         # Load the dataset and CSV file paths
         if self.post_train_evalulation == True:                                                                                 # for training purpose only
@@ -165,22 +164,26 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.Base_3dccs_model  = self.base_model_filepath.toPlainText()                                                     # Base model
         self.basemodel_flag    = self.use_basemodel_flag.isChecked()                                                        # fLAG FOR BASE MODEL 
         self.eval_dirpath      = self.train_evalulation_dirpath.toPlainText()                                               # get name of Eval Dirpath
-        self.inf_filepath      = self.smile_msdata_filepath.toPlainText()                                                   # path to inference file                                                         
+        self.inf_filepath      = self.smile_msdata_filepath.toPlainText()  
+        self.store_weights     = self.trained_model_dirpath.toPlainText()                                                    # path to store only final weighst &configs                                                        .to
+        self.inf_adduct_type   = self.inf_adduct_info.currentText()
+        #=================================================
+        self.train_singlemode = self.train_singlemode_flag.isChecked()                                                      # train just one dataset as show in th molecular dataset bar
 
         self.dataset_id        =  os.path.splitext(os.path.basename(self.csv_file_path))[0]
         self.config_fname      =  "_".join( ["config", self.dataset_id ]) +".json" 
         if self.post_train_evalulation == True:
-            self.eval_dirname      =  "_".join( [self.dataset_id ,f"{self.cur_train_res}x{self.cur_train_res}_" ])          # Eval dirname is based on MSdata CSV file
+            self.eval_dirname      =  "_".join( [self.dataset_id ,f"{self.cur_train_res}x{self.cur_train_res}_" ])          # Eval dirname is based on MSdata CSV file    
         else:
             self.eval_dirname      =  "_".join( [self.dataset_id ,f"{self.img_dim }x{self.img_dim}_" ])
-        self.config_file_path      = os.path.join(cur_path, "configs" , self.config_fname)
+        self.config_file_path      =  "/".join(["./configs" , self.config_fname])
         #========================
         if os.path.isfile(self.Base_3dccs_model) and  self.use_basemodel_flag.isChecked():
             self.base_reg_model = self.Base_3dccs_model
         else:
             self.base_reg_model = os.path.join(cur_path, "models/regression_model_checkpoint_best_%sx%spxl.h5"%(str(self.img_dim),str(self.img_dim))) 
         #========================
-        self.reg_model_fname   = os.path.join(cur_path, "models/" + self.dataset_id + "_3dccs_model_ckpt_%sx%spxl_%s.h5"%(str(self.img_dim),str(self.img_dim),  str(self.random_seed)))
+        #self.reg_model_fname   = os.path.join(cur_path, "models/" + self.dataset_id + "_3dccs_model_ckpt_%sx%spxl_%s.h5"%(str(self.img_dim),str(self.img_dim),  str(self.random_seed)))
         self.model_config      = os.path.join(cur_path, "models/" + self.dataset_id + "_3dccs_model_ckpt_%sx%spxl_%s.cfg"%(str(self.img_dim),str(self.img_dim), str(self.random_seed)))
         self.SMILE_src_filepath = self.raw_smile_datafile.toPlainText()
         self.optimized_struct_output_dirpath  = self.set_optimized_mol_datapath.toPlainText()
@@ -209,7 +212,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             print(colored("#Using default image threshold    : %d"%self.image_threshold,"green"))
         #==========================
         hide_tf_warnings(suppress_msg=self.flag_ignore_sys_warnings.isChecked()) if self.flag_ignore_sys_warnings.isChecked() else None
-        self.gpu_index, self.gpu_name = self.select_gpu(init = True) #Call the function to get the GPU index and name of GPU device 
+        self.gpu_index, self.gpu_name = self.select_gpu(init = False) #Call the function to get the GPU index and name of GPU device 
 
         # Create directory for evaluation images
         self.timestamp       = datetime.datetime.now().strftime('%Y%m%d%H%M%S')        # create time_stamp for the folder to store th model & associated images
@@ -217,7 +220,6 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.evaluations_dir = os.path.join(self.eval_dirpath , self.eval_dirname  + self.timestamp)
         #===========================================
         self.set_pixel_thresholding_value()
-        #self.console_show_store_vars()
         #====================================================
         plt.ion()
         self.make_plot()
@@ -259,6 +261,9 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         fileName, _ = QFileDialog.getOpenFileName(self,"Select inference  MS data (for SMILEs)","./datasets", "Trained weights(*.csv);;All Files (*.*)", options=options)
         if fileName:
             self.smile_msdata_filepath.setText(fileName)
+            if self.qm.question(self,'3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
+                return
+            self.inference_projection_path.setText(os.path.join(get_pathname_without_ext(fileName) + "_optimized_structure", "2D_projections")) # autoset path according to the source data file
         else:
             None
 
@@ -277,7 +282,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         fileName, _ = QFileDialog.getOpenFileName(self,"Select CSV file containing MS data for 2D Projections" , os.path.join(cur_path,"datasets"),"CSV files (*.csv); All Files (*.*)", options=options)
         if fileName:
             self.train_msdata.setText(fileName)            
-            if self.qm.question(self,'CDCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
+            if self.qm.question(self,'3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
                 return
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(fileName) + "_optimized_structure", "2D_projections")) # autoset path according to the source data file
         else:
@@ -417,15 +422,8 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             self.mol_orginal.setPixmap(QPixmap.fromImage(self.displayImage(self.image))) if target_img ==  "org_mol" else None
             self.mol_orginal.setAlignment(QtCore.Qt.AlignCenter)                         if target_img ==  "org_mol" else None
 
-
-            self.inf_mol_orginal.setPixmap(QPixmap.fromImage(self.displayImage(self.image))) if target_img ==  "inf_org_mol" else None
-            self.inf_mol_orginal.setAlignment(QtCore.Qt.AlignCenter)                         if target_img ==  "inf_org_mol" else None
-
             self.mol_modified.setPixmap(QPixmap.fromImage(self.displayImage(self.image))) if target_img ==  "mod_mol" else None
             self.mol_modified.setAlignment(QtCore.Qt.AlignCenter)                         if target_img ==  "mod_mol" else None
-
-            self.inf_mol_modified.setPixmap(QPixmap.fromImage(self.displayImage(self.image))) if target_img ==  "inf_mod_mol" else None
-            self.inf_mol_modified.setAlignment(QtCore.Qt.AlignCenter)                         if target_img ==  "inf_mod_mol" else None
 
             self.flowchart_3dccs.setPixmap(QPixmap.fromImage(self.displayImage(self.image))) if target_img ==  "3dccs_help" else None
             self.flowchart_3dccs.setAlignment(QtCore.Qt.AlignCenter)                         if target_img ==  "3dccs_help" else None
@@ -459,12 +457,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.lcdNumber.setValue(self.zoom_dial.value())
 
     def preview_img_binarization(self, mode_inference =False):  # makes the thresathold of image ( higehr the img_dim, teh betetr but huge memory requirments)
- 
-        if mode_inference == False:
-            self.loadImage(self.sample_img, target_img ="org_mol")             # Display the two-bit image (new_threshold_value = 0, )
-        else:
-            self.loadImage(self.sample_img, target_img ="inf_org_mol")         # Display the two-bit image (new_threshold_value = 0, )
-
+        self.loadImage(self.sample_img, target_img ="org_mol")             # Display the two-bit image (new_threshold_value = 0, )
 
         def getImage(img):
             if len(img.shape) == 2:  # Grayscale image
@@ -480,9 +473,9 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             return qimg
 
 
-        new_threshold_value = self.pixel_threshold_value.value() if mode_inference == False else  self.inf_pixel_threshold_value.value()    # NEw threshodl value
+        new_threshold_value = self.pixel_threshold_value.value() 
 
-        preview_zoom_dim = int(300 + self.zoom_dial.value())     if mode_inference == False else  int(300 + self.inf_zoom_dial.value())
+        preview_zoom_dim = int(300 + self.zoom_dial.value())   
 
         # Read and resize the image (for modified image)
         self.image = cv2.imread(self.sample_img , cv2.IMREAD_COLOR)        
@@ -494,24 +487,17 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         # For modified image                                                                           # convert to array                        
         two_bit_array_mod = (image_array > new_threshold_value).astype(np.uint8)                       # Binarize the image
         two_bit_image_mod = Image.fromarray(two_bit_array_mod * 255)
-
-        if mode_inference == False:               
-            self.mol_modified.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_mod * 255)))        # Dipslay updated image on on QPixmap 
-            self.mol_modified.setAlignment(QtCore.Qt.AlignCenter)                                          # Align the image
-        else:
-            self.inf_mol_modified.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_mod * 255)))    # Dipslay updated image on on QPixmap 
-            self.inf_mol_modified.setAlignment(QtCore.Qt.AlignCenter)                                      # Align the image            
+    
+        self.mol_modified.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_mod * 255)))        # Dipslay updated image on on QPixmap 
+        self.mol_modified.setAlignment(QtCore.Qt.AlignCenter)                                          # Align the image
 
         # for Orginal image
         two_bit_array_org = (image_array > 0 ).astype(np.uint8)                                                      # no chnage
         two_bit_image = Image.fromarray(two_bit_array_org * 255)               
         
-        if mode_inference == False: 
-            self.mol_orginal.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_org * 255)))  # Dipslay updated image on on QPixmap 
-            self.mol_orginal.setAlignment(QtCore.Qt.AlignCenter)
-        else:
-            self.inf_mol_orginal.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_org * 255)))  # Dipslay updated image on on QPixmap 
-            self.inf_mol_orginal.setAlignment(QtCore.Qt.AlignCenter)            
+
+        self.mol_orginal.setPixmap(QtGui.QPixmap.fromImage(getImage(two_bit_array_org * 255)))  # Dipslay updated image on on QPixmap 
+        self.mol_orginal.setAlignment(QtCore.Qt.AlignCenter)
 
         return new_threshold_value # Return the threshold value set by the user
 

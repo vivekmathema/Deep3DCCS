@@ -148,7 +148,7 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
     try:
         filtered_result_df = result_df[result_df["relative_percentage_error"] > error_threshold]   #3. Filtering result data based on 'relative_percentage_error'")
     except KeyError:
-        print("Error!. 'relative_percentage_error' column not found in result.csv. Filtering skipped.")
+        print("Error! 'relative_percentage_error' column not found in result.csv. Filtering skipped.")
         filtered_result_df = result_df
         return None
 
@@ -177,6 +177,7 @@ class MyApp(BaseClass):
         super(MyApp, self).__init__()
         #self.setupUi(self)
         self.post_train_evalulation  = None
+        self.reg_model_fname         =  ""
         #=========================================
         show_logo()
         #=========================================
@@ -233,55 +234,83 @@ class MyApp(BaseClass):
         pixmap.save(fname)
 
     def console_show_store_vars(self):
-        # Create a dictionary with variable names as keys and values as values for hyper parameters (gloabl)
+        print("\n" + "="*80)
+        print(colored("Runtime Variables, Configurations & Hyper parameters", "cyan", attrs=["bold"]))
+        print("="*80)
+
         variables = {
-            'dataset_path'      : self.dataset_path,
-            'SMILE_src_filepath': self.SMILE_src_filepath,
-            'csv_file_path'    : self.csv_file_path,
-            'config_file_path' : self.config_file_path,
-            'reg_model_fname'  : self.reg_model_fname,
-            'num_rotation'     : self.num_rotation,
-            'AllCCSID_name_flag': self.AllCCSID_name_flag,
-            'use_computed_mass' : self.use_computed_mass,
-            'basemodel_flag'   : self.basemodel_flag,
-            'base_reg_model'   : self.base_reg_model,
-            'learning_rate'    : self.learning_rate,
-            'activation_func'  : self.activation_func,
-            'img_dim'          : self.img_dim,
-            'image_threshold'  : self.image_threshold,
-            'train_epoch'       : self.train_epoch,
-            'batch_size'        : self.batch_size,
-            'relu_alpha'        : self.relu_alpha,
-            'activation_func'   : self.activation_func,
-            'loss_func'         : self.loss_func,            
-            'sample_limit'      : self.sample_limit,
-            'random_seed'       : self.random_seed,
-            'use_thresthold_gui': self.use_thresthold_gui,
-            'set_precision'     : self.set_precision,
-            'max_cutoff_weight': self.max_cutoff_weight, 
-            'min_cutoff_weight': self.min_cutoff_weight, 
-            'gpu_index'        : self.gpu_index,
-            'gpu_name'         : self.gpu_name,
-            'set_gpu_growth'   : self.set_gpu_growth.isChecked()
+            # ====================== DATA & PATHS ======================
+            "csv_file_path"             : self.csv_file_path,
+            "dataset_path"              : self.dataset_path,
+            "SMILE_src_filepath"        : self.SMILE_src_filepath,
+            "sdf_mol_dirpath"           : self.sdf_mol_dirpath,
+            "projection_output"         : self.projection_output,
+            "optimized_struct_output"   : self.optimized_struct_output_dirpath,
+            "inf_filepath"              : self.inf_filepath,
+            "inference_projection_path" : self.inference_projection_path.toPlainText(),
+            "eval_dirpath"              : self.eval_dirpath,
+            "evaluations_dir"           : self.evaluations_dir,
+            "config_file_path"          : self.config_file_path,
+
+            # ====================== MODEL FILES ======================
+            "Base_3dccs_model"           : self.Base_3dccs_model,
+            "basemodel_flag"             : self.basemodel_flag,
+            "base_reg_model"             : self.base_reg_model,
+            "model_config"               : self.model_config,
+            "store_weights"              : self.store_weights,
+
+            # ====================== TRAINING ======================
+            "train_epoch"                : self.train_epoch,
+            "batch_size"                 : self.batch_size,
+            "learning_rate"              : self.learning_rate,
+            "lr_decay_epoch"             : self.lr_decay_epoch,
+            "lr_decay_frac"              : self.lr_decay_frac,
+            "use_lr_decay"               : self.use_lr_decay,
+            "random_seed"                : self.random_seed,
+            "sample_limit"               : self.sample_limit,
+            "num_rotation"               : self.num_rotation,
+            "train_singlemode"           : self.train_singlemode,
+
+            # ====================== MODEL PARAMS ======================
+            "activation_func"            : self.activation_func,
+            "loss_func"                  : self.loss_func,
+            "relu_alpha"                 : self.relu_alpha,
+            "set_precision"              : self.set_precision,
+
+            # ====================== IMAGE / DATA PROCESSING ======================
+            "img_dim"                    : self.img_dim,
+            "image_threshold"            : self.image_threshold,
+            "use_thresthold_gui"         : self.use_thresthold_gui,
+            "use_multipixel_flag"        : self.use_multipixel_flag,
+            "min_cutoff_weight"          : self.min_cutoff_weight,
+            "max_cutoff_weight"          : self.max_cutoff_weight,
+
+            # ====================== FLAGS ======================
+            "post_train_evalulation"     : self.post_train_evalulation,
+            "use_computed_mass"          : self.use_computed_mass,
+            "AllCCSID_name_flag"         : self.AllCCSID_name_flag,
+            "molecule_name_flag"         : self.molecule_name_flag,
+            "inf_adduct_type"            : self.inf_adduct_type,
+
+            # ====================== GPU ======================
+            "gpu_index"                  : self.gpu_index,
+            "gpu_name"                   : self.gpu_name,
+            "set_gpu_growth"             : self.set_gpu_growth.isChecked(),
+
+            # ====================== IDENTIFIERS ======================
+            "dataset_id"                 : self.dataset_id,
+            "eval_dirname"               : self.eval_dirname,
+            "timestamp"                  : self.timestamp,
+            "exp_counter"                : self.exp_counter,
+            "run_mode"                   : self.run_mode,
         }
 
-        # Find the maximum length of variable names
-        max_name_length = max(len(name) for name in variables)
+        # Pretty print
+        for key, value in variables.items():
+            print(colored(f"{key:<30}", "yellow") + f": {value}")
 
-        # Print variable names and values with color formatting and adjusted spacing
-        for variable_name, variable_value in variables.items():
-            colored_name = colored(variable_name.ljust(max_name_length), 'green')
-            colored_value = colored(str(variable_value), 'white')
-            print(f"#{colored_name}: {colored_value}")
-
-        try:        
-            print(colored("\n#Saving config parameters : %s"%self.config_file_path, "blue"))        
-            self.save_json_config(variables, self.config_file_path)                                                       # latest alst used
-            self.save_json_config(variables, os.path.join(self.evaluations_dir ,  self.dataset_id +"_model_ckpt.json"))   # save backup in evulation
-            self.save_json_config(variables, os.path.join("models",  self.dataset_id +"_model_ckpt.json"))                # save backup in models
-        except:
-            print(colored("#WARNING! Failed to save config.", "red"))
- 
+        print("="*80 + "\n")
+     
 
     def compute_exact_mass(self, smiles):
         # Parse the SMILES string to a molecule
@@ -803,26 +832,31 @@ class MyApp(BaseClass):
 
     # the batch K-fold run code
     def confrim_train_3cnn_kfold(self, cmd_mode = False):
+        self.post_train_evalulation = True   # must set TRue for operating in k-fold post evaluation
 
-        self.post_train_evalulation == True
+        mode_msg ="\nNOTE: Single dataset mode is on. Only current dataset will be trained" if self.train_singlemode_flag.isChecked() else "\nNOTE: Multi-dataset mode is on. All datafiles will be trained"
 
-        if self.qm.question(self,'CDCCS',"Start train K-fold 3DCCS model", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
+        if self.qm.question(self,'CDCCS',f"Start K-fold cross validation 3DCCS model?\nNOTE: Train/Test/Validation ratios will be autoset.{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
-
+        self.update_gui_vars()
         #============================================================== # loop through all files datasets     
         self.cur_train_res = self.img_dim # 32 # strat with optimium pixels
         #==============================================================
-
-        # List all files in the directory and filter for CSV files
         current_folder = os.path.join(cur_path ,"datasets")
-        csv_files      = [file for file in os.listdir(current_folder) if file.endswith('.csv')]
-        print(colored(f"\nTotal of {len(csv_files)} training datafile(s) found batching running Training operation", "green"))
-        for itm in csv_files:
-            print(colored(os.path.join(current_folder, itm) ,"white"))
+        if self.train_singlemode_flag.isChecked():
+            print(colored(f"\nTraining single dataset mode for:\nSMILE datafile: {self.csv_file_path}\n2D projections: {self.dataset_path}" ,"yellow"))
+            csv_files= [self.csv_file_path]                                                                   # just a single file mode
+        else:
+            print(colored(f"\nTraining batch mode for all datafiles in path: {cur_path}\\datasets", "yellow"))
+            # List all files in the directory and filter for CSV files
+            csv_files = [file for file in os.listdir(current_folder) if file.endswith('.csv')]
+            print(colored(f"\nTotal of {len(csv_files)} training datafile(s) found batching running Training operation", "green"))
+            for itm in csv_files:
+                print(colored(os.path.join(current_folder, itm) ,"white"))
 
         for cur_file in csv_files:
             print(colored(f"\n#---------------------------------------------------------------------", "yellow"))
-            cur_file = os.path.join(current_folder,cur_file)                                                 # for running training
+            cur_file = os.path.join(current_folder,cur_file) if self.train_singlemode_flag.isChecked() == False else cur_file       # for running training
             self.train_msdata.setText(cur_file)
             self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                     # for inference & filter results
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
@@ -846,44 +880,56 @@ class MyApp(BaseClass):
                 self.image_dim_slider.setValue(mol_res)
                 print(colored(f"\nTraining for pixel(s) : {mol_res} pixels", "white"))
                 self.cur_train_res = mol_res                                                  # set the vfal for cur mol resoultion3
-                for cur_run in range(self.exp_counter):                                                     # run for each resoultion 3 times
+                for cur_run in range(self.exp_counter):                                       # run for each resoultion 3 times
                     print(colored(f"\n#---------------| Running simulation No#.{cur_run+1}/5:\n", "yellow"))
-                    self.random_seed_slider.setValue(random.randint(0,9999999))        # 1985 
+                    self.random_seed_slider.setValue(random.randint(0,99999))        # 1985 
                     set_random_seed(self.random_seed_slider.value()) 
-                    self.update_gui_vars()
-                    #=========== Sow current configuration
-                    self.console_show_store_vars()
-                    #===========Load data
-                    self.start_time = time.time()
-                    self.run_mode = "k-Fold training mode"
+                    self.clear_gpu_mem()                                                      # clear gpu memory
                     self.select_gpu(init =False)
-                    self.clear_gpu_mem()                                                                                  # clear gpu memory
+                    self.update_gui_vars()
+                    #===========Load data              
+                    self.console_show_store_vars()  # finally shwo console variables
+                    self.start_time = time.time()
+                    self.run_mode = "K-Fold Cross-validation training mode"                                                                               
                     self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
                     self.alternate_process_data_and_models()  # for k-fold training k-fold                   
         
 
     # this is the batch training methods I currently used to do all training in batch. need manual customization at moment to change values
     def confrim_train_3cnn(self, cmd_mode = False):
-        if self.qm.question(self,'CDCCS',"Start train 3DCCS model", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
+
+        self.post_train_evalulation = True   # must set TRue for operating in k-fold post eva
+
+        mode_msg ="\nNOTE: Single dataset mode is on. Only current dataset will be trained" if self.train_singlemode_flag.isChecked() else "\nNOTE: Multi-dataset mode is on. All datafiles will be trained"
+        if self.qm.question(self,'CDCCS',f"Start train 3DCCS model?{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
 
+        self.update_gui_vars()
+        
+        if sum([self.train_ratio_slider.value() , self.test_ratio_slider.value(), self.val_ratio_slider.value()]) >100:
+            self.qm.critical(self, "Error!", "The sum of Train,Test, Validation samples cannot exceed 100%!\n Enter valid percentage values to continue")
+            return
         #============================================================== # ==========================
         self.cur_train_res = 32
         #============================================================== # loop through all files datasets  
         self.post_train_evalulation = True                                                                    # for inference on validatio nset afetr training (automatically)
-
-        # List all files in the directory and filter for CSV files
         current_folder = os.path.join(cur_path ,"datasets")
-        csv_files = [file for file in os.listdir(current_folder) if file.endswith('.csv')]
-        print(colored(f"\nTotal of {len(csv_files)} training datafile(s) found batching running Training operation", "green"))
-        for itm in csv_files:
-            print(colored(os.path.join(current_folder, itm) ,"white"))
+        if self.train_singlemode_flag.isChecked():
+            print(colored(f"\nTraining single dataset mode for:\nSMILE datafile: {self.csv_file_path} \n2D projections: {self.dataset_path}" ,"yellow"))
+            csv_files= [self.csv_file_path]                                                                   # just a single file mode
+        else:
+            print(colored(f"\nTraining batch mode for all datafiles in path: {cur_path}\\datasets", "yellow"))
+            # List all files in the directory and filter for CSV files
+            csv_files = [file for file in os.listdir(current_folder) if file.endswith('.csv')]
+            print(colored(f"\nTotal of {len(csv_files)} training datafile(s) found batching running Training operation", "green"))
+            for itm in csv_files:
+                print(colored(os.path.join(current_folder, itm) ,"white"))
 
         for cur_file in csv_files:
             print(colored(f"\n#---------------------------------------------------------------------", "yellow"))
-            cur_file = os.path.join(current_folder,cur_file)                                                 # for running training
+            cur_file = os.path.join(current_folder,cur_file) if self.train_singlemode_flag.isChecked() == False else cur_file       # for running training
             self.train_msdata.setText(cur_file)
-            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                     # for inference & filter results
+            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                                             # for inference & filter results
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
             print(colored(f"\nCurrently training on : {cur_file}", "white"))
         #============================================================== #======@###########################################################################################################
@@ -905,16 +951,16 @@ class MyApp(BaseClass):
                 self.cur_train_res = mol_res                                                  # set the vfal for cur mol resoultion3
                 for cur_run in range(self.exp_counter):                                                     # run for each resoultion 3 times
                     print(colored(f"\n#---------------| Running simulation No#.{cur_run+1}/5:\n", "yellow"))
-                    self.random_seed_slider.setValue(random.randint(0,99999999))        # 1985 
+                    self.random_seed_slider.setValue(random.randint(0,99999))        # 1985 
                     set_random_seed(self.random_seed_slider.value()) 
+                    self.clear_gpu_mem()          
+                    self.select_gpu(init =False)
                     self.update_gui_vars()
-                    #=========== Sow current configuration
-                    self.console_show_store_vars()
+                    self.console_show_store_vars()                                    # show console variable
                     #===========Load data
                     self.start_time = time.time()
                     self.run_mode = "Loading 3DCNN training data"
-                    self.select_gpu(init =False)
-                    self.clear_gpu_mem()                                              # clear gpu memory
+                                    # clear gpu memory
                     self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
                     self.process_data_and_models()                                    # creates the shuffle data based on random seed and compiles the model to fit input data
                     #=========== Start real training
@@ -1063,7 +1109,6 @@ class MyApp(BaseClass):
 
     def alternate_process_data_and_models(self):
         """
-
         Perform simple K-Fold cross-validation (no nested CV).
         Trains and evaluates a 3DCNN regression model on each fold,
         computes metrics, and saves:
@@ -1073,7 +1118,6 @@ class MyApp(BaseClass):
         # Start
         self.start_time = time.time()
         self.run_mode = "Train 3DCNN model K-Fold mode"
-
 
         self.dataset_path  = self.train_2d_projection_dirpath.toPlainText()
         self.csv_file_path = self.train_msdata.toPlainText()
@@ -1121,12 +1165,12 @@ class MyApp(BaseClass):
 
         # Loop folds
         fold = 1
-        self.val_index = []
+        self.val_index = [] 
 
         for train_idx, val_idx in kf.split(self.data):
-            print(f"\nProcessing Fold {fold}:")
+            print(f"\nProcessing Fold : {fold}")
             self.val_idx = val_idx
-            print("K-fold validation indexes: ", self.val_idx)
+            #print("K-fold validation indexes: ", self.val_idx)
 
             # Split
             X_train, X_val = self.data[train_idx], self.data[val_idx]
@@ -1186,7 +1230,6 @@ class MyApp(BaseClass):
 
             # conduct inference
             self.inference_3dccs_kfold(post_train_evalulation=True, kfold=f"_kfold={fold}_") # for k-fold here
-
             self.clear_gpu_mem()
             fold += 1
 
@@ -1215,8 +1258,6 @@ class MyApp(BaseClass):
             json.dump(summary_dict, f, indent=4)
         print(f"Saved summary to {json_path}")
 
-        # Show graphs (optional)
-        #self.inference_3dccs_kfold(post_train_evalulation=True, kfold=f"k={n_splits}_")
         self.clear_gpu_mem()
 
 
@@ -1279,8 +1320,8 @@ class MyApp(BaseClass):
         # ============== divide the shuffled self.data based on train, test and validatio samles
         self.train_data            = self.data[:self.num_train_samples]                   # Experimental 2d Projections 
         self.train_exp_ccs         = self.exp_ccs[:self.num_train_samples]                # CCS values from experiment
-        self.train_extract_mass    = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given
-        self.train_exp_mz_ratio    = self.exp_mz_ratio[:self.num_train_samples]           # Train experimenta; mz_ratio values
+        self.train_extract_mass    = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given (for info only)
+        self.train_exp_mz_ratio    = self.exp_mz_ratio[:self.num_train_samples]           # Train experimenta; mz_ratio values (for infor only)
         
         self.val_data              = self.data[self.num_train_samples:self.num_train_samples + self.num_val_samples]
         self.val_exp_ccs           = self.exp_ccs[self.num_train_samples:self.num_train_samples + self.num_val_samples]
@@ -1435,7 +1476,7 @@ class MyApp(BaseClass):
         self.train_start_time = datetime.datetime.now()            # start time 
 
         # Save the model after every 5 epochs
-        self.checkpoint_filepath  = os.path.join(self.evaluations_dir,self.dataset_id +f'_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_regression_model_checkpoint.h5')
+        self.checkpoint_filepath  = os.path.join(self.evaluations_dir, self.dataset_id + f'_{self.img_dim}x{self.img_dim}_rseed' + f"{self.random_seed}_regression_model_checkpoint.h5")
         self.model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
             filepath=self.checkpoint_filepath,
             save_weights_only=False,
@@ -1453,11 +1494,11 @@ class MyApp(BaseClass):
         else:
             print(colored("\nWARNING! No Optimized model found! Starting fresh model","red"))
             if os.path.isfile(self.Base_3dccs_model) and self.basemodel_flag == True :
-                print(colored("#Use base model option selected ", "yellow"))
-                print(colored('\n#Base model pre-trained on low-confidence model found. Starting from base model...', "yellow"))
+                print(colored("#User selected to load model weights from base model", "yellow"))
                 self.base_reg_model = self.Base_3dccs_model
                 self.regression_model.load_weights(self.base_reg_model)
-       
+                print(colored(f'\n#Model weights loaded successfully from base model: {self.Base_3dccs_model}', "yellow"))
+
             # Initialize history variavle  lists to track history
             self.last_epoch      = 0   # previous last epoch trained
             self.history_mse     = []
@@ -1470,7 +1511,7 @@ class MyApp(BaseClass):
             self.history_rspe     = []
         
             self.relative_percentage_error_lst = []
-            self.std_dev_list            = []
+            self.std_dev_list     = []
 
         
         # Callback function to track history during training
@@ -1492,22 +1533,6 @@ class MyApp(BaseClass):
                 ccs3d.avgabs_per_err_lst.append(ccs3d.val_perc_abs_error)                             # (logs['mean_absolute_percentage_error'])
                 print(colored(f"\rEpoch {ccs3d.last_epoch+1}/{ccs3d.train_epoch} - Mean Val. Abs Error : {ccs3d.mean_val_abs_error:.4f} | Mean Perc. Val. Abs Error: {ccs3d.val_perc_abs_error:.2f} %" ,"yellow"), end= "\r")
         
-                '''
-                if ccs3d.mean_val_abs_error <= ccs3d.best_val_accuracy:
-                    print(colored("\n#Lower absolute validation score reached: %0.2f\nSaving model....:"%ccs3d.mean_val_abs_error, "yellow"))
-                    ccs3d.regression_model.save_weights(ccs3d.reg_model_fname)
-                    ccs3d.save_config(cfg_fpath = os.path.join(ccs3d.evaluations_dir ,  ccs3d.dataset_id + f"_{ccs3d.random_seed}_model_ckpt.cfg"))
-                    ccs3d.save_config(ccs3d.model_config)                                                        # saving general config
-                    ccs3d.best_val_accuracy = ccs3d.mean_val_abs_error                                         # update the best absoulte validation score
-        
-                if (ccs3d.min_perc_error <= ccs3d.avgabs_per_err_lst[-1]):
-                    print(colored("\n#Lower absolute percentage error score reached: %0.2f%%\nSaving model....:"%ccs3d.avgabs_per_err_lst[-1], "yellow"))
-                    ccs3d.regression_model.save_weights(ccs3d.reg_model_fname)
-                    ccs3d.save_config(cfg_fpath = os.path.join(ccs3d.evaluations_dir ,  ccs3d.dataset_id + f"_{ccs3d.random_seed}_model_ckpt.cfg"))
-                    ccs3d.save_config(ccs3d.model_config)                                                        # saving general config
-                    ccs3d.min_perc_error = ccs3d.avgabs_per_err_lst[-1]
-                '''   
-  
 
                 if  (epoch+1) % 50 == 0 and ccs3d.test_percent > 1 : # temporary modeling  (ignore  thsi if no valdiatio nset)
 
@@ -1698,7 +1723,7 @@ class MyApp(BaseClass):
                 ccs3d.history_loss.append(np.log(logs['loss']))                                    # training loss
         
 
-                ccs3d.mean_val_abs_error      = logs['val_mean_absolute_error' ]                 # np.mean(np.abs(test_exp_ccs - val_predictions))     # mean validation absoulte error                
+                ccs3d.mean_val_abs_error      = logs['val_mean_absolute_error' ]                   # np.mean(np.abs(test_exp_ccs - val_predictions))     # mean validation absoulte error                
                 ccs3d.history_mean_val_abs_error.append(ccs3d.mean_val_abs_error)                  # add to teh list
         
                 
@@ -1736,6 +1761,8 @@ class MyApp(BaseClass):
 
         self.lr_decay = LearningRateScheduler(self.lr_scheduler) # Create the LearningRateScheduler callback
 
+        
+        #====================================================================================================== main train part
         if (self.train_epoch -self.last_epoch ) >0:
             # Fit the model with checkpoint callback, history callback, and store the training history
             self.history = self.regression_model.fit(self.train_data, self.train_exp_ccs, batch_size=self.batch_size, epochs=(self.train_epoch -self.last_epoch) , 
@@ -1751,32 +1778,38 @@ class MyApp(BaseClass):
         print(colored("\nStoring trained model backup at training end:", "yellow"))
 
 
-        #Store at the  model folder
+        #Store at the final model at end of training regardless of the optimzied weights
+
+        #============ Update regression mdoel filename
+        self.reg_model_fname = os.path.join(self.dataset_id + f"_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_model_ckpt.h5")
         #==============
-        self.regression_model.save_weights(os.path.join(cur_path,"models", self.dataset_id + f"_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_model_ckpt.h5"))
-        self.save_config(cfg_fpath =  os.path.join(cur_path,"models",      self.dataset_id + f"_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_model_ckpt.cfg"))
+
+        self.regression_model.save_weights(os.path.join(self.store_weights, self.reg_model_fname))
+        self.save_config(cfg_fpath =  os.path.join(self.store_weights, os.path.splitext(os.path.basename(self.reg_model_fname))[0]+".cfg") )
+        print(colored( f"#Model & configuration stored at end of training to : {self.store_weights}" , "yellow"))
         #===============
 
         #Store at the Evaluation folder
         #===============
-        self.regression_model.save_weights(os.path.join(self.evaluations_dir,self.dataset_id    + f"_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_model_ckpt.h5"))        
-        self.save_config(cfg_fpath = os.path.join(self.evaluations_dir      ,  self.dataset_id  + f"_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_model_ckpt.cfg"))
+        self.regression_model.save_weights(os.path.join(self.evaluations_dir, self.reg_model_fname))        
+        self.save_config(cfg_fpath = os.path.join(self.evaluations_dir,  os.path.splitext(os.path.basename(self.reg_model_fname))[0]+".cfg"))
 
         #============== Store pyqt loss graph
-
         self.save_win_image(os.path.join(self.evaluations_dir,f"{self.dataset_id}_rseed{self.random_seed}_trainer_losses.png"))
         #===============
 
         self.train_time = timed_elapsed_in_min(start_time = self.train_start_time)  # colpute train time 
 
         #os.makedirs(self.evaluations_dir, exist_ok=True)
-        print(colored(f"\nTraining completd in {self.train_time} minutes:", "yellow"))
+        print(colored(f"\nTraining completed in {self.train_time} minutes:", "green"))
+        print(colored(f"\n\n-----------------------------------------------------------------------------------------------" ,"white"))
+
         #==================
                         
-        if self.test_percent > 1:                                    # only do inference for post_train_evalulation if there is validation datsset
+        if self.test_percent > 0.05:                                    # only do inference for post_train_evalulation if there is validation datsset
             self.inference_3dccs(post_train_evalulation = True)      # sliently use infererence on validation data after trainingh 
         else:
-            print("Skipping post_train_evalulation due to no validation set ")
+            print(colored("#[WARNING] Skipping post train evalulation due to very low (<5%) or No validation samples ", "red"))
         #==================
 
 
@@ -1793,7 +1826,7 @@ class MyApp(BaseClass):
             # for manual inference set the csv and dataset path absed on the user inout files
             self.dataset_path    = self.inference_projection_path.toPlainText()         
             self.csv_file_path   = self.smile_msdata_filepath.toPlainText()
-            self.reg_model_fname = self.trained_model.toPlainText()
+            self.reg_model_fname = self.trained_model.toPlainText()                        # only if Post rain evaulatin is false
             self.std_dev_list    = [0,0,0,0]                                               # set the sdtev lsi to NULL for inference  
             self.img_dim         = int(self.inf_img_dim.currentText())                     # use the input pixel resoultion by the user
             self.process_data_for_inference()                                              # to get the self.test_data
@@ -1803,10 +1836,10 @@ class MyApp(BaseClass):
             sample_index = 0                                                               # we use whole dataset as inference  in inference only mode
 
         elif post_train_evalulation ==  True:
-            sample_index = self.num_train_samples + self.num_val_samples                # becuase the starting pouint ot test samoel is (self.num_train_samples + self.num_val_samples)
+            sample_index = self.num_train_samples + self.num_val_samples                   # becuase the starting pouint ot test sample is (self.num_train_samples + self.num_val_samples)
         
 
-        self.reg_model_fname =  self.trained_model.toPlainText()                        # Load model if it exists, load weights
+        #self.reg_model_fname =  self.trained_model.toPlainText()                           # Load model if it exists, load weights
 
         if os.path.isfile(self.reg_model_fname):
             print(colored( f"#Loading trained model : {self.reg_model_fname}" , "yellow"))
@@ -1888,9 +1921,6 @@ class MyApp(BaseClass):
 
         relative_percentage_error, std_dev, skipped_count, skipped_percentage = percentage_std_error(self.test_exp_ccs, self.predictions)  # mean RPE coems from here
 
-        print("self.test_exp_ccs[:5], self.predictions[:5]\n")
-        print(self.test_exp_ccs[:5], self.predictions[:5])
-
         print("----------------------------------------------")
         print(f"Percentage standard deviation: {relative_percentage_error:.4f},\nStandard Deviation: {std_dev:.4f}", ) # relative_percentage_error here means mean realtive eprtcentage error per experiment
 
@@ -1928,9 +1958,9 @@ class MyApp(BaseClass):
         
         # Perform linear regression and print coefficients
         slope, intercept, r_value, p_value, std_err = linregress(self.test_exp_ccs, self.predictions.flatten())
+
+        print(f"Linear regression coefficients for : {self.dataset_id}")
         print(colored("___________________________________________________","green"))
-        print("Dataset ID                    :",self.dataset_id)
-        print("Linear regression coefficients")
         print("Slope                         :", slope)
         print("Intercept                     :", intercept)
         print("R-squared                     :", r_value ** 2)
@@ -2026,15 +2056,17 @@ class MyApp(BaseClass):
             patterns = ["16x16", "18x18", "32x32", "64x64" ,"128x128","192x192","220x220","256x256","512x512"] 
             return next((p for p in patterns if p in fname), None) 
 
-        # Prepare data dictionary for json file
-        data = {
+        #===================================================================
+        # Prepare data dictionary for json file during inference (self.post_train_evalulation =False)
+        data_inf = {
             "Results of inference": {
                 "Inf. source datafile"  : self.smile_msdata_filepath.toPlainText(),
-                "Trained model used  "  : self.trained_model.toPlainText(),
+                "Inf. 2d projection"    : self.dataset_path,
+                "Inf. model"            : self.trained_model.toPlainText(),
                 "Inf. model resolution" : f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels", # (just for now) f"{find_matching_resoultion(self.trained_model.toPlainText())} pixels",
                 "Inf. model rotation"   : f"{find_matching_rotation(self.trained_model.toPlainText())}.",
-                "Surface binarization"  : self.inf_pixel_threshold_value.value(),
                 "Inf. pixel dims."      : f"{self.inf_img_dim.currentText()}x{self.inf_img_dim.currentText()} pixels",
+                "Adduct type (user set)": self.inf_adduct_type,
                 "Pearson Correlation"   : f"{self.pearson_corr:.2f}",
                 "Linear Regression Coefficients": {
                     "Slope"    : round(slope, 2),
@@ -2049,10 +2081,37 @@ class MyApp(BaseClass):
                 "Mean Absolute Deviation": round(np.mean(self.std_dev_list), 4)
             }
         }
+        #=====================================================================
 
+
+        #===================================================================
+        # Prepare data dictionary for json file for post_train_evalulation = True
+        data_train = {
+            "Results of post-train Evaluation": {
+                "Source datafile" : self.csv_file_path,
+                "2d projection"   : self.dataset_path,
+                "Model"           : self.reg_model_fname,
+                "Random seed"     : self.random_seed, 
+                "Model resoultion": f"{self.img_dim}x{self.img_dim} pixels",
+                "Model rotation"  : f"{find_matching_rotation(self.reg_model_fname)} rotations",
+                "Pearson Correlation"   : f"{self.pearson_corr:.2f}",
+                "Linear Regression Coefficients": {
+                    "Slope"    : round(slope, 2),
+                    "Intercept": round(intercept, 2),
+                    "R-squared": round(r_value ** 2, 2),
+                    "Std Error": round(std_err, 2)
+                },
+                "Mean Relative Percentage Error": {
+                    "Mean Relative Percentage Error (MRPE)": round(relative_percentage_error, 4),
+                    "StdDev of MRPE": round(std_dev, 4)
+                },
+                "Mean Absolute Deviation": round(np.mean(ccs3d.std_dev_list), 4)
+            }
+        }
+        #=====================================================================
         # Optionally add train time if it exists
         try:
-            data["Results of inference"]["Total train time (min)"] = self.train_time
+            data_train["Results of inference"]["Total train time (min)"] = self.train_time
         except:
             pass
 
@@ -2060,7 +2119,7 @@ class MyApp(BaseClass):
         json_path = os.path.join( self.evaluations_dir, f"{self.dataset_id}{kfold}_linear_regression_{self.timestamp}.json" )
 
         with open(json_path, 'w') as f:
-            json.dump(data, f, indent=4)
+            json.dump(data_train, f, indent=4) if self.post_train_evalulation == True else json.dump(data_inf, f, indent=4)
 
         #==================================================================        
 
@@ -2110,16 +2169,13 @@ class MyApp(BaseClass):
     #============================ K_FOLD INFERENCE=============================================    
 
 
-    def inference_3dccs_kfold(self, post_train_evalulation = True , kfold = ""): 
+    def inference_3dccs_kfold(self, post_train_evalulation = True , kfold = ""):       # only for inference busing traiend model
 
         if post_train_evalulation == True:  # do not conduct if not post-rpocessing
-            pass 
+            pass
         else:
             return
 
-
-        self.reg_model_fname =  self.trained_model.toPlainText()                        # Load model if it exists, load weights
-        
         os.makedirs(self.evaluations_dir, exist_ok = True)                              # make Evaluation directory
 
         if os.path.isfile(self.reg_model_fname):
@@ -2305,20 +2361,22 @@ class MyApp(BaseClass):
         plt.text(0.98, 0.98, f'Pearson Correlation: {self.pearson_corr:.2f}', transform=plt.gca().transAxes, fontsize=10, verticalalignment='top', horizontalalignment='right', bbox=dict(facecolor='white', alpha=0.5))
         plt.savefig(os.path.join(self.evaluations_dir, f'{self.dataset_id}{kfold}_heatmap_{self.timestamp}.png'))
         
-
+        kfold_info = "N/A" if kfold == "" else kfold
         # Prepare data dictionary for json file
         data = {
             "Results of inference": {
                 "Dataset ID"            : self.dataset_id,
-                "K-folding"             : kfold,
-                "Source datafile"       : self.SMILE_src_filepath,
+                "Adduct type"           : self.inf_adduct_type,
+                "K-folding"             : kfold_info,
+                "Source datafile"       : self.csv_file_path,      # self.SMILE_src_filepath,
+                "2D Projection data"    : self.dataset_path,
                 "Random seed"           : self.random_seed,
                 "Surface binarization"  : self.image_threshold,
                 "Train epoch"           : self.train_epoch,
                 "Loss function"         : self.loss_func,
                 "Image dimension"       : f"{self.img_dim}x{self.img_dim} pixels",
                 "Linear Regression Coefficients": {
-                    "Slope": round(slope, 2),
+                    "Slope"    : round(slope, 2),
                     "Intercept": round(intercept, 2),
                     "R-squared": round(r_value ** 2, 2),
                     "Std Error": round(std_err, 2)
@@ -2391,7 +2449,7 @@ if __name__ == "__main__":
         ccs3d = MyApp()
         ccs3d.show()
         warnings.filterwarnings("ignore")                  # supress unnecessary/minor  warnings in console output  (version, depreciation stuffs like that)
-        ccs3d.setWindowTitle("Deep3DCCS: Deep Learning Approach for CCS Prediction form Multi-Angle Projections of Molecular Geometry") 
+        ccs3d.setWindowTitle("Deep3DCCS: Geometry-Driven DL Approach for Lipid CCS Prediction from Multi-Angle Molecular Projections") 
         print(colored(f"Running on GUI interface styled with:  {qtStyle[4]}" ,"blue"))
         sys.exit(app.exec_()) 
 
