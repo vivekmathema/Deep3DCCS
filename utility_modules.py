@@ -53,6 +53,7 @@ os.chdir(cur_path)                                                    # change t
 from _core import *
 from helper_tools import *
 #===============================
+import webbrowser
 
 #Load UI
 Ui_MainWindow, QtBaseClass = uic.loadUiType("ui_interface.ui")
@@ -79,7 +80,6 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.enable_3d_preview_flag.stateChanged.connect(self.update_gui_vars) 
         self.btn_train_3dcnn.clicked.connect(self.confrim_train_3cnn)
         self.btn_train_3dcnn_kfold.clicked.connect(self.confrim_train_3cnn_kfold)
-
         self.use_gui_thresholding_flag.stateChanged.connect(self.set_pixel_thresholding_value)
 
         #=========
@@ -108,6 +108,8 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.btn_load_trained_model.clicked.connect(self.load_trained_model_for_inference)
         self.btn_inference.clicked.connect(lambda post_train_evalulation: self.inference_3dccs(False) )  # lambda var_to-change: targetfunctuion (values)
         #=====================
+        self.btn_exit_inference.clicked.connect(self.exit_3dccs)
+        self.btn_exit_trainer.clicked.connect(self.exit_3dccs)
       
 
         self.btn_set_sdf_input_dirpath.clicked.connect(self.set_sdf_input_dirpath)
@@ -122,13 +124,19 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.gpu_index, self.gpu_name = self.select_gpu(init = True) #Call the function to get the GPU index and name of GPU device firs time
         self.preview_img_binarization()                              # activate preview
         self.preview_img_binarization(lambda mode_inference: self.preview_img_binarization(True))                       # activate preview for inference as well
+        #=======================
+        self.btn_goto_repository.clicked.connect(self.open_online_repository)
+        #======================= system verbosty
+        self.verbosity           = int(self.sys_verbosity.currentText().split("::")[0])
 
 
     # Module for updating all GUI-based variables before running any task
     def update_gui_vars(self):
         # Hide non-critical Tensorflow messages
         hide_tf_warnings(suppress_msg=True) if self.flag_ignore_sys_warnings.isChecked() else None
-        self.train_epoch          = self.train_epoch_slider.value()   # 12  # 
+        #==========================================Systemverbosity
+        self.verbosity           = int(self.sys_verbosity.currentText().split("::")[0])
+        self.train_epoch         = self.train_epoch_slider.value()   # 12  # 
         self.learning_rate       = self.learning_rate_slider.value()  # 0.0001 # make the learning date for model    
         self.image_threshold     = self.pixel_threshold_value.value() # 100    # 200-250 set value for the thresthold
         self.batch_size          = self.batch_size_slider.value()     # 32     # batch size Defulat 10
@@ -148,6 +156,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.set_precision      = self.set_precision_slider.value() #               # set precision for calculation
         self.exp_counter        = self.exp_count.value()
         self.use_multipixel_flag = self.use_multipixel.isChecked()                  # for multi pixels
+        self.model_summary_flag  = self.display_model_summary_flag.isChecked()
 
         #====================== TRAINING HYPER PARAMETERS
         # Load the dataset and CSV file paths
@@ -254,6 +263,15 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         else:
             None
 
+    def open_online_repository(self):
+        try:
+            webbrowser.open("https://github.com/vivekmathema/Deep3DCCS")
+        except:
+            print("[WARNING] Falied to open web browser")
+            pass
+
+
+
 
     def set_inference_msdata_path(self):
         options = QFileDialog.Options()
@@ -357,7 +375,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.start_time = time.time()
         #=====
         self.update_gui_vars()
-        #self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
+        self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
         self.console_show_store_vars()
         self.build_otptimized_structure_from_smile(input_smile_datafile = self.SMILE_src_filepath)            # call moel optimization
 
@@ -377,7 +395,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         #=====
         self.update_gui_vars()
         print(colored(f"Number of angle rotations: {self.num_rotation}", "green"))
-        #self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
+        self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
         self.console_show_store_vars()
         self.build_2D_projections(sdf_mol_dirpath = self.sdf_mol_dirpath)            # call moel optimization
     

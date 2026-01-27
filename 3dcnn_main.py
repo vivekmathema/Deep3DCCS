@@ -91,13 +91,13 @@ from _core import *
 from helper_tools import *
 #===================Resize Image (based on width fit or height fit) CANNOT USE FOR THE CV2. Resize for 256 x 256 as it can make non symmetric output
 
-# change the datafiel header names in final filtered fiel to fit for the training
+# change the datafiel header names in final filtered file to fit for the training
 def rename_column_headers(target_file):
     # Load the DataFrame
-    df = pd.read_csv(target_file)
+    df = pd.read_csv(target_file, encoding = "latin-1")
     
     # Rename columns: change 'CCS' to 'exp_ccs'
-    df.rename(columns={'exp_ccs': 'exp_ccs'}, inplace=True)
+    df.rename(columns={'CCS': 'exp_ccs'}, inplace=True)
     
     # Save the modified DataFrame (optional)
     df.to_csv(file_path, index=False)
@@ -240,6 +240,8 @@ class MyApp(BaseClass):
 
         variables = {
             # ====================== DATA & PATHS ======================
+            "system verbosity"          : self.sys_verbosity.currentText(),
+            "Allow gpu memory growth"   : self.set_gpu_growth.isChecked(),
             "csv_file_path"             : self.csv_file_path,
             "dataset_path"              : self.dataset_path,
             "SMILE_src_filepath"        : self.SMILE_src_filepath,
@@ -298,11 +300,11 @@ class MyApp(BaseClass):
             "set_gpu_growth"             : self.set_gpu_growth.isChecked(),
 
             # ====================== IDENTIFIERS ======================
-            "dataset_id"                 : self.dataset_id,
-            "eval_dirname"               : self.eval_dirname,
-            "timestamp"                  : self.timestamp,
-            "exp_counter"                : self.exp_counter,
-            "run_mode"                   : self.run_mode,
+            "dataset_id   [N/A in preprocess]"   : self.dataset_id,
+            "eval_dirname [N/A in preprocess]"   : self.eval_dirname,
+            "timestamp"                          : self.timestamp,
+            "exp_counter"                        : self.exp_counter,
+            "run_mode"                           : self.run_mode,
         }
 
         # Pretty print
@@ -429,7 +431,7 @@ class MyApp(BaseClass):
         if file_type ==".xls" or  file_type ==".xlsx": 
             df = pd.read_excel(input_smile_datafile, sheet_name=0, engine='openpyxl')  # # Load data from the Excel file (assuming the chemical names are in the 'Name' column and SMILES in the 'SMILES' column
         elif file_type ==".csv":
-             df = pd.read_csv(input_smile_datafile)  #
+             df = pd.read_csv(input_smile_datafile, encoding  = "latin-1")  # must using latin1 encoding
         else:
             print("Error reading SMILEs data ! Only .csv and .xls (.xlsx) are currently supported")
             return
@@ -868,7 +870,7 @@ class MyApp(BaseClass):
                     multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText.strip().split(",")]
                     print(colored(f"\n Batch processing for image dimension(s): {multi_image_dims}", "green" ))
                 except:
-                    print(colored(f"\n Multi pixels not found. Using single image dimension {self.img_dim}", "red" ))
+                    print(colored(f"\n Multi pixels mode if turned off. Using SINGLE image dimension {self.img_dim}", "red" ))
                     multi_image_dims = [self.img_dim]
             else:
                 print(colored(f"\nCurrently training single pixel resoultion : {self.img_dim}x{self.img_dim} pixels", "white"))
@@ -1031,8 +1033,10 @@ class MyApp(BaseClass):
                     name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added
                     #===============
                     try:
-                        self.mol_name_list.append(row['name'].lower())
-                        self.mol_smiles_list.append(row['SMILES'].lower())
+                        self.mol_name_list.append(row['name'])
+                        self.mol_smiles_list.append(row['SMILES'])
+                        #self.mol_name_list.append(row['name'].lower())
+                        #self.mol_smiles_list.append(row['SMILES'].lower())
                     except:
                         pass
                     #===========
@@ -1190,8 +1194,14 @@ class MyApp(BaseClass):
                 metrics=["mean_squared_error", "mean_absolute_error", "mean_absolute_percentage_error"],
             )
 
+            # display model summry
+            if self.model_summary_flag:
+                print(colored("Model summary:\n------------------------------------------------\n", "green"))
+                self.regression_model.summary()
+                print(colored("\n------------------------------------------------\n", "green"))
+
             # Train
-            self.history = self.regression_model.fit(X_train, y_train, epochs=self.train_epoch, batch_size=self.batch_size, validation_data=(X_val, y_val),verbose=1)
+            self.history = self.regression_model.fit(X_train, y_train, epochs=self.train_epoch, batch_size=self.batch_size, validation_data=(X_val, y_val),verbose= self.verbosity)
 
             # Evaluate
             val_scores = self.regression_model.evaluate(X_val, y_val, verbose=1)
@@ -1476,7 +1486,7 @@ class MyApp(BaseClass):
         self.train_start_time = datetime.datetime.now()            # start time 
 
         # Save the model after every 5 epochs
-        self.checkpoint_filepath  = os.path.join(self.evaluations_dir, self.dataset_id + f'_{self.img_dim}x{self.img_dim}_rseed' + f"{self.random_seed}_regression_model_checkpoint.h5")
+        self.checkpoint_filepath  = os.path.join(self.evaluations_dir, self.dataset_id + f'_{self.img_dim}x{self.img_dim}_rseed{self.random_seed}_regression_model_checkpoint.h5')
         self.model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
             filepath=self.checkpoint_filepath,
             save_weights_only=False,
@@ -2440,6 +2450,20 @@ class MyApp(BaseClass):
         #==============
         self.clear_gpu_mem()
     
+
+    def exit_3dccs(self):
+        if self.qm.question(self,'CDCCS',f"Quit 3DCCS?", self.qm.Yes | self.qm.No) == self.qm.Yes:
+            print("Exiting 3DCCCS.")
+            try:
+                self.save_config(cfg_fpath = os.path.join(self.evaluations_dir,  os.path.splitext(os.path.basename(self.reg_model_fname))[0]+".cfg"))
+                self.clear_gpu_mem()
+                sys.exit(-1)
+            except:
+                sys.exit(-1)
+
+            return
+        return
+        
     
 
 if __name__ == "__main__":
