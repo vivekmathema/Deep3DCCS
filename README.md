@@ -174,10 +174,13 @@ Deep3DCCS/
 ├── evaluations/
 ├── configs/
 ├── assets/
-└── requirements-cpu.txt
+├── requirements-cpu.txt
 └── requirements-gpu.txt
 ```
 
+---
+NOTE: For inference or prediction on molecules with unknown experimental CCS values, the option “Autoset experimental CCS values to zero if value(s) or feature not found” must be enabled. This forces all experimental CCS values to zero.
+This option is applicable to CSV SMILES input datafiles that lack the exp_ccs column entirely or contain missing values (e.g., N/A or NULL)for some molecules. In both cases, the scoring metrics reported below are not meaningful, as no comparison with known experimental CCS values is possible.
 ---
 
 ## Evaluation Metrics
