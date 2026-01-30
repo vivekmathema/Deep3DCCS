@@ -260,7 +260,9 @@ class MyApp(BaseClass):
             "base_reg_model"             : self.base_reg_model,
             "model_config"               : self.model_config,
             "store_weights"              : self.store_weights,
-
+            "show model summary"         : self.model_summary_flag,
+            "dataset_id for Train|Test"  : self.dataset_id,
+            "eval dir for Train|Test"    : self.eval_dirname,
             # ====================== TRAINING ======================
             "train_epoch"                : self.train_epoch,
             "batch_size"                 : self.batch_size,
@@ -272,7 +274,6 @@ class MyApp(BaseClass):
             "sample_limit"               : self.sample_limit,
             "num_rotation"               : self.num_rotation,
             "train_singlemode"           : self.train_singlemode,
-
             # ====================== MODEL PARAMS ======================
             "activation_func"            : self.activation_func,
             "loss_func"                  : self.loss_func,
@@ -293,6 +294,8 @@ class MyApp(BaseClass):
             "AllCCSID_name_flag"         : self.AllCCSID_name_flag,
             "molecule_name_flag"         : self.molecule_name_flag,
             "inf_adduct_type"            : self.inf_adduct_type,
+            "autoset missing exp. ccs"   : self.autoset_expccs_flag,
+            "sort raw SMILE input data"  : self.sort_dataset_flag,
 
             # ====================== GPU ======================
             "gpu_index"                  : self.gpu_index,
@@ -300,8 +303,6 @@ class MyApp(BaseClass):
             "set_gpu_growth"             : self.set_gpu_growth.isChecked(),
 
             # ====================== IDENTIFIERS ======================
-            "dataset_id   [N/A in preprocess]"   : self.dataset_id,
-            "eval_dirname [N/A in preprocess]"   : self.eval_dirname,
             "timestamp"                          : self.timestamp,
             "exp_counter"                        : self.exp_counter,
             "run_mode"                           : self.run_mode,
@@ -436,7 +437,17 @@ class MyApp(BaseClass):
             print("Error reading SMILEs data ! Only .csv and .xls (.xlsx) are currently supported")
             return
 
-        data_tag = os.path.splitext(os.path.basename(input_smile_datafile))[0]                # get only filename without extension
+        if self.sort_dataset_flag:
+            print(colored("Dataset rows are being alphanumerically sorted based on adduct-labels. Same as MS Excel’s Custom Sort (A–Z) behavior sort" ,"yellow"))
+            # Excel-style A–Z sort (entire rows) | use it if the 
+            df = df.sort_values(by="AllCCSID", ascending=True, kind="mergesort")                 # that’s exactly Excel’s Custom Sort (A–Z) behavior sort the file based on alpahbetically from molecduler ID
+            df = df_sorted                                                                       # assign teh new sorted value
+            print("\nSorted dataset sample(s) preview:")
+            print("\n--------------------------------------------")
+            print(colored(df_sorted.head(),"blue"))                                              # print the sorted header                                             
+            print('\n--------------------------------------------')
+
+        data_tag = os.path.splitext(os.path.basename(input_smile_datafile))[0]                   # get only filename without extension
         
         self.struct_output_dir = os.path.join(self.optimized_struct_output_dirpath , data_tag + '_optimized_structure')  # Create a directory to save the output optimized structures 
 
@@ -840,6 +851,7 @@ class MyApp(BaseClass):
 
         if self.qm.question(self,'CDCCS',f"Start K-fold cross validation 3DCCS model?\nNOTE: Train/Test/Validation ratios will be autoset.{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
+        self.run_mode   = "3DCNN model training in K-fold mode"
         self.update_gui_vars()
         #============================================================== # loop through all files datasets     
         self.cur_train_res = self.img_dim # 32 # strat with optimium pixels
@@ -854,7 +866,7 @@ class MyApp(BaseClass):
             csv_files = [file for file in os.listdir(current_folder) if file.endswith('.csv')]
             print(colored(f"\nTotal of {len(csv_files)} training datafile(s) found batching running Training operation", "green"))
             for itm in csv_files:
-                print(colored(os.path.join(current_folder, itm) ,"white"))
+                print(colored(os.path.join(current_folder, itm) ,"white"))                
 
         for cur_file in csv_files:
             print(colored(f"\n#---------------------------------------------------------------------", "yellow"))
@@ -906,6 +918,7 @@ class MyApp(BaseClass):
         if self.qm.question(self,'CDCCS',f"Start train 3DCCS model?{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
 
+        self.run_mode   = "3DCNN model training in randomized sampling mode "
         self.update_gui_vars()
         
         if sum([self.train_ratio_slider.value() , self.test_ratio_slider.value(), self.val_ratio_slider.value()]) >100:
@@ -998,7 +1011,7 @@ class MyApp(BaseClass):
         return np.array(images)
 
 
-    # Function to read folders and match with CSV
+    # Function to read folders and match with CSV                                    # ths is the function to managet hemissing exp_ccs case
     def read_folders_and_match_csv(self, parent_directory, csv_file_path):
 
         # Declare variables for the ccs & other numeric parameters
@@ -1007,10 +1020,12 @@ class MyApp(BaseClass):
         name_to_mz_ratio        = {}   # Added
         self.mol_name_list      = []   # Added for name
         self.mol_smiles_list    = []   # added for smiles list
+        #=============================
+        self.exp_ccs_is_missing = False # check the exp-ccs valeus missing tests
 
         print(colored("#Reading database..."))
 
-        with open(csv_file_path, 'r', newline='') as csvfile:
+        with open(csv_file_path, 'r', newline='',encoding ="latin-1") as csvfile:
             reader  = csv.DictReader(csvfile)
             count   = 0
             skipped = 0 
@@ -1022,13 +1037,25 @@ class MyApp(BaseClass):
                 name = row['AllCCSID'].lower() if self.AllCCSID_name_flag else  row['name'].lower()  # use the ALLCCID  as molecular labels is true (to avoid naming special charcters errors)
 
                 if self.use_computed_mass: 
-                    mol_mass = self.compute_exact_mass(row['SMILES'])                                 # use the computed molecular mass from SMILE
+                    mol_mass = self.compute_exact_mass(row['SMILES'])                                 # use the computed molecular mass from SMILE 9for imformation purpise only
                 else:
                     mol_mass = float(row['extract_mass'])                                             # use exact mass from source file
 
                 if  (mol_mass < self.max_cutoff_weight) and (mol_mass > self.min_cutoff_weight)  :
                     #print(f"{row['name']} , {name} --> {mol_mass}")
-                    name_to_exp_ccs[name]         = round(float(row['exp_ccs']), self.set_precision)  # main exp_ccs
+
+                    #============== Handel the condition of missing exp_CCS
+                    raw_exp_ccs = row.get('exp_ccs', 0)
+                    
+                    if self.autoset_expccs_flag and self.post_train_evalulation == False:             # ONLY for inference. Autoset the ccs values to Zero if the exp CCS column does not exists or valeus are missing
+                        try:
+                            exp_ccs = float(raw_exp_ccs) if raw_exp_ccs not in ("", None) else 0.0
+                        except ValueError:
+                            self.exp_ccs_is_missing =True
+                            exp_ccs = 0.0
+                    #=============
+
+                    name_to_exp_ccs[name]         = round(exp_ccs, self.set_precision)  # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
                     name_to_extract_mass[name]    = round(mol_mass,              self.set_precision)  # Added
                     name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added
                     #===============
@@ -1828,7 +1855,14 @@ class MyApp(BaseClass):
 
     def inference_3dccs(self, post_train_evalulation = True , kfold = ""): 
         self.post_train_evalulation = post_train_evalulation
-        print("Status of Post train evaulations :" , self.post_train_evalulation)
+        print("Running in post train evaulations :" , self.post_train_evalulation)
+
+        if self.post_train_evalulation == False:
+            if self.qm.question(self,'3CDCCS',f"Run inference for CCS prediction?", self.qm.Yes | self.qm.No) == self.qm.Yes:
+                pass 
+            else:
+                return
+        self.run_mode = "Running sample CCS prediction"
         #========================================================================================================    
         if post_train_evalulation ==  False:                                                # Manually use traiend model for inference case, here test set = entire data
             print(colored( f"#Preforming manual inference.." , "yellow"))
@@ -1844,6 +1878,11 @@ class MyApp(BaseClass):
             self.train_data        =  self.test_data                                       # let train and test data be same for inference for model shape for self.create_3dcnn_regression_model()
             self.num_train_samples =  self.num_samples                                     # let train samples be total samples = val samples
             sample_index = 0                                                               # we use whole dataset as inference  in inference only mode
+
+            if self.exp_ccs_is_missing:
+                print(colored("\n-----------------------------------\n" ,"white"))
+                print(colored("\nWARNING! All or some of the experimental CCS values are missing. Thus, the validation charts/RMPE graphs may not be relevant" ,"red"))
+                print(colored("\n-----------------------------------\n" ,"white"))
 
         elif post_train_evalulation ==  True:
             sample_index = self.num_train_samples + self.num_val_samples                   # becuase the starting pouint ot test sample is (self.num_train_samples + self.num_val_samples)
@@ -1931,7 +1970,7 @@ class MyApp(BaseClass):
 
         relative_percentage_error, std_dev, skipped_count, skipped_percentage = percentage_std_error(self.test_exp_ccs, self.predictions)  # mean RPE coems from here
 
-        print("----------------------------------------------")
+        print(colored("\n-------[ Basic evaluation metrics | scores ]-------", "blue"))
         print(f"Percentage standard deviation: {relative_percentage_error:.4f},\nStandard Deviation: {std_dev:.4f}", ) # relative_percentage_error here means mean realtive eprtcentage error per experiment
 
         # Calculate mean absolute error (MAE) on the test set
@@ -1989,7 +2028,7 @@ class MyApp(BaseClass):
         #======================================================================================================================================= Prediction Values CSVs
         print(colored("\n#Writing predicted CCS for validation set..", "blue"))
         result_file = os.path.join(self.evaluations_dir, f'{self.dataset_id}{kfold}_predictions_{self.timestamp}.csv')
-        with open(result_file, 'w') as f:
+        with open(result_file, 'w', encoding ="latin-1") as f:                           # encoding must be latin-1 or else there will be error
 
             if len(self.mol_name_list) > 0:
                 # Write header header for new CSV file with molecule

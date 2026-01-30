@@ -156,7 +156,9 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.set_precision      = self.set_precision_slider.value() #               # set precision for calculation
         self.exp_counter        = self.exp_count.value()
         self.use_multipixel_flag = self.use_multipixel.isChecked()                  # for multi pixels
-        self.model_summary_flag  = self.display_model_summary_flag.isChecked()
+        self.model_summary_flag  = self.display_model_summary_flag.isChecked()      # shoet the model summary
+        self.sort_dataset_flag   = self.dataset_sorting_flag.isChecked()            # sort dataset during initial reading
+        self.autoset_expccs_flag = self.check_expccs_flag.isChecked()               # for checking if the exp-ccs exists in the inference mode
 
         #====================== TRAINING HYPER PARAMETERS
         # Load the dataset and CSV file paths
@@ -257,7 +259,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def load_trained_model_for_inference(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"Select trained models","./evaluations", "HDF5 Model weights Files (*.h5);;All Files (*.*)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self,"Select trained models","./models", "HDF5 model weights (*.h5);;All Files (*.*)", options=options)
         if fileName:
             self.trained_model.setText(fileName)
         else:
@@ -276,10 +278,10 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def set_inference_msdata_path(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"Select inference  MS data (for SMILEs)","./datasets", "Trained weights(*.csv);;All Files (*.*)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self,"Select raw SMILEs input datafile","./datasets", "SMILEs RAW datafile (*.csv);;All Files (*.*)", options=options)
         if fileName:
             self.smile_msdata_filepath.setText(fileName)
-            if self.qm.question(self,'3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
+            if self.qm.question(self,'Deep3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
                 return
             self.inference_projection_path.setText(os.path.join(get_pathname_without_ext(fileName) + "_optimized_structure", "2D_projections")) # autoset path according to the source data file
         else:
@@ -300,7 +302,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         fileName, _ = QFileDialog.getOpenFileName(self,"Select CSV file containing MS data for 2D Projections" , os.path.join(cur_path,"datasets"),"CSV files (*.csv); All Files (*.*)", options=options)
         if fileName:
             self.train_msdata.setText(fileName)            
-            if self.qm.question(self,'3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
+            if self.qm.question(self,'Deep3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:
                 return
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(fileName) + "_optimized_structure", "2D_projections")) # autoset path according to the source data file
         else:
@@ -362,7 +364,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             None
 
     def optimize_molecule(self):
-        if self.qm.question(self,'CDCCS',"Process SMILEs for moleculae structure optimization?", self.qm.Yes | self.qm.No) == self.qm.No:
+        if self.qm.question(self,'Deep3DCCS',"Process SMILEs for 3D molecule structure optimization?", self.qm.Yes | self.qm.No) == self.qm.No:
             return
         if self.optimized_struct_output_dirpath.strip() == "":
             print(colored("ERROR! Output path is empty. Please seelct a path (is created if not exists)" ,"red"))
@@ -371,17 +373,18 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             os.makedirs(self.optimized_struct_output_dirpath, exist_ok = True)  
 
         #===== Progress bar stuffs
-        self.run_mode   = "structure optimization"
+        self.run_mode   = "3D structure optimization and SDF file construction"
         self.start_time = time.time()
         #=====
         self.update_gui_vars()
+        self.dataset_id = os.path.splitext(os.path.basename(self.SMILE_src_filepath))[0]                      # during the dataset construction
         self.set_gpu_memory_growth(gpu_index = self.gpu_index, set_flag = self.set_gpu_growth.isChecked())    # set GPU mem growth
         self.console_show_store_vars()
         self.build_otptimized_structure_from_smile(input_smile_datafile = self.SMILE_src_filepath)            # call moel optimization
 
 
     def projection_2d(self):
-        if self.qm.question(self,'CDCCS',"Process optimized structure data for 2d Projection", self.qm.Yes | self.qm.No) == self.qm.No:
+        if self.qm.question(self,'Deep3DCCS',"Process SMILES-based optimized 3D structures for 2D projection dataset construction?", self.qm.Yes | self.qm.No) == self.qm.No:
             return
         if self.projection_output.strip() == "":
             print(colored("ERROR! Output path is empty. Please seelct a path (is created if not exists)" ,"red"))
@@ -390,7 +393,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             os.makedirs(self.sdf_mol_dirpath, exist_ok = True)                                                      # make directory if required
 
         #===== Progress bar stuffs
-        self.run_mode   = "2D projection"
+        self.run_mode   = "2D projection dataset construction"
         self.start_time = time.time()
         #=====
         self.update_gui_vars()

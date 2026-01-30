@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -271,13 +271,13 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>0</y>
-              <width>891</width>
+              <width>441</width>
               <height>31</height>
              </rect>
             </property>
             <property name="font">
              <font>
-              <family>MS Shell Dlg 2</family>
+              <family>MS Reference Sans Serif</family>
               <pointsize>9</pointsize>
               <weight>50</weight>
               <bold>false</bold>
@@ -293,7 +293,7 @@ p, li { white-space: pre-wrap; }
               <x>10</x>
               <y>305</y>
               <width>181</width>
-              <height>31</height>
+              <height>41</height>
              </rect>
             </property>
             <property name="font">
@@ -304,6 +304,12 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Step1: Preprocess SMILEs to its SDF co-ordinates dataset</string>
+            </property>
+            <property name="statusTip">
+             <string>Step1: Preprocess SMILEs to its SDF co-ordinates dataset</string>
             </property>
             <property name="text">
              <string>Step1: Process structure</string>
@@ -330,6 +336,12 @@ p, li { white-space: pre-wrap; }
               <pointsize>8</pointsize>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here</string>
+            </property>
+            <property name="statusTip">
+             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here</string>
+            </property>
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOn</enum>
             </property>
@@ -355,8 +367,11 @@ p, li { white-space: pre-wrap; }
               <underline>true</underline>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Shows the simple 3D preview of the molecule (drag to zoom &amp; rotate)</string>
+            </property>
             <property name="statusTip">
-             <string>Showes teh scaled version of contour preview (with manual selection ROI if available)</string>
+             <string>Shows the simple 3D preview of the molecule (drag to zoom &amp; rotate)</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>
@@ -397,6 +412,12 @@ p, li { white-space: pre-wrap; }
               <pointsize>7</pointsize>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Sets option to shows simple 3D preview of the molecule</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets option to shows simple 3D preview of the molecule</string>
+            </property>
             <property name="text">
              <string>3D preview</string>
             </property>
@@ -421,12 +442,18 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>10</x>
                <y>5</y>
-               <width>161</width>
+               <width>171</width>
                <height>18</height>
               </rect>
              </property>
+             <property name="toolTip">
+              <string>ALLCCSID (term for label) that represent a molecule SMILE and corrsponding name</string>
+             </property>
+             <property name="statusTip">
+              <string>ALLCCSID (term for label)  that represent a molecule SMILE and corrsponding name</string>
+             </property>
              <property name="text">
-              <string>Use AllCCSID labels</string>
+              <string>Use adduct IDs as labels</string>
              </property>
              <property name="checked">
               <bool>true</bool>
@@ -437,12 +464,21 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>10</x>
                <y>25</y>
-               <width>161</width>
+               <width>181</width>
                <height>21</height>
               </rect>
              </property>
+             <property name="toolTip">
+              <string>Use Molecule names as labels. Currently unavailable due to special characters in some molecule names that caused labellingsearch issues</string>
+             </property>
+             <property name="statusTip">
+              <string>Use Molecule names as labels. Currently unavailable due to special characters in some molecule names that caused labellingsearch issues</string>
+             </property>
              <property name="text">
               <string>Use molecule | ion name</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
             </widget>
             <widget class="QCheckBox" name="preview_optimize_item_flag">
@@ -453,6 +489,12 @@ p, li { white-space: pre-wrap; }
                <width>201</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Shows simple 3D skeletal structure preview of the molecule</string>
+             </property>
+             <property name="statusTip">
+              <string>Shows simple 3D skeletal structure preview of the molecule</string>
              </property>
              <property name="text">
               <string>Show predicted structure</string>
@@ -469,6 +511,12 @@ p, li { white-space: pre-wrap; }
                <width>201</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Autosets the path for Step:2</string>
+             </property>
+             <property name="statusTip">
+              <string>Autosets the path for Step:2</string>
              </property>
              <property name="text">
               <string>Autoset 2D projection path</string>
@@ -490,6 +538,41 @@ p, li { white-space: pre-wrap; }
               <enum>Qt::Vertical</enum>
              </property>
             </widget>
+           </widget>
+           <widget class="QCheckBox" name="dataset_sorting_flag">
+            <property name="geometry">
+             <rect>
+              <x>470</x>
+              <y>0</y>
+              <width>431</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="toolTip">
+             <string>Shows simple 3D skeletal structure preview of the molecule</string>
+            </property>
+            <property name="statusTip">
+             <string>Shows simple 3D skeletal structure preview of the molecule</string>
+            </property>
+            <property name="text">
+             <string>Adduct Id-based  dataset sorting</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="Line" name="line_18">
+            <property name="geometry">
+             <rect>
+              <x>450</x>
+              <y>2</y>
+              <width>20</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
            </widget>
           </widget>
           <widget class="QFrame" name="frame_17">
@@ -533,6 +616,12 @@ p, li { white-space: pre-wrap; }
                <width>41</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Sets the SDF (3D co-ordinate) datafile path during sample preprocessing</string>
+             </property>
+             <property name="statusTip">
+              <string>Sets the SDF (3D co-ordinate) datafile path during sample preprocessing</string>
              </property>
              <property name="text">
               <string>...</string>
@@ -584,6 +673,12 @@ p, li { white-space: pre-wrap; }
                <height>31</height>
               </rect>
              </property>
+             <property name="toolTip">
+              <string>Sets the SDF (3D co-ordinate) datafile path during sample preprocessing</string>
+             </property>
+             <property name="statusTip">
+              <string>Sets the SDF (3D co-ordinate) datafile path during sample preprocessing</string>
+             </property>
              <property name="html">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -632,9 +727,9 @@ p, li { white-space: pre-wrap; }
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>255</y>
+              <y>245</y>
               <width>181</width>
-              <height>31</height>
+              <height>41</height>
              </rect>
             </property>
             <property name="font">
@@ -646,8 +741,11 @@ p, li { white-space: pre-wrap; }
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="toolTip">
+             <string>STEP2: Process the SDF data file to 2D projections dataset used fro 3DCCS training</string>
+            </property>
             <property name="statusTip">
-             <string>Process the 2D projections</string>
+             <string>STEP2: Process the SDF data file to 2D projections dataset used fro 3DCCS training</string>
             </property>
             <property name="text">
              <string>Step2: Process 2D projection</string>
@@ -671,6 +769,12 @@ p, li { white-space: pre-wrap; }
               <pointsize>8</pointsize>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here</string>
+            </property>
+            <property name="statusTip">
+             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here</string>
+            </property>
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOn</enum>
             </property>
@@ -686,6 +790,12 @@ p, li { white-space: pre-wrap; }
               <width>141</width>
               <height>31</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Preview the concatinated 2D projection datasets for x,y,z axis</string>
+            </property>
+            <property name="statusTip">
+             <string>Preview the concatinated 2D projection datasets for x,y,z axis</string>
             </property>
             <property name="text">
              <string>Preview 2D projections </string>
@@ -703,11 +813,17 @@ p, li { white-space: pre-wrap; }
               <height>151</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Shows the concatinated 2D projection preview for Y-axis</string>
+            </property>
+            <property name="statusTip">
+             <string>Shows the concatinated 2D projection preview for Y-axis</string>
+            </property>
             <property name="tabShape">
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="tab_13">
              <attribute name="title">
@@ -731,8 +847,11 @@ p, li { white-space: pre-wrap; }
                 <underline>true</underline>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Shows the concatinated 2D projection preview for X-axis</string>
+              </property>
               <property name="statusTip">
-               <string>Showes teh scaled version of contour preview (with manual selection ROI if available)</string>
+               <string>Shows the concatinated 2D projection preview for X-axis</string>
               </property>
               <property name="frameShape">
                <enum>QFrame::Box</enum>
@@ -772,6 +891,12 @@ p, li { white-space: pre-wrap; }
                <font>
                 <pointsize>7</pointsize>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Shows simple 2D projection preview of the 3D molecule</string>
+              </property>
+              <property name="statusTip">
+               <string>Shows simple 2D projection preview of the 3D molecule</string>
               </property>
               <property name="text">
                <string>3D preview</string>
@@ -875,8 +1000,11 @@ p, li { white-space: pre-wrap; }
                 <underline>true</underline>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Shows the concatinated 2D projection preview for Z-axis</string>
+              </property>
               <property name="statusTip">
-               <string>Showes teh scaled version of contour preview (with manual selection ROI if available)</string>
+               <string>Shows the concatinated 2D projection preview for Z-axis</string>
               </property>
               <property name="frameShape">
                <enum>QFrame::Box</enum>
@@ -956,6 +1084,12 @@ p, li { white-space: pre-wrap; }
               <height>21</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Autosets the model training dataset paths in &quot;Trainer&quot; Tab for 3DCCS model   training</string>
+            </property>
+            <property name="statusTip">
+             <string>Autosets the model training dataset paths in &quot;Trainer&quot; Tab for 3DCCS model   training</string>
+            </property>
             <property name="text">
              <string>Autoset Trainer path</string>
             </property>
@@ -989,6 +1123,12 @@ p, li { white-space: pre-wrap; }
               <width>51</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>IMPORTANT! Set the number of rotations for training &amp; inference</string>
+            </property>
+            <property name="statusTip">
+             <string>IMPORTANT! Set the number of rotations for training &amp; inference</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -1248,8 +1388,11 @@ p, li { white-space: pre-wrap; }
              <height>21</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Sets the model terminal neuron activation type</string>
+           </property>
            <property name="statusTip">
-            <string>Set the optimizer for Classifier model. Cna be changed during retraining but NOT recommended. (Default: Adam)</string>
+            <string>Sets the model terminal neuron activation type</string>
            </property>
            <property name="currentText">
             <string>linear</string>
@@ -1308,8 +1451,11 @@ p, li { white-space: pre-wrap; }
              <height>21</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Sets the 3DCNN model optimizer (MSE &amp; Huber are available)</string>
+           </property>
            <property name="statusTip">
-            <string>Set the optimizer for Classifier model. Cna be changed during retraining but NOT recommended. (Default: Adam)</string>
+            <string>Sets the 3DCNN model optimizer (MSE &amp; Huber are available)</string>
            </property>
            <property name="currentText">
             <string>MSE</string>
@@ -1375,6 +1521,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
+            </property>
             <property name="minimum">
              <number>5</number>
             </property>
@@ -1412,6 +1564,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
+            </property>
             <property name="value">
              <number>5</number>
             </property>
@@ -1429,6 +1587,9 @@ p, li { white-space: pre-wrap; }
              <font>
               <pointsize>8</pointsize>
              </font>
+            </property>
+            <property name="toolTip">
+             <string>Sets value for model learning rate decay</string>
             </property>
             <property name="decimals">
              <number>6</number>
@@ -1449,10 +1610,10 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="label_14">
             <property name="geometry">
              <rect>
-              <x>19</x>
+              <x>9</x>
               <y>10</y>
-              <width>291</width>
-              <height>16</height>
+              <width>301</width>
+              <height>20</height>
              </rect>
             </property>
             <property name="font">
@@ -1472,6 +1633,12 @@ p, li { white-space: pre-wrap; }
               <width>81</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets epoch frequency for model learning rate decay</string>
             </property>
             <property name="minimum">
              <number>5</number>
@@ -1536,6 +1703,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training batch size. default : 8 samples</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training batch size. default : 8 samples</string>
+            </property>
             <property name="minimum">
              <number>2</number>
             </property>
@@ -1576,6 +1749,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training resoultion. default : 32x32 pixels (8 pixel step)</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training resoultion. default : 32x32 pixels (8 pixel step)</string>
+            </property>
             <property name="minimum">
              <number>2</number>
             </property>
@@ -1606,6 +1785,12 @@ p, li { white-space: pre-wrap; }
               <width>181</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets the model training batch size. default : 8 samples</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training batch size. default : 8 samples</string>
             </property>
             <property name="minimum">
              <number>2</number>
@@ -1695,6 +1880,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training replicates. default: 3</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training replicates. default: 3</string>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -1717,6 +1908,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training epoch. default : 250 epoch</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training epoch. default : 250 epoch</string>
+            </property>
             <property name="minimum">
              <number>3</number>
             </property>
@@ -1736,6 +1933,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training epoch. default : 250 epoch</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training epoch. default : 250 epoch</string>
+            </property>
             <property name="minimum">
              <number>3</number>
             </property>
@@ -1743,7 +1946,7 @@ p, li { white-space: pre-wrap; }
              <number>5000</number>
             </property>
             <property name="value">
-             <number>25</number>
+             <number>250</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1767,6 +1970,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the model training resoultion. default : 32x32 pixels (8 pixel step)</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training resoultion. default : 32x32 pixels (8 pixel step)</string>
+            </property>
             <property name="minimum">
              <number>2</number>
             </property>
@@ -1788,6 +1997,12 @@ p, li { white-space: pre-wrap; }
               <width>181</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets the model training replicates. default: 3</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the model training replicates. default: 3</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -1836,6 +2051,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Set the percentage of dataset data for model validation</string>
+            </property>
+            <property name="statusTip">
+             <string>Set the percentage of dataset data for model validation</string>
+            </property>
             <property name="minimum">
              <number>0</number>
             </property>
@@ -1861,17 +2082,23 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="text">
-             <string>% in validation data </string>
+             <string>Validation data (%)</string>
             </property>
            </widget>
            <widget class="QSlider" name="train_ratio_slider">
             <property name="geometry">
              <rect>
-              <x>141</x>
+              <x>161</x>
               <y>10</y>
-              <width>171</width>
+              <width>151</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Set the percentage of dataset data for model training </string>
+            </property>
+            <property name="statusTip">
+             <string>Set the percentage of dataset data for model training </string>
             </property>
             <property name="minimum">
              <number>50</number>
@@ -1901,6 +2128,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Set the percentage of dataset data for model training </string>
+            </property>
+            <property name="statusTip">
+             <string>Set the percentage of dataset data for model training </string>
+            </property>
             <property name="value">
              <number>60</number>
             </property>
@@ -1908,11 +2141,17 @@ p, li { white-space: pre-wrap; }
            <widget class="QSlider" name="test_ratio_slider">
             <property name="geometry">
              <rect>
-              <x>141</x>
+              <x>161</x>
               <y>40</y>
-              <width>171</width>
+              <width>151</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Set the percentage of dataset data for model testing</string>
+            </property>
+            <property name="statusTip">
+             <string>Set the percentage of dataset data for model testing</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -1936,9 +2175,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QSlider" name="val_ratio_slider">
             <property name="geometry">
              <rect>
-              <x>141</x>
+              <x>161</x>
               <y>70</y>
-              <width>171</width>
+              <width>151</width>
               <height>22</height>
              </rect>
             </property>
@@ -2005,6 +2244,12 @@ p, li { white-space: pre-wrap; }
               <width>81</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Set the percentage of dataset data for model testing</string>
+            </property>
+            <property name="statusTip">
+             <string>Set the percentage of dataset data for model testing</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -2386,7 +2631,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="toolTip">
-            <string>Shows the real-time validation Mean Average Percentage Error (MAPE)</string>
+            <string>Shows the real-time validation Mean Average Percentage Error (MAPE) graph</string>
            </property>
            <property name="statusTip">
             <string>Shows the real-time validation Mean Average Percentage Error (MAPE)</string>
@@ -2398,7 +2643,7 @@ p, li { white-space: pre-wrap; }
             <enum>QTabWidget::Triangular</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="tab_6">
             <attribute name="title">
@@ -3321,6 +3566,12 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Sets the path for SMILE molecule dataset set (same format as trainer dataset  for inference/prediction</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets the path for SMILE molecule dataset set (same format as trainer dataset  for inference/prediction</string>
+           </property>
            <property name="readOnly">
             <bool>false</bool>
            </property>
@@ -3340,6 +3591,12 @@ p, li { white-space: pre-wrap; }
              <width>641</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="toolTip">
+            <string>Sets the path for 2D projection dataset set (same format as trainer dataset  for inference/prediction</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets the path for 2D projection dataset set (same format as trainer dataset  for inference/prediction</string>
            </property>
            <property name="readOnly">
             <bool>false</bool>
@@ -3410,6 +3667,12 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Sets the trained model filepath for inference (train and inference dataset rotation should match)</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets the trained model filepath for inference (train and inference dataset rotation should match)</string>
+           </property>
            <property name="readOnly">
             <bool>false</bool>
            </property>
@@ -3418,7 +3681,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./evaluations/METLIN_MmHm_5rot_32x32_20250919105028/METLIN_MmHm_5rot_kfold=2_model_ckpt.h5&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./models/external_val_models/SIMPC_MmHm_5rot_32x32_rseed-4396526_model_ckpt.h5&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </widget>
@@ -3457,12 +3720,18 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>5</y>
-              <width>201</width>
+              <width>261</width>
               <height>18</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Use label that represent a molecule SMILE and corrsponding name</string>
+            </property>
+            <property name="statusTip">
+             <string>Use label that represent a molecule SMILE and corrsponding name</string>
+            </property>
             <property name="text">
-             <string>Use adduct id labels</string>
+             <string>Use adduct IDs as labels</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -3471,14 +3740,23 @@ p, li { white-space: pre-wrap; }
            <widget class="QRadioButton" name="use_molecule_name_flag_2">
             <property name="geometry">
              <rect>
-              <x>220</x>
+              <x>280</x>
               <y>5</y>
-              <width>171</width>
+              <width>401</width>
               <height>20</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Use Molecule names as labels. Currently unavailable due to special characters in some molecule names that caused labellingsearch issues</string>
+            </property>
+            <property name="statusTip">
+             <string>Use Molecule names as labels. Currently unavailable due to special characters in some molecule names that caused labellingsearch issues</string>
+            </property>
             <property name="text">
              <string>Use molecule | ion name</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </widget>
@@ -3498,9 +3776,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QFrame" name="frame_21">
            <property name="geometry">
             <rect>
-             <x>460</x>
+             <x>510</x>
              <y>480</y>
-             <width>451</width>
+             <width>401</width>
              <height>51</height>
             </rect>
            </property>
@@ -3516,11 +3794,14 @@ p, li { white-space: pre-wrap; }
            <widget class="QPushButton" name="btn_exit_inference">
             <property name="geometry">
              <rect>
-              <x>260</x>
+              <x>210</x>
               <y>10</y>
               <width>181</width>
               <height>31</height>
              </rect>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>Exit</string>
@@ -3534,7 +3815,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>241</width>
+              <width>191</width>
               <height>31</height>
              </rect>
             </property>
@@ -3556,8 +3837,8 @@ p, li { white-space: pre-wrap; }
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>490</y>
-             <width>291</width>
+             <y>480</y>
+             <width>251</width>
              <height>31</height>
             </rect>
            </property>
@@ -3651,6 +3932,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the maximum number of samples(bars) to appear in the output barchart </string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the maximum number of samples(bars) to appear in the output barchart </string>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -3695,6 +3982,12 @@ p, li { white-space: pre-wrap; }
               <height>22</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the minimum cutoff weight of the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the minimum cutoff weight of the molecule ion during inference</string>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -3716,6 +4009,12 @@ p, li { white-space: pre-wrap; }
               <width>71</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets the maximum cutoff weight of the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the maximum cutoff weight of the molecule ion during inference</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -3739,6 +4038,15 @@ p, li { white-space: pre-wrap; }
               <height>21</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Use maximum cutoff weight filter for the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Use minimum cutoff weight filter for the molecule ion during inference</string>
+            </property>
+            <property name="whatsThis">
+             <string/>
+            </property>
             <property name="text">
              <string>Min. cut-off weight</string>
             </property>
@@ -3755,6 +4063,12 @@ p, li { white-space: pre-wrap; }
               <height>21</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Use maximum cutoff weight filter for the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Use maximum cutoff weight filter for the molecule ion during inference</string>
+            </property>
             <property name="text">
              <string>Max. cut-off weight</string>
             </property>
@@ -3770,6 +4084,12 @@ p, li { white-space: pre-wrap; }
               <width>611</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets the minimum cutoff weight of the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the minimum cutoff weight of the molecule ion during inference</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -3798,6 +4118,12 @@ p, li { white-space: pre-wrap; }
               <width>611</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets the maximum cutoff weight of the molecule ion during inference</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets the maximum cutoff weight of the molecule ion during inference</string>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -3839,7 +4165,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>111</width>
+              <width>751</width>
               <height>21</height>
              </rect>
             </property>
@@ -3855,14 +4181,17 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="inf_adduct_info">
             <property name="geometry">
              <rect>
-              <x>650</x>
+              <x>780</x>
               <y>10</y>
-              <width>251</width>
+              <width>121</width>
               <height>21</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Manually set the adduct type ( for result documentation &amp; information purpose only)</string>
+            </property>
             <property name="statusTip">
-             <string>Set the optimizer for Classifier model. Cna be changed during retraining but NOT recommended. (Default: Adam)</string>
+             <string>manually set the adduct type ( for result documentation &amp; information purpose only)</string>
             </property>
             <property name="currentText">
              <string>N/A</string>
@@ -3899,14 +4228,17 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="inf_img_dim">
             <property name="geometry">
              <rect>
-              <x>830</x>
+              <x>780</x>
               <y>37</y>
-              <width>71</width>
+              <width>121</width>
               <height>21</height>
              </rect>
             </property>
+            <property name="toolTip">
+             <string>Sets the pixel x pixel input size for prediction model, default= 32.  ( can differ from resoultion of training datasets but prediction accuracy may vary)</string>
+            </property>
             <property name="statusTip">
-             <string>Sets the pixel x pixel input size for prediction model 9default= 32)</string>
+             <string>Sets the pixel x pixel input size for prediction model, default= 32.  ( can differ from resoultion of training datasets but prediction accuracy may vary)</string>
             </property>
             <property name="currentText">
              <string>32</string>
@@ -3945,9 +4277,15 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>40</y>
-              <width>811</width>
+              <width>751</width>
               <height>21</height>
              </rect>
+            </property>
+            <property name="toolTip">
+             <string>Sets model resoultion ( can differ from resoultion of training datasets but prediction accuracy may vary)</string>
+            </property>
+            <property name="statusTip">
+             <string>Sets model resoultion ( can differ from resoultion of training datasets but prediction accuracy may vary)</string>
             </property>
             <property name="text">
              <string>Select the model resoultion</string>
@@ -3961,7 +4299,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>63</y>
-              <width>811</width>
+              <width>761</width>
               <height>21</height>
              </rect>
             </property>
@@ -3978,9 +4316,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="inf_img_rot">
             <property name="geometry">
              <rect>
-              <x>830</x>
+              <x>780</x>
               <y>60</y>
-              <width>71</width>
+              <width>121</width>
               <height>21</height>
              </rect>
             </property>
@@ -4024,6 +4362,12 @@ p, li { white-space: pre-wrap; }
              <height>215</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Inference results are shown here with key feature values (IDs,PPR, SMILEs...)</string>
+           </property>
+           <property name="statusTip">
+            <string>Inference results are shown here with key feature values (IDs,PPR, SMILEs...)</string>
+           </property>
            <column>
             <property name="text">
              <string>SN.</string>
@@ -4056,6 +4400,28 @@ p, li { white-space: pre-wrap; }
              <string>Exp_CCS</string>
             </property>
            </column>
+          </widget>
+          <widget class="QCheckBox" name="check_expccs_flag">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>500</y>
+             <width>501</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="toolTip">
+            <string>Set to uze exp_CCS as zero if exp_CCS is unknown during inference (suitable for new unknown samples)</string>
+           </property>
+           <property name="statusTip">
+            <string>Set to uze exp_CCS as zero if exp_CCS is unknown during inference (suitable for new unknown samples)</string>
+           </property>
+           <property name="text">
+            <string>Autoset experimental CCS values to zero if value(s) or feature not found</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </widget>
         </widget>
@@ -4090,6 +4456,12 @@ p, li { white-space: pre-wrap; }
             <height>22</height>
            </rect>
           </property>
+          <property name="toolTip">
+           <string>Sets the processor to use ( GPUs are faster | CPUs are slow)</string>
+          </property>
+          <property name="statusTip">
+           <string>Sets the processor to use ( GPUs are faster | CPUs are slow)</string>
+          </property>
          </widget>
          <widget class="QCheckBox" name="display_model_summary_flag">
           <property name="geometry">
@@ -4100,8 +4472,14 @@ p, li { white-space: pre-wrap; }
             <height>21</height>
            </rect>
           </property>
+          <property name="toolTip">
+           <string>Display model summary upon model build or loaded successfully</string>
+          </property>
+          <property name="statusTip">
+           <string>Display model summary upon model build or loaded successfully</string>
+          </property>
           <property name="text">
-           <string>Display model summary upload successful model loading or build</string>
+           <string>Display model summary upon successful model loading or build</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_21">
@@ -4131,6 +4509,12 @@ p, li { white-space: pre-wrap; }
             <height>22</height>
            </rect>
           </property>
+          <property name="toolTip">
+           <string>Sets the verbosty (level of terminal | console messages being displayed)</string>
+          </property>
+          <property name="statusTip">
+           <string>Sets the verbosty (level of terminal | console messages being displayed during training). has no effect in model training.</string>
+          </property>
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -4159,6 +4543,12 @@ p, li { white-space: pre-wrap; }
             <height>21</height>
            </rect>
           </property>
+          <property name="toolTip">
+           <string>Allows dynamic growth of GPU memory during train/ inference (not recommended for low VRAM GPUs)</string>
+          </property>
+          <property name="statusTip">
+           <string>Allows dynamic growth of GPU memory during train/ inference (not recommended for low VRAM GPUs)</string>
+          </property>
           <property name="text">
            <string>Allow GPU memory growth during runtime</string>
           </property>
@@ -4171,6 +4561,12 @@ p, li { white-space: pre-wrap; }
             <width>901</width>
             <height>21</height>
            </rect>
+          </property>
+          <property name="toolTip">
+           <string>Allow opening of multiple molecule structure preview windows</string>
+          </property>
+          <property name="statusTip">
+           <string>Allow opening of multiple molecule structure preview windows</string>
           </property>
           <property name="text">
            <string>Allow opening multiple structure preview windows</string>
@@ -4314,7 +4710,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;To ensure robust performance across adduct types, the 3D-CNN framework was systematically evaluated under varying image resolutions and rotational sampling densities. Optimal representation settings were identified independently for each adduct species. Model reliability was then assessed through repeated cross-validation using optimized configurations, ensuring stable learning behavior and resistance to overfitting. An external in-house lipid dataset was further employed to validate real-world generalization, confirming that the learned volumetric features capture transferable structural determinants of CCS beyond the training distribution.&lt;/span&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;4. Comparative Evaluation and Reproducibility : Benchmarking and open source Commitment&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The predictive performance of the optimized 3D-CNN model was benchmarked against established online CCS prediction tools, enabling direct comparison under identical molecular inputs. Across lipid adduct classes, the proposed deep learning framework demonstrated competitive and often superior predictive accuracy, highlighting the advantage of geometry-aware volumetric learning. To support transparency and reproducibility, all source code, installation infromation, GUI guidelines, trained models, preprocessing workflows, and associated datasets will be released through our publix github repository, facilitating reuse, eas of customization and further development by the community.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The predictive performance of the optimized 3D-CNN model was benchmarked against established online CCS prediction tools, enabling direct comparison under identical molecular inputs. Across lipid adduct classes, the proposed deep learning framework demonstrated competitive and often superior predictive accuracy, highlighting the advantage of geometry-aware volumetric learning. To support transparency and reproducibility, all source code, installation infromation, GUI guidelines, trained models, preprocessing workflows, and associated datasets will be released through our publix github repository, facilitating reuse, eas of customization and further development by the community.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The software  is a part of ongoing work entitled:&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Times New Roman,serif'; font-size:12pt; font-weight:600;&quot;&gt;Deep3DCCS: Geometry-Driven Deep Learning for Lipid CCS Prediction from Multi-Angle Molecular Projections&amp;quot;, &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;currently under review.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>
@@ -4415,88 +4814,6 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>963</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuMenu">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actionLoad_settings"/>
-    <addaction name="actionLoad_previous_setting"/>
-    <addaction name="separator"/>
-    <addaction name="actionSave_entire_settings"/>
-    <addaction name="actionSave_settings_as"/>
-    <addaction name="separator"/>
-    <addaction name="actionLoad_default_settings"/>
-    <addaction name="separator"/>
-    <addaction name="actionActivate_log"/>
-    <addaction name="actionClear_log_files"/>
-    <addaction name="separator"/>
-    <addaction name="actionClear_Terminal_output"/>
-    <addaction name="separator"/>
-    <addaction name="actionStay_on_Top"/>
-    <addaction name="separator"/>
-    <addaction name="actionRestore_last_session_on_start"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionOnline_Help_Github"/>
-    <addaction name="actionAbout_ContourGANs"/>
-   </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="title">
-     <string>Tools</string>
-    </property>
-    <addaction name="separator"/>
-    <addaction name="separator"/>
-    <addaction name="actionSMILE_structure_otimization"/>
-    <addaction name="actionOptimize_Structure_2D_projection"/>
-    <addaction name="separator"/>
-    <addaction name="actionTrain_Classifier"/>
-    <addaction name="actionRun_inferencing"/>
-   </widget>
-   <widget class="QMenu" name="menuSkin">
-    <property name="title">
-     <string>Theme</string>
-    </property>
-    <addaction name="separator"/>
-    <addaction name="actionDaylight_Theme"/>
-    <addaction name="separator"/>
-    <addaction name="actionDark_Theme"/>
-    <addaction name="separator"/>
-    <addaction name="actionDefault_Theme"/>
-    <addaction name="separator"/>
-   </widget>
-   <widget class="QMenu" name="menuOutput_explorer">
-    <property name="title">
-     <string>Explorer</string>
-    </property>
-    <addaction name="actionOpen_CRISP_II_root_folder"/>
-    <addaction name="actionView_singleclass_contour_extraction_folder"/>
-    <addaction name="actionView_cloned_multiclass_contour_extraction_folder"/>
-    <addaction name="actionView_multiclass_deepstacking_build_folder"/>
-   </widget>
-   <addaction name="menuMenu"/>
-   <addaction name="menuSettings"/>
-   <addaction name="menuOutput_explorer"/>
-   <addaction name="menuSkin"/>
-   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLoad_settings">
