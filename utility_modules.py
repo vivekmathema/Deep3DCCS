@@ -56,13 +56,13 @@ from helper_tools import *
 import webbrowser
 
 #Load UI
-Ui_MainWindow, QtBaseClass = uic.loadUiType("ui_interface.ui")
+Ui_MainWindow, QtBaseClass = uic.loadUiType("ui_interface.res")
 
 class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidgets.QMainWindow, Ui_MainWindow):            
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
-        loadUi("ui_interface.ui",self)
+        loadUi("ui_interface.res",self)
 
 
     def initalize_vars(self):
