@@ -169,6 +169,8 @@ Deep3DCCS/
 ├── utility_modules.py
 ├── helper_tools.py
 ├── ui_interface.ui
+├── run_deep3DCCS_GPU.bat
+├── run_deep3DCCS_CPU.bat
 ├── datasets/
 ├── models/
 ├── evaluations/
