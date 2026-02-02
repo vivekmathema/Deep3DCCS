@@ -163,6 +163,12 @@
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
+             <property name="toolTip">
+              <string>Set the input filepath for raw SMILE with molecule IDs (both CSV and XLSX) files are accepted)</string>
+             </property>
+             <property name="statusTip">
+              <string>Set the input filepath for raw SMILE with molecule IDs (both CSV and XLSX) files are accepted)</string>
+             </property>
              <property name="text">
               <string>...</string>
              </property>
@@ -181,6 +187,12 @@
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="toolTip">
+              <string>Set the input dirpath for the 2D projection dataset (will be created if not exists)</string>
+             </property>
+             <property name="statusTip">
+              <string>Set the input dirpath for the 2D projection dataset (will be created if not exists)</string>
              </property>
              <property name="text">
               <string>...</string>
@@ -216,6 +228,12 @@
                <height>31</height>
               </rect>
              </property>
+             <property name="toolTip">
+              <string>Set the input filepath for raw SMILE with molecule IDs (both CSV and XLSX) files are accepted)</string>
+             </property>
+             <property name="statusTip">
+              <string>Set the input filepath for raw SMILE with molecule IDs (both CSV and XLSX) files are accepted)</string>
+             </property>
              <property name="readOnly">
               <bool>false</bool>
              </property>
@@ -235,6 +253,12 @@ p, li { white-space: pre-wrap; }
                <width>661</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Set the input dirpath for the 2D projection dataset (will be created if not exists)</string>
+             </property>
+             <property name="statusTip">
+              <string>Set the input dirpath for the 2D projection dataset (will be created if not exists)</string>
              </property>
              <property name="readOnly">
               <bool>false</bool>
@@ -3385,6 +3409,12 @@ p, li { white-space: pre-wrap; }
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
+           <property name="toolTip">
+            <string>Set the input  filepath for SMILEs trainer dataset (CSV file is accepted)</string>
+           </property>
+           <property name="statusTip">
+            <string>Set the input  filepath for SMILEs trainer dataset (CSV file is accepted)</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -3438,6 +3468,12 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>The input  filepath for SMILEs trainer dataset (ONLY .csv file is accepted)</string>
+           </property>
+           <property name="statusTip">
+            <string>The input  filepath for SMILEs trainer dataset  (ONLY .csv file is accepted)</string>
+           </property>
            <property name="readOnly">
             <bool>false</bool>
            </property>
@@ -3457,6 +3493,12 @@ p, li { white-space: pre-wrap; }
              <width>671</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="toolTip">
+            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile </string>
+           </property>
+           <property name="statusTip">
+            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile </string>
            </property>
            <property name="readOnly">
             <bool>false</bool>
@@ -3522,6 +3564,12 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="toolTip">
+            <string>Sets the path for SMILE molecule dataset set. Must be same format as trainer dataset  for inference/prediction (ONLY .csv file is accepted)</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets the path for SMILE molecule dataset set. Must be same format as trainer dataset  for inference/prediction (ONLY .csv file is accepted)</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -3534,6 +3582,12 @@ p, li { white-space: pre-wrap; }
              <width>51</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="toolTip">
+            <string>Sets the path for 2D projection dataset path (same format as inference dataset  for inference/prediction</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets the path for 2D projection dataset path (same format as inference dataset  for inference/prediction</string>
            </property>
            <property name="text">
             <string>...</string>
@@ -3567,10 +3621,10 @@ p, li { white-space: pre-wrap; }
             </rect>
            </property>
            <property name="toolTip">
-            <string>Sets the path for SMILE molecule dataset set (same format as trainer dataset  for inference/prediction</string>
+            <string>Sets the path for SMILE molecule dataset set. Must be same format as trainer dataset  for inference/prediction (ONLY .csv file is accepted)</string>
            </property>
            <property name="statusTip">
-            <string>Sets the path for SMILE molecule dataset set (same format as trainer dataset  for inference/prediction</string>
+            <string>Sets the path for SMILE molecule dataset set. Must be same format as trainer dataset  for inference/prediction (ONLY .csv file is accepted)</string>
            </property>
            <property name="readOnly">
             <bool>false</bool>
@@ -3580,7 +3634,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/SIMPC_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/external_validation/SIMPC_MmHm_5rot.csv&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="inference_projection_path">
@@ -3593,10 +3647,10 @@ p, li { white-space: pre-wrap; }
             </rect>
            </property>
            <property name="toolTip">
-            <string>Sets the path for 2D projection dataset set (same format as trainer dataset  for inference/prediction</string>
+            <string>Sets the path for 2D projection dataset path (same format as inference dataset  for inference/prediction</string>
            </property>
            <property name="statusTip">
-            <string>Sets the path for 2D projection dataset set (same format as trainer dataset  for inference/prediction</string>
+            <string>Sets the path for 2D projection dataset path (same format as inference dataset  for inference/prediction</string>
            </property>
            <property name="readOnly">
             <bool>false</bool>
@@ -3606,7 +3660,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/SIMPC_MmHm_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;./datasets/external_validation/SIMPC_MmHm_5rot_optimized_structure/2D_projections&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
           <widget class="QLabel" name="label_9">
@@ -3803,6 +3857,12 @@ p, li { white-space: pre-wrap; }
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="toolTip">
+             <string>Exit 3DCCS</string>
+            </property>
+            <property name="statusTip">
+             <string>Exit 3DCCS</string>
+            </property>
             <property name="text">
              <string>Exit</string>
             </property>
@@ -3822,8 +3882,11 @@ p, li { white-space: pre-wrap; }
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="toolTip">
+             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
+            </property>
             <property name="statusTip">
-             <string>Inference for unknown samples or SMILEs</string>
+             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
             </property>
             <property name="text">
              <string>Inference</string>
@@ -4764,9 +4827,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QProgressBar" name="progressBar">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>630</x>
        <y>735</y>
-       <width>541</width>
+       <width>331</width>
        <height>21</height>
       </rect>
      </property>
@@ -4799,7 +4862,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>735</y>
-       <width>411</width>
+       <width>621</width>
        <height>21</height>
       </rect>
      </property>

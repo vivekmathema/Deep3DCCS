@@ -342,11 +342,17 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def set_SMILE_datafile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"Select SMILE datafile(.xls) ",os.path.join(cur_path,"datasets"),"Microsoft XLS files (*.xls, *.xlsx);Comma Seperated Values (*.csv);;All Files (*.*)", options=options)
+
+        fileName, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select SMILE data file",
+            os.path.join(cur_path, "datasets"),
+            "Data files (*.csv *.xls *.xlsx);;CSV files (*.csv);;Excel files (*.xls *.xlsx);;All Files (*.*)",
+            options=options
+        )
+
         if fileName:
-            self.raw_smile_datafile.setText (fileName)
-        else:
-            None
+            self.raw_smile_datafile.setText(fileName)
 
 
     def set_sdf_input_dirpath(self):
@@ -387,10 +393,11 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         if self.qm.question(self,'Deep3DCCS',"Process SMILES-based optimized 3D structures for 2D projection dataset construction?", self.qm.Yes | self.qm.No) == self.qm.No:
             return
         if self.projection_output.strip() == "":
-            print(colored("ERROR! Output path is empty. Please seelct a path (is created if not exists)" ,"red"))
+            print(colored("ERROR! Output path is empty. Please select a path (will be created if not exists)" ,"red"))
             return
         else:
-            os.makedirs(self.sdf_mol_dirpath, exist_ok = True)                                                      # make directory if required
+            os.makedirs(self.optimized_struct_output_dirpath, exist_ok = True) 
+            #os.makedirs(self.sdf_mol_dirpath, exist_ok = True)                                                      # make directory if required
 
         #===== Progress bar stuffs
         self.run_mode   = "2D projection dataset construction"

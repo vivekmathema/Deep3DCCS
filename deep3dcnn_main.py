@@ -451,7 +451,7 @@ class MyApp(BaseClass):
         
         self.struct_output_dir = os.path.join(self.optimized_struct_output_dirpath , data_tag + '_optimized_structure')  # Create a directory to save the output optimized structures 
 
-        os.makedirs(self.struct_output_dir, exist_ok=True)
+        os.makedirs(self.struct_output_dir, exist_ok=True)                                       # required dire for the SDF 3D structure datafile storage                          
 
         self.list_optimized_mols.clear()                     # clear the list for SMILES
         count =0                                             # success mol counter
@@ -847,7 +847,8 @@ class MyApp(BaseClass):
     def confrim_train_3cnn_kfold(self, cmd_mode = False):
         self.post_train_evalulation = True   # must set TRue for operating in k-fold post evaluation
 
-        mode_msg ="\nNOTE: Single dataset mode is on. Only current dataset will be trained" if self.train_singlemode_flag.isChecked() else "\nNOTE: Multi-dataset mode is on. All datafiles will be trained"
+        mode_msg ="\nNOTE: Single dataset mode is on. Only current dataset will be trained" if self.train_singlemode_flag.isChecked() else "\nNOTE: Multi-dataset mode is on. All datafiles will be trained."
+        mode_msg = mode_msg + "\nNOTE: Ensure the number of rotation and pixel resoultion to match training | inference dataset" 
 
         if self.qm.question(self,'CDCCS',f"Start K-fold cross validation 3DCCS model?\nNOTE: Train/Test/Validation ratios will be autoset.{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
@@ -915,6 +916,7 @@ class MyApp(BaseClass):
         self.post_train_evalulation = True   # must set TRue for operating in k-fold post eva
 
         mode_msg ="\nNOTE: Single dataset mode is on. Only current dataset will be trained" if self.train_singlemode_flag.isChecked() else "\nNOTE: Multi-dataset mode is on. All datafiles will be trained"
+        mode_msg = mode_msg + "\nNOTE: Ensure the number of rotation and pixel resoultion to match training | inference dataset" 
         if self.qm.question(self,'CDCCS',f"Start train 3DCCS model?{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
 
@@ -1046,17 +1048,23 @@ class MyApp(BaseClass):
 
                     #============== Handel the condition of missing exp_CCS
                     raw_exp_ccs = row.get('exp_ccs', 0)
-                    
-                    if self.autoset_expccs_flag and self.post_train_evalulation == False:             # ONLY for inference. Autoset the ccs values to Zero if the exp CCS column does not exists or valeus are missing
+
+                    if self.autoset_expccs_flag and self.post_train_evalulation == False:            # ONLY for inference. Autoset the ccs values to Zero if the exp CCS column does not exists or valeus are missing
                         try:
                             exp_ccs = float(raw_exp_ccs) if raw_exp_ccs not in ("", None) else 0.0
                         except ValueError:
                             self.exp_ccs_is_missing =True
                             exp_ccs = 0.0
+                    else:                                                                            # exp-ccs is mandatory for the training process 
+                        try:
+                            exp_ccs = float(row['exp_ccs'])                                          # use if the column name is CCS for excel file  (TODO: make both exp-ccs in future for excel & csv file)
+                        except:
+                            exp_ccs = float(row['CCS'])                                              # use if the column name is exp_ccs for .csv file
+
                     #=============
 
-                    name_to_exp_ccs[name]         = round(exp_ccs, self.set_precision)  # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
-                    name_to_extract_mass[name]    = round(mol_mass,              self.set_precision)  # Added
+                    name_to_exp_ccs[name]         = round(exp_ccs,    self.set_precision)             # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
+                    name_to_extract_mass[name]    = round(mol_mass,   self.set_precision)             # Added
                     name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added
                     #===============
                     try:
@@ -1811,7 +1819,8 @@ class MyApp(BaseClass):
             return
         #========================================================================================================
         
-        #os.makedirs(self.evaluations_dir, exist_ok=True)
+        os.makedirs(self.evaluations_dir, exist_ok=True)
+        
         print(colored("\nStoring trained model backup at training end:", "yellow"))
 
 
@@ -1837,7 +1846,6 @@ class MyApp(BaseClass):
 
         self.train_time = timed_elapsed_in_min(start_time = self.train_start_time)  # colpute train time 
 
-        #os.makedirs(self.evaluations_dir, exist_ok=True)
         print(colored(f"\nTraining completed in {self.train_time} minutes:", "green"))
         print(colored(f"\n\n-----------------------------------------------------------------------------------------------" ,"white"))
 
@@ -1858,7 +1866,7 @@ class MyApp(BaseClass):
         print("Running in post train evaulations :" , self.post_train_evalulation)
 
         if self.post_train_evalulation == False:
-            if self.qm.question(self,'3CDCCS',f"Run inference for CCS prediction?", self.qm.Yes | self.qm.No) == self.qm.Yes:
+            if self.qm.question(self,'3CDCCS',f"Run inference for CCS prediction?\nNOTE: Ensure the number of rotation and pixel resoultion to match training | inference dataset", self.qm.Yes | self.qm.No) == self.qm.Yes:
                 pass 
             else:
                 return
