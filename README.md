@@ -104,6 +104,31 @@ Launch the main application:
 python 3DCNN_gui.py
 ```
 
+---
+## Graphical user friendly inferface of Deep3DCCS (beta version)
+The Deep3DCCS is a complete GUI-feature enagled software toolkit that can be run locally for both training and inference with full customization
+
+** Welcome screen for Deep3DCCS gui inferface
+
+<img src="assets/gui-interface.jpg" width ="800">
+
+
+**The Deep3DCCS data pre-processing module**
+
+<img src="assets/preprocessing.jpg" width ="800">
+
+
+**The Deep3DCCS data Model training module**
+
+<img src="assets/trainer_inferface.jpg" width ="800">
+
+
+**The Deep3DCCS data Inference/ccs prediction using trained module**
+
+<img src="assets/inference_interface.jpg" width ="800">
+
+
+
 The GUI provides:
 - **Molecular Optimization:** SMILES → optimized 3D structures
 - **2D Projection Generation:** Multi-angle image stacks
