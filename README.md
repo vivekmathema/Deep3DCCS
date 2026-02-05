@@ -105,23 +105,39 @@ python deep3dcnn_main.py
 ```
 
 ---
+## General Instruction for basic operation
+
+The Deep3DCCS GUI enables users to visually select and oeprate three key steps (seperated in three major tabs with in the main gui windows): 
+- SMILEs Data pre-processing & 2D-projection database generation
+- 3DCCS model training
+- Inference using trained model
+- All three steps can be summarized below
+
 ## Graphical user friendly inferface of Deep3DCCS (beta version)
-The Deep3DCCS is a complete GUI-feature enagled software toolkit that can be run locally for both training and inference with full customization. Hovering mouse on most of the buttons in GUI interface will prvide users short description of its corrsponding functions.
+The Deep3DCCS is a complete GUI-feature enagled software toolkit that can be run locally for both training and inference with full customization. Hovering mouse on most of the buttons in GUI interface will provide users short description of its corrsponding functions.
 
 **Welcome screen for Deep3DCCS gui inferface**
-
+This is a basic welcome screen along with general information about the software. It also links to its github repository.
 
 <img src="assets/gui-interface.jpg" width ="800">
 
 
 **The Deep3DCCS data pre-processing module**
+Step 1: Model pre-processing is a straight foward step in GUI window under the Tab "Data pre-processor". Users are required to upload the SMILEs datasets (.csv or xlsx files- Examples of formatted datasets are provided in "./datasets/" folder).The experimental CCS values is mandatory only for training SMILEs dataset pre-processing.
 
+- This is followed by choosing approperate options and pressing: "Step1:Process structure" button for 3D optimzied structrue datafiles generation from SMILEs. 
+- Subsequently, the next step is to produce 2DCCS compatible 2D-projection training/inference-compatible dataset by pressing "Step2: Process 2D projection" button. 
+- In each case, users must set/select correct number of rotations accordingly. 
+- Basic preview of the molecule structrue and 2D-projections can be seen in the preview window for each dataset processing step.
 
 <img src="assets/preprocessing.jpg" width ="800">
 
 
 **The Deep3DCCS data Model training module**
-
+- This module can be accessed by selecting the "Trainer" tab in the main window.
+- User will have to provide the SMILEs dataset (The same SMILEs dataset file which they used to pre-process 2D-projection dataset in "Data pre-processor" module. Only .CSV file is accepted at this point)
+- This is followed by selecting 2D projection dataset folder path associated with the SMILEs dataset. The software by default sets path for the 2D projection datasets but users can change arrording to their experimental setup.
+  
 <img src="assets/trainer_inferface.jpg" width ="800">
 
 
