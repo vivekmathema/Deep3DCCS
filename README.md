@@ -107,10 +107,10 @@ python deep3dcnn_main.py
 ---
 ## General Instruction for basic operation
 
-The Deep3DCCS GUI enables users to visually select and oeprate three key steps (seperated in three major tabs with in the main gui windows): 
-- SMILEs Data pre-processing & 2D-projection database generation
-- 3DCCS model training
-- Inference using trained model
+The Deep3DCCS GUI enables users to visually select and oeprate three key modules (seperated in three major tabs with in the main gui windows): 
+- Module 1: SMILEs Data pre-processing & 2D-projection database generation
+- Modeul 2: 3DCCS model training
+- Module 3: Inference using trained model
 - All three steps can be summarized below
 
 ## Graphical user friendly inferface of Deep3DCCS (beta version)
@@ -123,7 +123,7 @@ This is a basic welcome screen along with general information about the software
 
 
 **The Deep3DCCS data pre-processing module**
-Step 1: Model pre-processing is a straight foward step in GUI window under the Tab "Data pre-processor". Users are required to upload the SMILEs datasets (.csv or xlsx files- Examples of formatted datasets are provided in "./datasets/" folder).The experimental CCS values is mandatory only for training SMILEs dataset pre-processing.
+Module 1: Model pre-processing is a straight foward step in GUI window under the Tab "Data pre-processor". Users are required to upload the SMILEs datasets (.csv or xlsx files- Examples of formatted datasets are provided in "./datasets/" folder).The experimental CCS values is mandatory only for training SMILEs dataset pre-processing.
 
 - This is followed by choosing approperate options and pressing: "Step1:Process structure" button for 3D optimzied structrue datafiles generation from SMILEs. 
 - Subsequently, the next step is to produce 2DCCS compatible 2D-projection training/inference-compatible dataset by pressing "Step2: Process 2D projection" button. 
@@ -134,15 +134,34 @@ Step 1: Model pre-processing is a straight foward step in GUI window under the T
 
 
 **The Deep3DCCS data Model training module**
-- This module can be accessed by selecting the "Trainer" tab in the main window.
+
+- Module 2: This module can be accessed by selecting the "Trainer" tab in the main window.
 - User will have to provide the SMILEs dataset (The same SMILEs dataset file which they used to pre-process 2D-projection dataset in "Data pre-processor" module. Only .CSV file is accepted at this point)
 - This is followed by selecting 2D projection dataset folder path associated with the SMILEs dataset. The software by default sets path for the 2D projection datasets but users can change arrording to their experimental setup.
-  
+- Users can select storage path for the models and evaluations results.
+- Users must setup the correct number of rotations and pixel resoultion for each training dataset that macthes with the training dataset.
+- The users can train single or multiple dataset for different pixel resoultions and rotations based on their requirments.
+- The option to train single dataset can be selected by tickmarking "Train single dataset mode" checkbox.
+- The option to train multiple resoultion can be applied by tickmarking "Use batch image dimensions" checkbox.
+- The batch or single mode training itself can be done for random experimentation mode by pressing [ Train:Single | Batch ]  or K-fold [Train K-fold: single | Batch ] buttons. (For further details, see under title "Optimization of Training Models")
+
+- 
 <img src="assets/trainer_inferface.jpg" width ="800">
 
 
 **The Deep3DCCS data Inference/ccs prediction using trained module**
 
+- Module 3: This is the final inference/prediction module. 
+- Users will have to provide the optimized/trained model for particular rotation and adduct user "3DCCS model path".
+- User will have to set the 2D-projection dataset path asscoiated with the SMILEs input datafile under "2D projection dataset" path. The software by default sets path for the 2D projection datasets but users can change arrording to their experimental setup.
+- The experimental CCS valus are not mandatory for unknown compounds but is required for conducting external validation.
+- Samples of custom SiMPC inference dataset for model validation are provided along with the code
+- All SMILEs samples for inference/external validation should be processed in same way as for training dataset
+- Although any pixel resoultion is accepted during inferencing for a model trained with particular rotation, it is recommended to use same pixel rotation that the model was originally trained on.
+- Once the path/parameters setup is ready, press "Inference" button to compute the CCS values.
+- Finally, inference results along with SMILESs , molecule IDs, name, predicted ccs, experimental ccs (if available), RPE will be displayed in the result table box and stored in the "./evaluation" folder along with other by default.
+-If user has provided SMILEs data with experimental ccs for external validation, the several comapartive charts will be generated in the evaluation folder along with ccs prediction results.
+  
 <img src="assets/inference_interface.jpg" width ="800">
 
 
@@ -162,8 +181,7 @@ The GUI provides:
 ### Sample pre-processing (for both Training and inference)
 **Pre-processing Step #1:** Select the CSV or XLS files contanining sample IDs, SMILES, Adduct information to create standard 3D image dataset
 **Pre-processing Step #2:** Select the subsequent 3D image dataset to creat final 2D training dataset angle projection dataset. 
-
-**This 2D projection dataset along with the original SampleID CSV/XLS file is used for training/testing and inference/external validation (if unknown)**
+- This 2D projection dataset along with the SMILEs dataset file (CSV only) file is used for model training and inference/external validation.
 
 ###  Optimization of Training Models 
 ** There is no golden rule to idetify best model training/optimiation parameters in deep learnining/machine learnining. We suggest conducting two step experimentation to: (i) First identlty a potentially suitable parameters using random sampling for model training (ii) Using 4-fold cross-validation with the observed most accurate parameters configuration for model optimization. Finally use thwe optimized model for inference. Additionaly, the optimized model parameteres can be used to train on entire train/test dataset and futher validated on external validation dataset to access the real-world generalization of the optimized model. 
@@ -221,15 +239,13 @@ Deep3DCCS/
 NOTE: For inference or prediction on molecules with unknown experimental CCS values, the option “Autoset experimental CCS values to zero if value(s) or feature not found” must be enabled. This forces all experimental CCS values to zero.
 This option is applicable to CSV SMILES input datafiles that lack the exp_ccs column entirely or contain missing values (e.g., N/A or NULL)for some molecules. In both cases, the scoring metrics reported below are not meaningful, as no comparison with known experimental CCS values is possible.
 
-
 ## Evaluation Metrics
 
 - **Relative Percentage Error (RPE)**
-- Mean Absolute Error (MAE)
 - Mean Absolute Percentage Error (MAPE)
 - Pearson Correlation (r)
 - Coefficient of Determination (R²)
-- Deming regression parameters
+
 
 **Interpretation Guide:**
 - RPE < 3%: Excellent
