@@ -69,7 +69,7 @@
 ```bash
 git clone https://github.com/vivekmathema/Deep3DCCS.git
 cd Deep3DCCS
-Deep3DCCS > run_3dccs.bat (for windows)  |  Deep3DCCS > python3 3dcnn_main.py  (for linux)
+Deep3DCCS > run_deep3DCCS_gpu.bat (for windows)  |  Deep3DCCS > python3 deep3dcnn_main.py  (for linux)
 ```
 
 ### Core Dependencies
@@ -101,7 +101,7 @@ python -c "import tensorflow as tf; import rdkit; print('Installation successful
 ### GUI Interface
 Launch the main application:
 ```bash
-python deep3dcnn_main.py.py
+python deep3dcnn_main.py
 ```
 
 ---
@@ -180,10 +180,7 @@ Optional: An identical Microsoft XLS file is included for better annotation and 
 - GlobalAveragePooling3D
 - Dense layers: 128 → 64 (LeakyReLU, Dropout 0.3)
 - Output: Single linear neuron (CCS regression)
-
-Optimizer: **Adam (lr=0.0001)**  
-Metrics: MSE, MAE, MAPE
-
+- Optimizer: **Adam (lr=0.0001)**  
 ---
 
 ## Repository Structure
@@ -222,8 +219,7 @@ This option is applicable to CSV SMILES input datafiles that lack the exp_ccs co
 - RPE < 3%: Excellent
 - 3–5%: Good
 - 5–10%: Moderate
-- >10%: Requires refinement
-
+- >10%: Requires refinement or the model is not optimzied to deal with such structure due to limited dataset and/or model architecture.
 ---
 
 ## Benchmarking
@@ -231,6 +227,7 @@ This option is applicable to CSV SMILES input datafiles that lack the exp_ccs co
 Deep3DCCS is benchmarked against:
 - **CCSBASE**
 - **ALLCCS**
+
 
 Evaluation includes RPE distribution, paired statistical tests, computational efficiency, and external dataset validation.
 
