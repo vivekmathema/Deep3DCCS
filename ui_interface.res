@@ -286,7 +286,7 @@ p, li { white-space: pre-wrap; }
               </font>
              </property>
              <property name="text">
-              <string>SMILEs dataset (.csv)</string>
+              <string>SMILEs dataset (.csv |xlsx)</string>
              </property>
             </widget>
            </widget>
@@ -685,7 +685,7 @@ p, li { white-space: pre-wrap; }
               </font>
              </property>
              <property name="text">
-              <string>2D projection output</string>
+              <string>2D projection dataset output</string>
              </property>
             </widget>
             <widget class="QTextBrowser" name="sdf_mol_input_dirpath">
@@ -3456,7 +3456,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>2D molecular image dataset :</string>
+            <string>2Dprojection  dataset :</string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="train_msdata">
@@ -3526,7 +3526,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>Molecular feature data (CSV) :</string>
+            <string>SMILEs dataset (CSV only) :</string>
            </property>
           </widget>
          </widget>
@@ -3608,7 +3608,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>2D Projection dataset</string>
+            <string>2D Projection dataset                  </string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="smile_msdata_filepath">
@@ -3678,7 +3678,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>Molecular dataset IDs (CSV) :</string>
+            <string>SMILEs dataset (CSV only)</string>
            </property>
           </widget>
           <widget class="QPushButton" name="btn_load_trained_model">
@@ -3709,7 +3709,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>3DCCS Model path                :</string>
+            <string>3DCCS Model path             </string>
            </property>
           </widget>
           <widget class="QTextBrowser" name="trained_model">
