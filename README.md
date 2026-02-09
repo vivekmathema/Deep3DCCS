@@ -104,7 +104,33 @@ Launch the main application:
 python deep3dcnn_main.py
 ```
 
+## CUDA requirment for the GPU version 
+For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
+After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
+
+**CUDA/cuDNN Core installation (for windows 64 bit OS running with NVIDIA GPU)**
+```
+CUDA Toolkit 11.8:
+
+link: https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
+
+To install cuDNN 8.00 Library for CUDA 11.0 Goto NVIDIA's cuDNN downlaod page:
+
+link: https://developer.nvidia.com/rdp/cudnn-archive
+
+and select download cuDNN for 11.x (login may be required)
+
+link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
+
+MSVC C and C++ Build Tools redistributable version for GPU/CUDA/cuDNN support
+
+Depending upon the support packages, some windows system might require Microsoft Visual C++ Redistributable  (~18 MB instalelr for x64 system) 
+
+link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
+
+```
 ---
+
 ## General Instruction for basic operation
 
 The Deep3DCCS GUI enables users to visually select and oeprate three key modules (seperated in three major tabs with in the main gui windows): 
