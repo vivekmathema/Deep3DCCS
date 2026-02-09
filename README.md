@@ -61,9 +61,9 @@
 
   
 ### Hardware Recommendations
-- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM)
-- **RAM:** ≥ 16 GB (can run smoothly in 12 GB ram for low resoultion models ) 
-- CPU-only execution supported for small datasets trainining and inferencing
+- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM, 16 GB recommended for higher batch size)
+- **System RAM:** ≥ 32 GB (can run smoothly in 16 GB system RAM ) 
+- CPU-only execution is supported for small datasets trainining and any-size inferencing
 
 ### Clone Repository
 ```bash
