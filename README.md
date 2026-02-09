@@ -135,9 +135,9 @@ link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?v
 
 The Deep3DCCS GUI enables users to visually select and oeprate three key modules (seperated in three major tabs with in the main gui windows): 
 - Module 1: SMILEs Data pre-processing & 2D-projection database generation
-- Modeul 2: 3DCCS model training
+- Module 2: 3DCCS model training
 - Module 3: Inference using trained model
-- All three steps can be summarized below
+- All three steps can be summarized below.
 
 ## Graphical user friendly inferface of Deep3DCCS (beta version)
 The Deep3DCCS is a complete GUI-feature enagled software toolkit that can be run locally for both training and inference with full customization. Hovering mouse on most of the buttons in GUI interface will provide users short description of its corrsponding functions.
@@ -189,7 +189,6 @@ Module 1: Model pre-processing is a straight foward step in GUI window under the
 -If user has provided SMILEs data with experimental ccs for external validation, the several comapartive charts will be generated in the evaluation folder along with ccs prediction results.
   
 <img src="assets/inference_interface.jpg" width ="800">
-
 
 
 The GUI provides:
