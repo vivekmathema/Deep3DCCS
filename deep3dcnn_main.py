@@ -1979,18 +1979,18 @@ class MyApp(BaseClass):
         relative_percentage_error, std_dev, skipped_count, skipped_percentage = percentage_std_error(self.test_exp_ccs, self.predictions)  # mean RPE coems from here
 
         print(colored("\n-------[ Basic evaluation metrics | scores ]-------", "blue"))
-        print(f"Percentage standard deviation: {relative_percentage_error:.4f},\nStandard Deviation: {std_dev:.4f}", ) # relative_percentage_error here means mean realtive eprtcentage error per experiment
+        print(colored("Relative percentage error    :", "green"), colored(f"{relative_percentage_error:.4f} %", "white")) # relative_percentage_error here means mean realtive eprtcentage error per experiment
 
         # Calculate mean absolute error (MAE) on the test set
         mae = mean_absolute_error(self.test_exp_ccs, self.predictions)
-        print("Mean Absolute Error (MAE) on Test Set:", mae)
+        print(colored("Mean Absolute Error (MAE)    :","green"), colored(mae,"white"))
 
         mape = mean_absolute_percentage_error(self.test_exp_ccs, self.predictions)
-        print("Mean Absolute Error (MAPE) on Test Set:", mape)        
+        print(colored("Mean Absolute Error (MAPE)   :", "green"), colored(mape, "white"))        
         
         # Calculate Pearson correlation coefficient
         self.pearson_corr, p_value = pearsonr(self.test_exp_ccs, self.predictions.flatten())
-        print(f"{kfold}Pearson Correlation Coefficient: {self.pearson_corr}")
+        print(colored(f"{kfold}Pearson's Corr. Coeff.       :" ,"green"), colored(self.pearson_corr, "white"))
 
         # Calculate the correlation matrix
         self.correlation_matrix = np.corrcoef(self.test_exp_ccs, self.predictions.flatten())
@@ -2016,7 +2016,8 @@ class MyApp(BaseClass):
         # Perform linear regression and print coefficients
         slope, intercept, r_value, p_value, std_err = linregress(self.test_exp_ccs, self.predictions.flatten())
 
-        print(f"Linear regression coefficients for : {self.dataset_id}")
+        print("\n")
+        print(colored(f"Linear regression coefficients for :", "blue"),colored(self.dataset_id, "white"))
         print(colored("___________________________________________________","green"))
         print("Slope                         :", slope)
         print("Intercept                     :", intercept)
