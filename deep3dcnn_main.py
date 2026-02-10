@@ -1979,7 +1979,7 @@ class MyApp(BaseClass):
         relative_percentage_error, std_dev, skipped_count, skipped_percentage = percentage_std_error(self.test_exp_ccs, self.predictions)  # mean RPE coems from here
 
         print(colored("\n-------[ Basic evaluation metrics | scores ]-------", "blue"))
-        print(colored("Mean Relative perc. error    :", "green"), colored(f"{relative_percentage_error:.4f} %", "white")) # relative_percentage_error here means mean realtive eprtcentage error per experiment
+        print(colored("Mean Relative % error (MRPE) :", "green"), colored(f"{relative_percentage_error:.4f} %", "white")) # relative_percentage_error here means mean realtive eprtcentage error per experiment
 
         # Calculate mean absolute error (MAE) on the test set
         mae = mean_absolute_error(self.test_exp_ccs, self.predictions)
