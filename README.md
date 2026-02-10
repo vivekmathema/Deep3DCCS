@@ -190,7 +190,7 @@ Module 1: Model pre-processing is a straight foward step in GUI window under the
 - Users will have to provide the optimized/trained model for particular rotation and adduct user "3DCCS model path".
 - User will have to set the 2D-projection dataset path asscoiated with the SMILEs input datafile under "2D projection dataset" path. The software by default sets path for the 2D projection datasets but users can change arrording to their experimental setup.
 - The experimental CCS valus are not mandatory for unknown compounds but is required for conducting external validation.
-- Samples of custom SiMPC inference dataset for model validation are provided along with the code
+- Users can input the sample data provided along with the code or their own inference dataset for model validation.
 - All SMILEs samples for inference/external validation should be processed in same way as for training dataset
 - Although any pixel resoultion is accepted during inferencing for a model trained with particular rotation, it is recommended to use same pixel rotation that the model was originally trained on.
 - Once the path/parameters setup is ready, press "Inference" button to compute the CCS values.
