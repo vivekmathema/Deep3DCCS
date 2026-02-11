@@ -2017,7 +2017,7 @@ class MyApp(BaseClass):
         slope, intercept, r_value, p_value, std_err = linregress(self.test_exp_ccs, self.predictions.flatten())
 
         print("\n")
-        print(colored(f"Linear regression coefficients for :", "blue"),colored(self.dataset_id, "white"))
+        print(colored(f"Linear regression metrics for :", "blue"),colored(self.dataset_id, "white"))
         print(colored("___________________________________________________","green"))
         print("Slope                         :", slope)
         print("Intercept                     :", intercept)

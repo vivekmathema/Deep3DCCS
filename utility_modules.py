@@ -299,7 +299,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def set_train_msdata_csv(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"Select CSV file containing MS data for 2D Projections" , os.path.join(cur_path,"datasets"),"CSV files (*.csv); All Files (*.*)", options=options)
+        fileName, _ =  QFileDialog.getOpenFileName(self,"Select raw SMILEs input datafile","./datasets", "SMILEs RAW datafile (*.csv);;All Files (*.*)", options=options)
         if fileName:
             self.train_msdata.setText(fileName)            
             if self.qm.question(self,'Deep3DCCS',"Automatically set the 2D projection folder path", self.qm.Yes | self.qm.No) == self.qm.No:

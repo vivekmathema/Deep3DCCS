@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>963</width>
-    <height>811</height>
+    <height>787</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>961</width>
-      <height>801</height>
+      <height>762</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -3184,6 +3184,9 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -3219,6 +3222,9 @@ p, li { white-space: pre-wrap; }
              <width>41</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
             <string>...</string>
@@ -3273,6 +3279,9 @@ p, li { white-space: pre-wrap; }
              <width>41</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
             <string>...</string>
@@ -3564,6 +3573,9 @@ p, li { white-space: pre-wrap; }
              <height>31</height>
             </rect>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="toolTip">
             <string>Sets the path for SMILE molecule dataset set. Must be same format as trainer dataset  for inference/prediction (ONLY .csv file is accepted)</string>
            </property>
@@ -3582,6 +3594,9 @@ p, li { white-space: pre-wrap; }
              <width>51</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="toolTip">
             <string>Sets the path for 2D projection dataset path (same format as inference dataset  for inference/prediction</string>
@@ -3689,6 +3704,12 @@ p, li { white-space: pre-wrap; }
              <width>51</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="statusTip">
+            <string>Sets the trained model filepath for inference (train and inference dataset rotation should match)</string>
            </property>
            <property name="text">
             <string>...</string>
@@ -4670,7 +4691,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>About 3DCCS</string>
+       <string>About Deep3DCCS</string>
       </attribute>
       <widget class="QLabel" name="flowchart_3dccs">
        <property name="geometry">
@@ -4691,7 +4712,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="statusTip">
-        <string>Schmeatics of Deep3DCNN as graphical workflow </string>
+        <string>Schematic representation of Deep3DCNN as a graphical workflow</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -4747,7 +4768,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
        <property name="statusTip">
-        <string>general help for Deep3DCNN</string>
+        <string>General information for Deep3DCNN (see repository for detailed help)</string>
        </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
