@@ -136,7 +136,7 @@ link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?v
 A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a 7z compressed file.
 
 ```
-link:  https://drive.google.com/file/d/1SPgNjvOu54A9a40tse8QqQAtJnLZTsT6/view?usp=sharing
+link:  https://drive.google.com/file/d/1DNN2_NWk5nKDd1G6O2UJDyWYhnbRWFqn/view?usp=sharing
 ```
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
