@@ -4,4 +4,8 @@ A single RAW dataset per adduct can generate all rotation variants. Separate dat
 
 Optional: An identical Microsoft XLS file is included for better annotation and customization of the input data.
 
+
 Users are expected to extract the CSV/XLS files to the ./datasets/ folder
+An example SMILES dataset (METLINTEST_MmHm_5rot.csv | METLINTEST_MmHm_5rot_optimized_structure | MmHm [M-H]) is provided to demonstrate the inference module. This dataset is also configured as the default inference path in the Deep3DCCS software GUI.
+
+NOTE: An example SMILES dataset (METLINTEST_MmHm_5rot.csv | METLINTEST_MmHm_5rot_optimized_structure | MmHm [M-H]) is provided to demonstrate the inference module. This dataset is also configured as the default inference path in the Deep3DCCS software GUI. If you are using the code directly from the repository, make sure to unzip "METLINTEST_MmHm_5rot_optimized_structure.zip" into the "./datasets/" directory before running inference, unless you preprocess the structures yourself.
