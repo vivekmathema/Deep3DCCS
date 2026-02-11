@@ -160,6 +160,8 @@ This is a basic welcome screen along with general information about the software
 **The Deep3DCCS data pre-processing module**
 Module 1: Model pre-processing is a straight foward step in GUI window under the Tab "Data pre-processor". Users are required to upload the SMILEs datasets (.csv or xlsx files- Examples of formatted datasets are provided in "./datasets/" folder).The experimental CCS values is mandatory only for training SMILEs dataset pre-processing.
 
+IMPORTANT NOTE: Molecule names may contain Latin or Latin-like encoded characters that can cause issues during preprocessing of .csv or .xlsx files. Therefore, the SMILES input file must always be saved using "latin-1" encoding. In Python, specify the encoding explicitly when writing the file (e.g., with open("SMILEs_datafile.csv", "w", encoding="latin-1") as f:) if you are creating a custom training or inference SMILES dataset.
+
 - This is followed by choosing approperate options and pressing: "Step1:Process structure" button for 3D optimzied structrue datafiles generation from SMILEs. 
 - Subsequently, the next step is to produce 2DCCS compatible 2D-projection training/inference-compatible dataset by pressing "Step2: Process 2D projection" button. 
 - In each case, users must set/select correct number of rotations accordingly. 
