@@ -104,7 +104,7 @@ Launch the main application:
 python deep3dcnn_main.py
 ```
 
-## CUDA requirment for the GPU version 
+## CUDA requirement for the GPU version 
 For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
 After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
 
