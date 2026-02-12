@@ -1,0 +1,23 @@
+{
+    "Results of inference": {
+        "Inf. source datafile": "./datasets/METLINTEST_MmHm_5rot.csv",
+        "Inf. 2d projection": "./datasets/METLINTEST_MmHm_5rot_optimized_structure/2D_projections",
+        "Inf. model": "./models/external_val_models/SIMPC_MmHm_5rot_32x32_rseed-4396526_model_ckpt.h5",
+        "Inf. model resolution": "32x32 pixels",
+        "Inf. model rotation": "5rot.",
+        "Inf. pixel dims.": "32x32 pixels",
+        "Adduct type (user set)": "N/A",
+        "Pearson Correlation": "0.99",
+        "Linear Regression Coefficients": {
+            "Slope": 0.91,
+            "Intercept": 25.34,
+            "R-squared": 0.97,
+            "Std Error": 0.04
+        },
+        "Mean Relative Percentage Error": {
+            "Mean Relative Percentage Error (MRPE)": 3.0029,
+            "StdDev of MRPE": 2.5909
+        },
+        "Mean Absolute Deviation": 0.0
+    }
+}
