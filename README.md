@@ -81,6 +81,13 @@ pip install rdkit-pypi
 pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
 ```
 
+### The requirments (for GPU or CPU) can be installed uisng
+
+```
+pip install -r requirements-gpu.txt
+pip install -r requirements-cpu.txt
+```
+
 ### RDKit (Alternative via Conda)
 ```bash
 conda install -c conda-forge rdkit
