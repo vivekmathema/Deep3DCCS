@@ -58,11 +58,11 @@
 
 A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a 7z compressed file.
 
-<img src="assets/deep3dccs_download_logo.jpg" width ="420">
+<img src="assets/deep3dccs_download_logo.jpg" width ="500">
 
 
 ```
-link:  https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
+https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
 ```
 
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
@@ -71,21 +71,21 @@ Users need to download the 7zip compressed file, decompress using (7zip or winRA
 ```
 CUDA Toolkit 11.8:
 
-link: https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
+https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
 
 To install cuDNN 8.00 Library for CUDA 11.0 Goto NVIDIA's cuDNN downlaod page:
 
-link: https://developer.nvidia.com/rdp/cudnn-archive
+https://developer.nvidia.com/rdp/cudnn-archive
 
 and select download cuDNN for 11.x (login may be required)
 
-link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
+Download link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
 
 MSVC C and C++ Build Tools redistributable version for GPU/CUDA/cuDNN support
 
 Depending upon the support packages, some windows system might require Microsoft Visual C++ Redistributable  (~18 MB instalelr for x64 system) 
 
-link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
 
 ```
 
