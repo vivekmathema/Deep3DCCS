@@ -68,16 +68,17 @@ https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
 **CUDA/cuDNN Core installation (for windows 64 bit OS running with NVIDIA GPU)**
-```
-CUDA Toolkit 11.8:
 
+CUDA Toolkit 11.8/12.x:
+```
 https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
+```
 
 To install cuDNN 8.00 Library for CUDA 11.0 Goto NVIDIA's cuDNN downlaod page:
-
+```
 https://developer.nvidia.com/rdp/cudnn-archive
-
-and select download cuDNN for 11.x (login may be required)
+```
+and select download cuDNN for 11.x (or 12.x if installing v12.x) (login may be required)
 
 Download link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
 
@@ -95,9 +96,9 @@ After users have installed default python environment manually (or run portable 
 
 
 ### Prerequisites
-- **Python ≥ 3.7** (tested with TensorFlow 2.10)
-- Supported OS: **Windows 10/11**, **Ubuntu 20.04/22.04**
-- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0 and cUDNN 8.5+ for proper running of GPU-version
+- **Python ≥ 3.7** (tested with TensorFlow-GPU 2.6.0)
+- Supported & recommended OS: **Windows 10/11**, **Users can try on Linux Ubuntu if they can setup similar python environment with Tensorflow and CUDA support**
+- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0-v12.6 and cUDNN 8.5+ for proper running of GPU-version
 
   
 ### Hardware Recommendations
