@@ -74,7 +74,7 @@ CUDA Toolkit 11.8/12.x:
 https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
 ```
 
-To install cuDNN 8.00 Library for CUDA 11.0 Goto NVIDIA's cuDNN downlaod page:
+To install cuDNN 8.00+ Library for CUDA 11.x/12.x Goto NVIDIA's cuDNN downlaod page:
 ```
 https://developer.nvidia.com/rdp/cudnn-archive
 ```
@@ -110,7 +110,7 @@ After users have installed default python environment manually (or run portable 
 ```bash
 git clone https://github.com/vivekmathema/Deep3DCCS.git
 cd Deep3DCCS
-Deep3DCCS > run_deep3DCCS_gpu.bat (for windows)  |  Deep3DCCS > python3 deep3dcnn_main.py  (for linux)
+Deep3DCCS > run_deep3DCCS_gpu.bat (for windows 64bit GPU/portable version)  |  (linux users are advised to install python environment and then use Deep3DCCS > python3 deep3dcnn_main.py )
 ```
 
 ### Core Dependencies
