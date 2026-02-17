@@ -128,11 +128,6 @@ pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seab
 pip install -r requirements-gpu.txt
 ```
 
-### Installation Verification
-```bash
-python -c "import tensorflow as tf; import rdkit; print('Installation successful:', tf.__version__)"
-```
-
 ---
 
 ## Usage
