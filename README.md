@@ -60,12 +60,10 @@ A portable, GPU-enabled, and self-contained version of Deep3DCCS is available fo
 
 <img src="assets/deep3dccs_download_logo.jpg" width ="420">
 
-```
-link: https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
-```
 
-[Download Portable Deep3DCCS for Win64 systems](https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4)
-
+```
+link:  https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
+```
 
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
