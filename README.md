@@ -201,7 +201,7 @@ IMPORTANT NOTE: Molecule names may contain Latin or Latin-like encoded character
 - All SMILEs samples for inference/external validation should be processed in same way as for training dataset
 - Although any pixel resoultion is accepted during inferencing for a model trained with particular rotation, it is recommended to use same pixel rotation that the model was originally trained on.
 - Once the path/parameters setup is ready, press "Inference" button to compute the CCS values.
-- Finally, inference results along with SMILESs , molecule IDs, name, predicted ccs, experimental ccs (if available), RPE will be displayed in the result table box and stored in the "./evaluation" folder along with other by default.
+- Finally, inference results along with SMILESs, molecule IDs, name, predicted ccs, experimental ccs (if available), RPE will be displayed in the result table box and stored in the "./evaluation" folder along with other by default.
 -If user has provided SMILEs data with experimental ccs for external validation, the several comapartive charts will be generated in the evaluation folder along with ccs prediction results.
   
 <img src="assets/inference_interface.jpg" width ="800">
