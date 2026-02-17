@@ -85,6 +85,11 @@ link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?v
 
 ```
 
+## CUDA requirement for the GPU version 
+For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
+After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
+
+
 ### Prerequisites
 - **Python ≥ 3.7** (tested with TensorFlow 2.10)
 - Supported OS: **Windows 10/11**, **Ubuntu 20.04/22.04**
@@ -112,11 +117,10 @@ pip install rdkit-pypi
 pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
 ```
 
-### The requirments (for GPU or CPU) can be installed uisng
+### The requirments can be installed uisng
 
 ```
 pip install -r requirements-gpu.txt
-pip install -r requirements-cpu.txt
 ```
 
 ### Installation Verification
@@ -134,9 +138,6 @@ Launch the main application:
 python deep3dcnn_main.py
 ```
 
-## CUDA requirement for the GPU version 
-For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
-After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
 
 ---
 ## General Instruction for basic operation
