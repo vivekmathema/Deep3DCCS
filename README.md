@@ -54,66 +54,14 @@
 
 ## Installation
 
-### Prerequisites
-- **Python ≥ 3.7** (tested with TensorFlow 2.10)
-- Supported OS: **Windows 10/11**, **Ubuntu 20.04/22.04**
-- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0 and cUDNN 8.5+ for proper running of GPU-version
+## [Recommended] Portable GPU version release for Windows 64bit systems
 
-  
-### Hardware Recommendations
-- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM, 16 GB recommended for higher batch size)
-- **System RAM:** ≥ 32 GB (can run smoothly in 16 GB system RAM ) 
-- CPU-only execution is supported for small datasets trainining and any-size inferencing
-
-### Clone Repository
-```bash
-git clone https://github.com/vivekmathema/Deep3DCCS.git
-cd Deep3DCCS
-Deep3DCCS > run_deep3DCCS_gpu.bat (for windows)  |  Deep3DCCS > python3 deep3dcnn_main.py  (for linux)
-```
-
-### Core Dependencies
-```bash
-pip install tensorflow==2.6.0
-pip install keras==2.6.0
-pip install scipy==1.4.1
-pip install rdkit-pypi
-pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
-```
-
-### The requirments (for GPU or CPU) can be installed uisng
+A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a 7z compressed file.
 
 ```
-pip install -r requirements-gpu.txt
-pip install -r requirements-cpu.txt
+link: https://drive.google.com/file/d/1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4/view?usp=sharing
 ```
-
-### RDKit (Alternative via Conda)
-```bash
-conda install -c conda-forge rdkit
-conda install -c conda-forge openbabel
-```
-
-### Installation Verification
-```bash
-python -c "import tensorflow as tf; import rdkit; print('Installation successful:', tf.__version__)"
-```
-
-> A standalone **portable Windows (64-bit)** version will be released in the future upon acceptance of the manuscript.
-
----
-
-## Usage
-
-### GUI Interface
-Launch the main application:
-```bash
-python deep3dcnn_main.py
-```
-
-## CUDA requirement for the GPU version 
-For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
-After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
+Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
 **CUDA/cuDNN Core installation (for windows 64 bit OS running with NVIDIA GPU)**
 ```
@@ -136,17 +84,61 @@ Depending upon the support packages, some windows system might require Microsoft
 link: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
 
 ```
+
+### Prerequisites
+- **Python ≥ 3.7** (tested with TensorFlow 2.10)
+- Supported OS: **Windows 10/11**, **Ubuntu 20.04/22.04**
+- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0 and cUDNN 8.5+ for proper running of GPU-version
+
+  
+### Hardware Recommendations
+- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM, 16 GB recommended for higher batch size)
+- **System RAM:** ≥ 32 GB (can run smoothly in 16 GB system RAM ) 
+
+
+### Clone Repository
+```bash
+git clone https://github.com/vivekmathema/Deep3DCCS.git
+cd Deep3DCCS
+Deep3DCCS > run_deep3DCCS_gpu.bat (for windows)  |  Deep3DCCS > python3 deep3dcnn_main.py  (for linux)
+```
+
+### Core Dependencies
+```bash
+pip install tensorflow-gpu==2.6.0
+pip install keras==2.6.0
+pip install scipy==1.4.1
+pip install rdkit-pypi
+pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
+```
+
+### The requirments (for GPU or CPU) can be installed uisng
+
+```
+pip install -r requirements-gpu.txt
+pip install -r requirements-cpu.txt
+```
+
+### Installation Verification
+```bash
+python -c "import tensorflow as tf; import rdkit; print('Installation successful:', tf.__version__)"
+```
+
 ---
 
-## Portable GPU version release for Windows 64bit systems
+## Usage
 
-A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a 7z compressed file.
-
+### GUI Interface
+Launch the main application:
 ```
-link: https://drive.google.com/file/d/1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4/view?usp=sharing
+python deep3dcnn_main.py
 ```
-Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
+## CUDA requirement for the GPU version 
+For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
+After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
+
+---
 ## General Instruction for basic operation
 
 The Deep3DCCS GUI enables users to visually select and oeprate three key modules (seperated in three major tabs with in the main gui windows): 
