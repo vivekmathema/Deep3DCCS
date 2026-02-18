@@ -13,7 +13,6 @@
 
 <img src="assets/about_3dccs.jpg" width ="720">
 
-
 ## Key Features
 
 ### Molecular Structure Processing
@@ -67,68 +66,6 @@ https://drive.google.com/uc?export=download&id=1cBSITajg9lfJ_R6ThiwLUPMmGccfzuT4
 
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
-**CUDA/cuDNN Core installation (for windows 64 bit OS running with NVIDIA GPU)**
-
-CUDA Toolkit 11.8/12.x:
-```
-https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
-```
-
-To install cuDNN 8.00+ Library for CUDA 11.x/12.x Goto NVIDIA's cuDNN downlaod page:
-```
-https://developer.nvidia.com/rdp/cudnn-archive
-```
-and select download cuDNN for 11.x (or 12.x if installing v12.x) (login may be required)
-
-Download link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
-
-MSVC C and C++ Build Tools redistributable version for GPU/CUDA/cuDNN support
-
-Depending upon the support packages, some windows system might require Microsoft Visual C++ Redistributable  (~18 MB instalelr for x64 system) 
-
-https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
-
-```
-
-## CUDA requirement for the GPU version 
-For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
-After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
-
-
-### Prerequisites
-- **Python ≥ 3.7** (tested with TensorFlow-GPU 2.6.0)
-- Supported & recommended OS: **Windows 10/11**, **Users can try on Linux Ubuntu if they can setup similar python environment with Tensorflow and CUDA support**
-- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0-v12.6 and cUDNN 8.5+ for proper running of GPU-version
-
-  
-### Hardware Recommendations
-- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM, 16 GB recommended for higher batch size)
-- **System RAM:** ≥ 32 GB (can run smoothly in 16 GB system RAM ) 
-
-
-### Clone Repository
-```bash
-git clone https://github.com/vivekmathema/Deep3DCCS.git
-cd Deep3DCCS
-Deep3DCCS > run_deep3DCCS_gpu.bat (for windows 64bit GPU/portable version)  |  (linux users are advised to install python environment and then use Deep3DCCS > python3 deep3dcnn_main.py )
-```
-
-### Core Dependencies
-```bash
-pip install tensorflow-gpu==2.6.0
-pip install keras==2.6.0
-pip install scipy==1.4.1
-pip install rdkit-pypi
-pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
-```
-
-### The requirments can be installed uisng
-
-```
-pip install -r requirements-gpu.txt
-```
-
----
 
 ## Usage
 
@@ -304,14 +241,75 @@ Evaluation includes RPE distribution, paired statistical tests, computational ef
 
 ---
 
-
-
-## Output Files
+# Output Files
 
 - **3D Structures:** SDF + Cartesian coordinate files
 - **2D Projections:** PNG stacks with JSON metadata
 - **Models:** HDF5 (.h5) + checkpoints
 - **Results:** CSV, JSON summaries, publication-quality plots
+
+**CUDA/cuDNN Core installation (for windows 64 bit OS running with NVIDIA GPU)**
+
+CUDA Toolkit 11.8/12.x:
+```
+https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
+```
+
+To install cuDNN 8.00+ Library for CUDA 11.x/12.x Goto NVIDIA's cuDNN downlaod page:
+```
+https://developer.nvidia.com/rdp/cudnn-archive
+```
+and select download cuDNN for 11.x (or 12.x if installing v12.x) (login may be required)
+
+Download link will be dynamically provided for: CUDA Download cuDNN v8.9.7 (December 5th, 2023), for CUDA 11.x
+
+MSVC C and C++ Build Tools redistributable version for GPU/CUDA/cuDNN support
+
+Depending upon the support packages, some windows system might require Microsoft Visual C++ Redistributable  (~18 MB instalelr for x64 system) 
+
+```
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
+```
+
+---
+
+## CUDA requirement for the GPU version 
+For systems running on windows, the tensorflow may reqruire CUDA/cuDNN runtime library files to utilize Nvidia GPU which shoudl be installed seperately.
+After users have installed default python environment manually (or run portable python environment "./_env/" to using supplied run_deep3DCCS_gpu.bat ) follow the instructions in links below to install official CUDA/cuDNN library. A system windows restart is recommended after installation.
+
+
+### Prerequisites
+- **Python ≥ 3.7** (tested with TensorFlow-GPU 2.6.0)
+- Supported & recommended OS: **Windows 10/11**, **Users can try on Linux Ubuntu if they can setup similar python environment with Tensorflow and CUDA support**
+- _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0-v12.6 and cUDNN 8.5+ for proper running of GPU-version
+
+  
+### Hardware Recommendations
+- **GPU (recommended):** NVIDIA CUDA-compatible GPU (≥ 8 GB VRAM, 16 GB recommended for higher batch size)
+- **System RAM:** ≥ 32 GB (can run smoothly in 16 GB system RAM ) 
+
+
+### Clone Repository
+```bash
+git clone https://github.com/vivekmathema/Deep3DCCS.git
+cd Deep3DCCS
+Deep3DCCS > run_deep3DCCS_gpu.bat (for windows 64bit GPU/portable version)  |  (linux users are advised to install python environment and then use Deep3DCCS > python3 deep3dcnn_main.py )
+```
+
+### Core Dependencies
+```bash
+pip install tensorflow-gpu==2.6.0
+pip install keras==2.6.0
+pip install scipy==1.4.1
+pip install rdkit-pypi
+pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
+```
+
+### The requirments can be installed uisng
+
+```
+pip install -r requirements-gpu.txt
+```
 
 ---
 
