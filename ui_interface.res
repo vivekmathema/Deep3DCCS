@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -3929,10 +3929,10 @@ p, li { white-space: pre-wrap; }
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
+             <string>Stores the inference | prediction results shown on table  to CSV file</string>
             </property>
             <property name="statusTip">
-             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
+             <string>Stores the inference | prediction results shown on table  to CSV file</string>
             </property>
             <property name="text">
              <string>Export results</string>
@@ -4474,9 +4474,9 @@ p, li { white-space: pre-wrap; }
            <property name="font">
             <font>
              <family>Arial</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
+             <pointsize>11</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="toolTip">
