@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -361,10 +361,10 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="toolTip">
-             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here</string>
+             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here. Double click on list item for structure preview</string>
             </property>
             <property name="statusTip">
-             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here</string>
+             <string>Lists of molecules id's who SMILEs are being used for SDF files  construction is shown here.Double click on list item for structure preview</string>
             </property>
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -794,10 +794,10 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="toolTip">
-             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here</string>
+             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here. Double click on list item for structure preview</string>
             </property>
             <property name="statusTip">
-             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here</string>
+             <string>Lists of molecules id's who SMILEs are being used for 2D projection dataset construction is shown here. Double click on list item for structure preview</string>
             </property>
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -3869,9 +3869,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QPushButton" name="btn_exit_inference">
             <property name="geometry">
              <rect>
-              <x>210</x>
+              <x>290</x>
               <y>10</y>
-              <width>181</width>
+              <width>101</width>
               <height>31</height>
              </rect>
             </property>
@@ -3896,7 +3896,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>10</y>
-              <width>191</width>
+              <width>141</width>
               <height>31</height>
              </rect>
             </property>
@@ -3911,6 +3911,31 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="text">
              <string>Inference</string>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btn_export_inf_results">
+            <property name="geometry">
+             <rect>
+              <x>155</x>
+              <y>10</y>
+              <width>131</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
+            </property>
+            <property name="statusTip">
+             <string>Inference for unknown samples or SMILEs. Inference model requires same rotation dataset as trained model being used.</string>
+            </property>
+            <property name="text">
+             <string>Export results</string>
             </property>
             <property name="default">
              <bool>false</bool>
@@ -4440,11 +4465,19 @@ p, li { white-space: pre-wrap; }
           <widget class="QTableWidget" name="tableWidget">
            <property name="geometry">
             <rect>
-             <x>5</x>
+             <x>10</x>
              <y>40</y>
-             <width>911</width>
+             <width>901</width>
              <height>215</height>
             </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
            </property>
            <property name="toolTip">
             <string>Inference results are shown here with key feature values (IDs,PPR, SMILEs...)</string>
@@ -4490,7 +4523,7 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>10</x>
              <y>500</y>
-             <width>501</width>
+             <width>431</width>
              <height>31</height>
             </rect>
            </property>

@@ -110,6 +110,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         #=====================
         self.btn_exit_inference.clicked.connect(self.exit_3dccs)
         self.btn_exit_trainer.clicked.connect(self.exit_3dccs)
+        self.btn_export_inf_results.clicked.connect(self.export_table)
       
 
         self.btn_set_sdf_input_dirpath.clicked.connect(self.set_sdf_input_dirpath)
@@ -255,6 +256,55 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             self.sdf_mol_input_dirpath.setText(dirname)  if self.set_autoset_2D_projection_flag.isChecked() else None 
         else:
             None
+
+
+    #exports the inference results table to the csv file
+    def export_table(self):
+
+        if self.tableWidget.rowCount()<=1:
+            self.qm.critical(self, "Deep3DCCS", "Error! inference table is empty. Run inference | prediction first")
+            return
+            
+        if self.qm.question(self,'Deep3DCCS',f"Export the prediction results as csv datafile", self.qm.Yes | self.qm.No) == self.qm.No:
+            return
+        
+        # make result directory
+        os.makedirs("./results",exist_ok= True)
+        # Open Save File dialog
+        file_path, _ = QFileDialog.getSaveFileName(self,
+            "Export inference result as CSV file",
+            os.path.join("./results", os.path.basename(self.smile_msdata_filepath.toPlainText()).split(".")[0] +"_pred.csv"),
+            "CSV Files (*.csv);;All Files (*)"  )
+
+        if not file_path:
+            return  # User cancelled
+
+        try:
+            with open(file_path, mode='w', newline='', encoding='latin-1') as file:
+                writer = csv.writer(file)
+
+                # Write header row
+                headers = []
+                for column in range(self.tableWidget.columnCount()):
+                    header_item = self.tableWidget.horizontalHeaderItem(column)
+                    headers.append(header_item.text() if header_item else "")
+                writer.writerow(headers)
+
+                # Write table data
+                for row in range(self.tableWidget.rowCount()):
+                    row_data = []
+                    for column in range(self.tableWidget.columnCount()):
+                        item = self.tableWidget.item(row, column)
+                        row_data.append(item.text() if item else "")
+                    writer.writerow(row_data)
+
+            print(colored("Inference | Prediction results stored to:", "white"), colored(f"{file_path}" , "green"))
+            self.qm.critical(self, "Deep3DCCS", "SUCCESS: Prediction results stored successfully")
+            return
+
+        except Exception as e:
+            print("Error saving prediction results:", e)
+
 
     def load_trained_model_for_inference(self):
         options = QFileDialog.Options()
@@ -533,11 +583,11 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
     def select_gpu(self, init = False):    
         
         if init == True:                                                            # Initalizing the GPU scan on start  
-            #print(colored("#TensorFlow version:%s"%str(tf.__version__), "blue"))    # Check if TensorFlow is installed and print its version
+            #print(colored("#TensorFlow version:%s"%str(tf.__version__), "blue"))   # Check if TensorFlow is installed and print its version
             self.use_processor.clear()                                              # Clear GPU
 
             gpus = tf.config.experimental.list_physical_devices('GPU')              # Check if CUDA (GPU support) is available and print GPU information
-            if gpus:
+            if gpus and tf.test.is_built_with_cuda():                               # make sure the tf is built with cuda
                 print("#CUDA is available. Listing GPUs...")
                 print("_________________________________________________\n")
                 available_gpu_names = [gpu.name for gpu in gpus]                    # List available GPUs and their names
@@ -548,7 +598,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
                 print("_________________________________________________")
                 return 0, gpus[0].name
             else:                                                                   # only add CPU and resturn
-                print("#CUDA is not available. Using CPU. Processing will be very slow...")
+                print("#CUDA is not available. Defaulting to CPU. Processing will be very slow...")
                 self.use_processor.addItem("0::CPU--CPU")
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
                 return "/CPU:0", "CPU"
@@ -575,7 +625,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             try:     
                 tf.config.experimental.set_memory_growth(gpu_instance, set_flag)
             except:
-                self.logger(f"Error setting GPU memory for : {gpu_instance}")
+                print(colored(f"Error setting GPU memory for : {gpu_instance}", "red"))
                 pass
 
 

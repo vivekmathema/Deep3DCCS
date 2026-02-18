@@ -26,7 +26,6 @@ Dependencies: PyQt5, TensorFlow, RDKit, OpenCV, NumPy, Pandas, etc.
 
 Author: Siriraj Metabolomics & Phenomics Center (SiMPC), Mahidol University
 """
-
 import os, sys
 import time ,glob
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -35,9 +34,6 @@ import csv
 from csv import reader
 #=========
 import tensorflow as tf
-from tensorflow.keras import mixed_precision
-mixed_precision.set_global_policy('mixed_float16')
-#========
 tf.get_logger().setLevel('ERROR')  # or 'WARNING'
 import numpy as np
 import math
@@ -119,7 +115,7 @@ threshold in the results file and maintaining the original format of the source 
 
 def filterd_source_file(source_file, result_file, output_file, output_trainer, error_threshold=3.0):
     """
-    Filters source data based on matching 'AllCCSID' values and an optional error threshold in the result data.
+    Filters source data based on matching 'ID' values and an optional error threshold in the result data.
 
     Args:
         source_file: Path to the source CSV file.
@@ -152,9 +148,9 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
         filtered_result_df = result_df
         return None
 
-    result_values = [item.upper() for item in set(filtered_result_df["AllCCSID"])] # 4. Extracting unique 'AllCCSID' values from filtered result data")
+    result_values = [item.upper() for item in set(filtered_result_df["AllCCSID"])] # 4. Extracting unique 'ID' values from filtered result data")
 
-    filtered_source_df = source_df[~source_df["AllCCSID"].isin(result_values)]     # Filtering source data: Removing rows with 'AllCCSID' in result_values")
+    filtered_source_df = source_df[~source_df["AllCCSID"].isin(result_values)]     # Filtering source data: Removing rows with 'ID' in result_values")
 
     print(f"Saving filtered source data to '{output_file}'")
     filtered_source_df.to_csv(output_file, index=False) 
@@ -193,6 +189,8 @@ class MyApp(BaseClass):
 
     def set_inf_table_header(self):
         self.tableWidget.clear()      # reset the table widgets
+        self.tableWidget.setRowCount(0)       # Remove all rows
+        self.tableWidget.setColumnCount(0)    # Remove all columns
         self.inf_table_Header =['molecule', "SMILE", "id/label", "mz ratio" , "pred.CCS" ,"exp.CCS"]
         self.tableWidget.setStyleSheet("QTableWidget { background-color: #FFFFE0; }")
         self.tableWidget.setColumnCount(len(self.inf_table_Header))                              
@@ -460,7 +458,7 @@ class MyApp(BaseClass):
         skipped_mol = 0                                      # failed        
 
         for index, row in tqdm(df.iterrows(), desc="Processing SMILEs data", ncols=200):             # Iterate through the rows in the DataFrame
-            molecule_name = row['name'] if self.AllCCSID_name_flag== False else row['AllCCSID']      # get names of molecules
+            molecule_name = row['name'] if self.AllCCSID_name_flag== False else row['ID']      # get names of molecules
             smiles        = row['SMILES']                                                            # get the SMILEs of corrsponding
 
             try:
@@ -1036,7 +1034,7 @@ class MyApp(BaseClass):
 
             for row in tqdm(reader, desc ="Reading database :" ,ncols =200):
 
-                name = row['AllCCSID'].lower() if self.AllCCSID_name_flag else  row['name'].lower()  # use the ALLCCID  as molecular labels is true (to avoid naming special charcters errors)
+                name = row['ID'].lower() if self.AllCCSID_name_flag else  row['name'].lower()  # use the ALLCCID  as molecular labels is true (to avoid naming special charcters errors)
 
                 if self.use_computed_mass: 
                     mol_mass = self.compute_exact_mass(row['SMILES'])                                 # use the computed molecular mass from SMILE 9for imformation purpise only
