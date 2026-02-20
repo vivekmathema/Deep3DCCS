@@ -182,7 +182,7 @@ A single RAW dataset per adduct can generate all rotation variants. Separate dat
 
 **A valid templat csv file suitable for both Train and inference/prediction is providded: ./datasets/template.csv**
 **Note that the column 'exp_ccs' for experimental ccs values are not required for the prediction**
-**mz_ratio is for information purpose only. it is not requried for training or inference**
+
 
 
 Optional: An identical Microsoft XLS file is included for better annotation and customization of the input data.
