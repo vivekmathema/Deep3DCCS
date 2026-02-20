@@ -268,7 +268,7 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
             self.qm.critical(self, "Deep3DCCS", "Error! inference table is empty. Run inference | prediction first")
             return
             
-        if self.qm.question(self,'Deep3DCCS',f"Export the prediction results as csv datafile", self.qm.Yes | self.qm.No) == self.qm.No:
+        if self.qm.question(self,'Deep3DCCS',f"Export the prediction results as csv datafile?", self.qm.Yes | self.qm.No) == self.qm.No:
             return
         
         # make result directory
