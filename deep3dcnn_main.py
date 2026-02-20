@@ -1063,10 +1063,7 @@ class MyApp(BaseClass):
 
                     name_to_exp_ccs[name]         = round(exp_ccs,    self.set_precision)             # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
                     name_to_extract_mass[name]    = round(mol_mass,   self.set_precision)             # Added
-                    try:
-                        name_to_mz_ratio[name]    = round(float(row['mz_ratio']),self.set_precision)  # Added only if exists
-                    except:
-                        name_to_mz_ratio[name]    = 0                                                 # assume as zero
+                    name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added only if exists
 
                     #===============
                     try:
