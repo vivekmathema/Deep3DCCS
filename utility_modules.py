@@ -179,6 +179,9 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.inf_filepath      = self.smile_msdata_filepath.toPlainText()  
         self.store_weights     = self.trained_model_dirpath.toPlainText()                                                    # path to store only final weighst &configs                                                        .to
         self.inf_adduct_type   = self.inf_adduct_info.currentText()
+        self.train_adduct_type = self.train_adduct_info.currentText()
+
+
         #=================================================
         self.train_singlemode = self.train_singlemode_flag.isChecked()                                                      # train just one dataset as show in th molecular dataset bar
 

@@ -77,6 +77,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem import Draw, AllChem
+from rdkit.Chem import rdMolDescriptors
 import math as m
 #==============================
 cur_path           = os.path.dirname(os.path.abspath(__file__))       # current absolute path 
@@ -148,6 +149,8 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
         filtered_result_df = result_df
         return None
 
+    
+    print("debug: ", filtered_result_df.head())
     result_values = [item.upper() for item in set(filtered_result_df['ID'])] # 4. Extracting unique 'ID' values from filtered result data")
 
     filtered_source_df = source_df[~source_df['ID'].isin(result_values)]     # Filtering source data: Removing rows with 'ID' in result_values")
@@ -718,6 +721,54 @@ class MyApp(BaseClass):
             self.train_msdata.setText(self.raw_smile_datafile.toPlainText() )
             self.train_2d_projection_dirpath.setText(self.projection_output_dirpath.toPlainText())
 
+    def compute_mz_ratio(self, smiles= "" , adduct = "" ):  # computes the mz_ratio if not supplied. Adduct must be supplied to get correct prediction
+        """Compute m/z from SMILES and adduct string.
+           Supported adducts: [M+H]+  |  [M-H]- | [M+Na]+ | [M+HCOO]-
+        """
+
+        # Monoisotopic masses
+        ADDUCT_TABLE = {
+            "H"   : 1.007276,
+            "Na"  : 22.989218,
+            "HCOO": 44.998201
+        }
+
+        mol = Chem.MolFromSmiles(smiles)
+        if mol is None:
+            raise ValueError("Invalid SMILES string.")
+
+        M = rdMolDescriptors.CalcExactMolWt(mol)
+
+        # --- Parse adduct string ---
+        if not (adduct.startswith("[M") and (adduct.endswith("]+") or adduct.endswith("]-"))):
+            raise ValueError("Unsupported adduct format.")
+
+        # Determine charge sign
+        charge = +1 if adduct.endswith("]+") else -1
+
+        # Extract inside part: e.g. +H, -H, +Na, +HCOO
+        inner = adduct[2:-2]  # remove "[M" and "]+" or "]-"
+
+        if inner[0] not in ["+", "-"]:
+            raise ValueError("Invalid adduct format.")
+
+        sign = inner[0]
+        group = inner[1:]
+
+        if group not in ADDUCT_TABLE:
+            print(f"Unsupported adduct group: {group}")
+
+        mass_shift = ADDUCT_TABLE[group]
+
+        # Apply correct sign to mass shift
+        if sign == "+":
+            mz = (M + mass_shift) / abs(charge)
+        else:
+            mz = (M - mass_shift) / abs(charge)
+
+        return mz
+
+
     # this function is just for rough preview of moleculer structrue, nothing to do with orignal structure code provided by the team 
     def show_2d_projections_preview(self, projection_dirpath = None):
         def load_images_from_folder(folder):
@@ -850,7 +901,7 @@ class MyApp(BaseClass):
 
         if self.qm.question(self,'CDCCS',f"Start K-fold cross validation 3DCCS model?\nNOTE: Train/Test/Validation ratios will be autoset.{mode_msg}", self.qm.Yes | self.qm.No) == self.qm.No and cmd_mode == False:
             return
-        self.run_mode   = "3DCNN model training in K-fold mode"
+        self.run_mode   = "Train 3DCNN model K-fold mode"
         self.update_gui_vars()
         #============================================================== # loop through all files datasets     
         self.cur_train_res = self.img_dim # 32 # strat with optimium pixels
@@ -1025,12 +1076,22 @@ class MyApp(BaseClass):
 
         print(colored("#Reading database..."))
 
+        if self.inf_adduct_type == "N/A":                                             # if not suppleis by the user, compute
+            print(colored("\n[WARNING] Adduct type unknown for INFERENCE. Setting inference default to:", "red")   , colored("{[M-H]- Monoisotopic masses ", "white"))
+        else:
+            print(colored("\nSetting current adduct type for INFERENCE to :", "green") , colored(f"{self.inf_adduct_type}", "white"))
+
+        if self.train_adduct_type == "N/A":                                             # if not suppleis by the user, compute
+            print(colored("\n[WARNING] Adduct type unknown for TRAINING. Setting inference default to:", "red")   , colored("[M-H]- Monoisotopic masses ", "white"))
+        else:
+            print(colored("\nSetting current adduct type for TRAINING to  :", "green") , colored(f"{self.train_adduct_type}", "white"))
+
         with open(csv_file_path, 'r', newline='',encoding ="latin-1") as csvfile:
             reader  = csv.DictReader(csvfile)
             count   = 0
             skipped = 0 
 
-            print(colored(f"#Using computed molecular mass from SMILES: {self.use_computed_mass}" ,color = "green"))
+            print(colored(f"\n#Using computed molecular mass from SMILES: {self.use_computed_mass}" ,color = "green"))
 
             for row in tqdm(reader, desc ="Reading database :" ,ncols =200):
 
@@ -1063,7 +1124,29 @@ class MyApp(BaseClass):
 
                     name_to_exp_ccs[name]         = round(exp_ccs,    self.set_precision)             # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
                     name_to_extract_mass[name]    = round(mol_mass,   self.set_precision)             # Added
-                    name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added only if exists
+                    
+                    # the algorthm does not actually reques mz_ratio but compuets from SMILEs itself as optional parameter
+                    try:
+                        name_to_mz_ratio[name]    = round(float(row['mz_ratio']),self.set_precision)  # If supplies by ther user manually
+                        #print(colored(f"\nUsing current mz_ratios manually supplied by the user for adduct type : {self.inf_adduct_type}", "green"))
+                    except:
+                        if self.post_train_evalulation == True: # for Training
+                            if self.inf_adduct_type == "N/A":                                             # if not suppleis by the user, compute
+                                adduct ="[M-H]-"
+                                #print(colored("\n[WARNING] Adduct type unknown. Setting default to: [M+H]+ Monoisotopic masses ", "red"))
+                            else:
+                                #print(colored(f"\nCurrent mz masses computed for adduct type : {self.inf_adduct_type}", "green"))
+                                adduct = self.inf_adduct_type
+
+                        else:
+                            if self.train_adduct_type == "N/A":  # for inferance                                           # if not suppleis by the user, compute
+                                adduct ="[M-H]-"
+                                #print(colored("\n[WARNING] Adduct type unknown. Setting default to: [M+H]+ Monoisotopic masses ", "red"))
+                            else:
+                                #print(colored(f"\nCurrent mz masses computed for adduct type : {self.inf_adduct_type}", "green"))
+                                adduct = self.train_adduct_type
+                        
+                        name_to_mz_ratio[name]  = self.compute_mz_ratio(row['SMILES'], adduct)   # computes generic mass if the mz_ratio is not available
 
                     #===============
                     try:
@@ -1189,8 +1272,8 @@ class MyApp(BaseClass):
         self.image_data = self.data
         self.input_data = np.empty((self.image_data.shape[0], self.image_data.shape[1], self.image_data.shape[2], self.image_data.shape[3], 3))
         self.input_data[:, :, :, :, 0] = self.image_data[:, :, :, :, 0]
-        self.input_data[:, :, :, :, 1] = self.mz_ratio_normalized[:, np.newaxis, np.newaxis, np.newaxis] * 0
-        self.data = self.input_data
+        self.input_data[:, :, :, :, 1] = self.mz_ratio_normalized[:, np.newaxis, np.newaxis, np.newaxis] * 0  # ,ade all mz_ratio values zero
+        self.data                      = self.input_data
 
         print("#Data shape after feature addition :", self.data.shape)
 
@@ -1307,6 +1390,8 @@ class MyApp(BaseClass):
 
     def  process_data_and_models(self):
 
+        self.run_mode   = "Train 3DCNN model randomized mode"
+
         # Load the data and experimental CCS values
         self.data, self.exp_ccs, self.exp_extract_mass , self.exp_mz_ratio  = self.load_data(self.dataset_path, self.csv_file_path)
         
@@ -1333,7 +1418,7 @@ class MyApp(BaseClass):
         
         # Normalize additional features to 8-bit range (0-256)
         self.extract_mass_normalized = ((self.exp_extract_mass - self.exp_extract_mass.min()) / (self.exp_extract_mass.max() - self.exp_extract_mass.min())) * 256
-        self.mz_ratio_normalized     = ((self.exp_mz_ratio - self.exp_mz_ratio.min())         / (self.exp_mz_ratio.max()     - self.exp_mz_ratio.min()))     * 256
+        self.mz_ratio_normalized     = ((self.exp_mz_ratio     - self.exp_mz_ratio.min())     / (self.exp_mz_ratio.max()     - self.exp_mz_ratio.min()))     * 256
         
         #print("\n#Data shape before extract_mass & mz_ratio:", self.data.shape)
         
@@ -1342,12 +1427,11 @@ class MyApp(BaseClass):
         # Create input data with additional features
         self.input_data = np.empty((self.image_data.shape[0], self.image_data.shape[1], self.image_data.shape[2], self.image_data.shape[3], 3))
         self.input_data[:, :, :, :, 0]  = self.image_data[:, :, :, :, 0]  # Image data
-        #self.input_data[:, :, :, :, 1] = self.extract_mass_normalized[:, np.newaxis, np.newaxis, np.newaxis]     # Extract_mass
         self.input_data[:, :, :, :, 1]  = self.mz_ratio_normalized[:, np.newaxis, np.newaxis, np.newaxis]   * 0   # mz_ratio the extract_mass is now removed to 2 become 1 dim
         
-        self.data = self.input_data                                                                           # update new shape
+        self.data = self.input_data                                                                               # update new shape
         
-        print("#Data shape after extract_mass & mz_ratio :", self.data.shape)
+        #print("#Data shape after extract_mass & mz_ratio :", self.data.shape)
         
         #===============================================================================SAMPLE SPLITTING
         self.num_samples = self.data.shape[0]                                              # Assuming all samples have the same number of components (3 components in each)
@@ -1364,17 +1448,17 @@ class MyApp(BaseClass):
         # ============== divide the shuffled self.data based on train, test and validatio samles
         self.train_data            = self.data[:self.num_train_samples]                   # Experimental 2d Projections 
         self.train_exp_ccs         = self.exp_ccs[:self.num_train_samples]                # CCS values from experiment
-        self.train_extract_mass    = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given (for info only)
+        #self.train_extract_mass    = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given (for info only)
         self.train_exp_mz_ratio    = self.exp_mz_ratio[:self.num_train_samples]           # Train experimenta; mz_ratio values (for infor only)
         
         self.val_data              = self.data[self.num_train_samples:self.num_train_samples + self.num_val_samples]
         self.val_exp_ccs           = self.exp_ccs[self.num_train_samples:self.num_train_samples + self.num_val_samples]
-        self.val_extract_mass      = self.exp_extract_mass[self.num_train_samples:self.num_train_samples + self.num_val_samples]  # Added
+        #self.val_extract_mass      = self.exp_extract_mass[self.num_train_samples:self.num_train_samples + self.num_val_samples]  # Added
         self.val_exp_mz_ratio      = self.exp_mz_ratio[self.num_train_samples:self.num_train_samples + self.num_val_samples]      # Added
         
         self.test_data             = self.data[self.num_train_samples + self.num_val_samples:]
         self.test_exp_ccs          = self.exp_ccs[self.num_train_samples + self.num_val_samples:]          
-        self.test_extract_mass     = self.exp_extract_mass[self.num_train_samples + self.num_val_samples:]                        # Added
+        #self.test_extract_mass     = self.exp_extract_mass[self.num_train_samples + self.num_val_samples:]                        # Added
         self.test_exp_mz_ratio     = self.exp_mz_ratio[self.num_train_samples + self.num_val_samples:]
 
         #==============================================================================
@@ -2040,13 +2124,13 @@ class MyApp(BaseClass):
 
             if len(self.mol_name_list) > 0:
                 # Write header header for new CSV file with molecule
-                f.write(f'index,AllCCSID,SMILE,name,predicted_CCS,experimental_CCS,relative_percentage_error')
+                f.write(f'index,ID,SMILE,name,predicted_CCS,experimental_CCS,relative_percentage_error')
                 for index, (true_ccs, predicted_ccs) in enumerate(zip(self.test_exp_ccs, self.predictions.flatten())):
                     mol_name = str(self.mol_name_list[index + sample_index]).replace(',',"-")
                     f.write(f"\n{index},{self.found_sample_names[index + sample_index]}, {self.mol_smiles_list[index + sample_index]}, {mol_name},{predicted_ccs},{true_ccs}, {100 * abs(true_ccs - predicted_ccs)/true_ccs}")
             else:
                 # Write header header for new CSV file without moelculae name
-                f.write(f'index,AllCCSID,SMILE,predicted_CCS,experimental_CCS,relative_percentage_error')
+                f.write(f'index,ID,SMILE,predicted_CCS,experimental_CCS,relative_percentage_error')
                 for index, (true_ccs, predicted_ccs) in enumerate(zip(self.test_exp_ccs, self.predictions.flatten())):
                     f.write(f"\n{index},{self.found_sample_names[index + sample_index]}, {self.mol_smiles_list[index + sample_index]}, {predicted_ccs},{true_ccs}, {100 * abs(true_ccs - predicted_ccs)/true_ccs}")
         
@@ -2355,13 +2439,13 @@ class MyApp(BaseClass):
 
             if len(self.mol_name_list) > 0:
                 # Write header header for new CSV file with molecule
-                f.write(f'index,AllCCSID,SMILE,name,predicted_CCS,experimental_CCS,relative_percentage_error')
+                f.write(f'index,ID,SMILE,name,predicted_CCS,experimental_CCS,relative_percentage_error')
                 for index, (true_ccs, predicted_ccs) in enumerate(zip(ccs3d.exp_ccs[self.val_idx], self.predictions.flatten())):
                     mol_name = str(self.mol_name_list[self.val_idx[index]]).replace(',',"-")
                     f.write(f"\n{index},{self.found_sample_names[self.val_idx[index]]}, {self.mol_smiles_list[self.val_idx[index]]}, {mol_name},{predicted_ccs},{true_ccs}, {100 * abs(true_ccs - predicted_ccs)/true_ccs}")
             else:
                 # Write header header for new CSV file without moelculae name
-                f.write(f'index,AllCCSID,SMILE,predicted_CCS,experimental_CCS,relative_percentage_error')
+                f.write(f'index,ID,SMILE,predicted_CCS,experimental_CCS,relative_percentage_error')
                 for index, (true_ccs, predicted_ccs) in enumerate(zip(ccs3d.exp_ccs[self.val_idx], self.predictions.flatten())):
                     f.write(f"\n{index},{self.found_sample_names[self.val_idx[index]]}, {self.mol_smiles_list[self.val_idx[index]]}, {predicted_ccs},{true_ccs}, {100 * abs(true_ccs - predicted_ccs)/true_ccs}")
         

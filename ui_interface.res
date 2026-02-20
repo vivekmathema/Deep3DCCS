@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -1300,7 +1300,7 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>10</x>
              <y>0</y>
-             <width>411</width>
+             <width>181</width>
              <height>31</height>
             </rect>
            </property>
@@ -1315,6 +1315,84 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="checked">
             <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="train_adduct_info">
+           <property name="geometry">
+            <rect>
+             <x>330</x>
+             <y>5</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="toolTip">
+            <string>Manually set the adduct type for model training . Must provide if experimental mz_ratio are not available.</string>
+           </property>
+           <property name="statusTip">
+            <string>Manually set the adduct type for model training. Must provide if experimental mz_ratio are not available</string>
+           </property>
+           <property name="currentText">
+            <string>[M-H]-</string>
+           </property>
+           <property name="currentIndex">
+            <number>2</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>N/A</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>[M+H]+</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>[M-H]-</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>[M+HCOO]-</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>[M+Na]+</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QLabel" name="label_53">
+           <property name="geometry">
+            <rect>
+             <x>200</x>
+             <y>0</y>
+             <width>91</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Adduct type</string>
+           </property>
+          </widget>
+          <widget class="Line" name="line_5">
+           <property name="geometry">
+            <rect>
+             <x>190</x>
+             <y>0</y>
+             <width>3</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </widget>
@@ -2667,7 +2745,7 @@ p, li { white-space: pre-wrap; }
             <enum>QTabWidget::Triangular</enum>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="tab_6">
             <attribute name="title">
@@ -4297,16 +4375,16 @@ p, li { white-space: pre-wrap; }
              </rect>
             </property>
             <property name="toolTip">
-             <string>Manually set the adduct type ( for result documentation &amp; information purpose only)</string>
+             <string>Manually set the adduct type . Must provide if experimental mz_ratio are not available</string>
             </property>
             <property name="statusTip">
-             <string>manually set the adduct type ( for result documentation &amp; information purpose only)</string>
+             <string>Manually set the adduct type . Must provide if experimental mz_ratio are not available</string>
             </property>
             <property name="currentText">
-             <string>N/A</string>
+             <string>[M-H]-</string>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <item>
              <property name="text">
@@ -5267,12 +5345,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>835</x>
-     <y>350</y>
+     <x>839</x>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
-     <x>909</x>
-     <y>350</y>
+     <x>913</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -5283,12 +5361,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>871</x>
-     <y>350</y>
+     <x>875</x>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
-     <x>800</x>
-     <y>350</y>
+     <x>804</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -5300,11 +5378,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>844</x>
-     <y>380</y>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
-     <x>890</x>
-     <y>380</y>
+     <x>894</x>
+     <y>365</y>
     </hint>
    </hints>
   </connection>
@@ -5315,12 +5393,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>869</x>
-     <y>380</y>
+     <x>873</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
-     <x>806</x>
-     <y>380</y>
+     <x>810</x>
+     <y>365</y>
     </hint>
    </hints>
   </connection>
@@ -5336,7 +5414,7 @@ p, li { white-space: pre-wrap; }
     </hint>
     <hint type="destinationlabel">
      <x>706</x>
-     <y>631</y>
+     <y>616</y>
     </hint>
    </hints>
   </connection>
@@ -5347,12 +5425,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>802</x>
-     <y>672</y>
+     <x>808</x>
+     <y>657</y>
     </hint>
     <hint type="destinationlabel">
-     <x>739</x>
-     <y>671</y>
+     <x>745</x>
+     <y>656</y>
     </hint>
    </hints>
   </connection>
@@ -5364,11 +5442,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>766</x>
-     <y>671</y>
+     <y>656</y>
     </hint>
     <hint type="destinationlabel">
-     <x>821</x>
-     <y>672</y>
+     <x>827</x>
+     <y>657</y>
     </hint>
    </hints>
   </connection>
@@ -5379,12 +5457,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>721</x>
-     <y>671</y>
+     <x>727</x>
+     <y>656</y>
     </hint>
     <hint type="destinationlabel">
-     <x>917</x>
-     <y>410</y>
+     <x>921</x>
+     <y>395</y>
     </hint>
    </hints>
   </connection>
@@ -5395,12 +5473,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>872</x>
-     <y>410</y>
+     <x>876</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
-     <x>655</x>
-     <y>671</y>
+     <x>661</x>
+     <y>656</y>
     </hint>
    </hints>
   </connection>
@@ -5411,60 +5489,60 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>431</y>
+     <x>312</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
-     <x>373</x>
-     <y>431</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_13</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lr_decay_freq</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>356</x>
-     <y>431</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>255</x>
-     <y>431</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lr_decay_freq</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spinBox_13</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>313</x>
-     <y>431</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>379</x>
-     <y>431</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_13</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lr_decay_freq</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
      <x>377</x>
-     <y>431</y>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_13</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lr_decay_freq</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
-     <x>309</x>
-     <y>431</y>
+     <x>259</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lr_decay_freq</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_13</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>405</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_13</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lr_decay_freq</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>381</x>
+     <y>405</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>313</x>
+     <y>405</y>
     </hint>
    </hints>
   </connection>
@@ -5475,12 +5553,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>391</x>
-     <y>722</y>
+     <x>395</x>
+     <y>708</y>
     </hint>
     <hint type="destinationlabel">
-     <x>440</x>
-     <y>720</y>
+     <x>444</x>
+     <y>705</y>
     </hint>
    </hints>
   </connection>
@@ -5491,12 +5569,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>427</x>
-     <y>725</y>
+     <x>431</x>
+     <y>705</y>
     </hint>
     <hint type="destinationlabel">
-     <x>388</x>
-     <y>725</y>
+     <x>392</x>
+     <y>708</y>
     </hint>
    </hints>
   </connection>
@@ -5507,12 +5585,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
-     <y>419</y>
+     <x>359</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
-     <y>419</y>
+     <y>405</y>
     </hint>
    </hints>
   </connection>
@@ -5523,12 +5601,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>343</y>
+     <x>349</x>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
-     <x>284</x>
-     <y>343</y>
+     <x>288</x>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5539,12 +5617,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>336</y>
+     <x>324</x>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
-     <x>360</x>
-     <y>336</y>
+     <x>364</x>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5555,12 +5633,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>340</x>
-     <y>638</y>
+     <x>344</x>
+     <y>625</y>
     </hint>
     <hint type="destinationlabel">
-     <x>299</x>
-     <y>638</y>
+     <x>303</x>
+     <y>625</y>
     </hint>
    </hints>
   </connection>
@@ -5571,12 +5649,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>312</x>
-     <y>647</y>
+     <x>315</x>
+     <y>625</y>
     </hint>
     <hint type="destinationlabel">
-     <x>358</x>
-     <y>647</y>
+     <x>362</x>
+     <y>625</y>
     </hint>
    </hints>
   </connection>
@@ -5587,12 +5665,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>611</y>
+     <x>314</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>343</x>
-     <y>612</y>
+     <x>347</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -5603,12 +5681,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>604</y>
+     <x>346</x>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
-     <x>300</x>
-     <y>609</y>
+     <x>304</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -5619,12 +5697,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>312</x>
-     <y>583</y>
+     <x>315</x>
+     <y>565</y>
     </hint>
     <hint type="destinationlabel">
-     <x>365</x>
-     <y>583</y>
+     <x>369</x>
+     <y>565</y>
     </hint>
    </hints>
   </connection>
@@ -5635,12 +5713,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>577</y>
+     <x>346</x>
+     <y>565</y>
     </hint>
     <hint type="destinationlabel">
-     <x>303</x>
-     <y>577</y>
+     <x>307</x>
+     <y>565</y>
     </hint>
    </hints>
   </connection>
@@ -5651,12 +5729,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>312</x>
-     <y>686</y>
+     <x>314</x>
+     <y>665</y>
     </hint>
     <hint type="destinationlabel">
-     <x>345</x>
-     <y>685</y>
+     <x>349</x>
+     <y>665</y>
     </hint>
    </hints>
   </connection>
@@ -5667,12 +5745,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>338</x>
-     <y>676</y>
+     <x>342</x>
+     <y>665</y>
     </hint>
     <hint type="destinationlabel">
-     <x>264</x>
-     <y>672</y>
+     <x>268</x>
+     <y>665</y>
     </hint>
    </hints>
   </connection>
@@ -5683,12 +5761,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>282</x>
-     <y>704</y>
+     <x>286</x>
+     <y>695</y>
     </hint>
     <hint type="destinationlabel">
-     <x>353</x>
-     <y>706</y>
+     <x>357</x>
+     <y>695</y>
     </hint>
    </hints>
   </connection>
@@ -5699,12 +5777,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>334</x>
-     <y>700</y>
+     <x>338</x>
+     <y>695</y>
     </hint>
     <hint type="destinationlabel">
-     <x>300</x>
-     <y>704</y>
+     <x>304</x>
+     <y>695</y>
     </hint>
    </hints>
   </connection>
@@ -5715,12 +5793,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>861</x>
-     <y>361</y>
+     <x>865</x>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
-     <x>829</x>
-     <y>361</y>
+     <x>833</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -5731,12 +5809,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>856</x>
-     <y>370</y>
+     <x>860</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
-     <x>819</x>
-     <y>370</y>
+     <x>823</x>
+     <y>365</y>
     </hint>
    </hints>
   </connection>
@@ -5747,12 +5825,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>314</y>
+     <x>346</x>
+     <y>295</y>
     </hint>
     <hint type="destinationlabel">
-     <x>306</x>
-     <y>312</y>
+     <x>310</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
@@ -5763,12 +5841,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>317</x>
-     <y>306</y>
+     <x>321</x>
+     <y>295</y>
     </hint>
     <hint type="destinationlabel">
-     <x>373</x>
-     <y>306</y>
+     <x>377</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
@@ -5779,12 +5857,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>315</x>
-     <y>279</y>
+     <x>319</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
-     <x>360</x>
-     <y>285</y>
+     <x>364</x>
+     <y>265</y>
     </hint>
    </hints>
   </connection>
@@ -5795,12 +5873,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>333</x>
-     <y>278</y>
+     <x>337</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
-     <x>298</x>
-     <y>274</y>
+     <x>302</x>
+     <y>265</y>
     </hint>
    </hints>
   </connection>
@@ -5811,12 +5889,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>318</x>
-     <y>251</y>
+     <x>322</x>
+     <y>235</y>
     </hint>
     <hint type="destinationlabel">
-     <x>390</x>
-     <y>251</y>
+     <x>394</x>
+     <y>235</y>
     </hint>
    </hints>
   </connection>
@@ -5827,12 +5905,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>248</y>
+     <x>341</x>
+     <y>235</y>
     </hint>
     <hint type="destinationlabel">
-     <x>307</x>
-     <y>246</y>
+     <x>311</x>
+     <y>235</y>
     </hint>
    </hints>
   </connection>
