@@ -148,9 +148,9 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
         filtered_result_df = result_df
         return None
 
-    result_values = [item.upper() for item in set(filtered_result_df["AllCCSID"])] # 4. Extracting unique 'ID' values from filtered result data")
+    result_values = [item.upper() for item in set(filtered_result_df['ID'])] # 4. Extracting unique 'ID' values from filtered result data")
 
-    filtered_source_df = source_df[~source_df["AllCCSID"].isin(result_values)]     # Filtering source data: Removing rows with 'ID' in result_values")
+    filtered_source_df = source_df[~source_df['ID'].isin(result_values)]     # Filtering source data: Removing rows with 'ID' in result_values")
 
     print(f"Saving filtered source data to '{output_file}'")
     filtered_source_df.to_csv(output_file, index=False) 
@@ -438,7 +438,7 @@ class MyApp(BaseClass):
         if self.sort_dataset_flag:
             print(colored("Dataset rows are being alphanumerically sorted based on adduct-labels. Same as MS Excel’s Custom Sort (A–Z) behavior sort" ,"yellow"))
             # Excel-style A–Z sort (entire rows) | use it if the 
-            df = df.sort_values(by="AllCCSID", ascending=True, kind="mergesort")                 # that’s exactly Excel’s Custom Sort (A–Z) behavior sort the file based on alpahbetically from molecduler ID
+            df = df.sort_values(by='ID', ascending=True, kind="mergesort")                 # that’s exactly Excel’s Custom Sort (A–Z) behavior sort the file based on alpahbetically from molecduler ID
             df = df_sorted                                                                       # assign teh new sorted value
             print("\nSorted dataset sample(s) preview:")
             print("\n--------------------------------------------")
@@ -1063,7 +1063,11 @@ class MyApp(BaseClass):
 
                     name_to_exp_ccs[name]         = round(exp_ccs,    self.set_precision)             # main exp_ccs   # round(float('exp_ccs']), self.set_precision)  # main exp_ccs
                     name_to_extract_mass[name]    = round(mol_mass,   self.set_precision)             # Added
-                    name_to_mz_ratio[name]        = round(float(row['mz_ratio']),self.set_precision)  # Added
+                    try:
+                        name_to_mz_ratio[name]    = round(float(row['mz_ratio']),self.set_precision)  # Added only if exists
+                    except:
+                        name_to_mz_ratio[name]    = 0                                                 # assume as zero
+
                     #===============
                     try:
                         self.mol_name_list.append(row['name'])
@@ -1183,7 +1187,7 @@ class MyApp(BaseClass):
         self.extract_mass_normalized = ((self.exp_extract_mass - self.exp_extract_mass.min()) / (self.exp_extract_mass.max() - self.exp_extract_mass.min())) * 256
         self.mz_ratio_normalized     = ((self.exp_mz_ratio - self.exp_mz_ratio.min()) / (self.exp_mz_ratio.max() - self.exp_mz_ratio.min())) * 256
 
-        print("\n#Data shape before feature addition:", self.data.shape)
+        #print("\n#Data shape before feature addition:", self.data.shape)
 
         self.image_data = self.data
         self.input_data = np.empty((self.image_data.shape[0], self.image_data.shape[1], self.image_data.shape[2], self.image_data.shape[3], 3))
@@ -1334,7 +1338,7 @@ class MyApp(BaseClass):
         self.extract_mass_normalized = ((self.exp_extract_mass - self.exp_extract_mass.min()) / (self.exp_extract_mass.max() - self.exp_extract_mass.min())) * 256
         self.mz_ratio_normalized     = ((self.exp_mz_ratio - self.exp_mz_ratio.min())         / (self.exp_mz_ratio.max()     - self.exp_mz_ratio.min()))     * 256
         
-        print("\n#Data shape before extract_mass & mz_ratio:", self.data.shape)
+        #print("\n#Data shape before extract_mass & mz_ratio:", self.data.shape)
         
         self.image_data = self.data  # (shape: (148, 15, 128, 128, 1))
         
@@ -1433,7 +1437,7 @@ class MyApp(BaseClass):
         self.extract_mass_normalized = ((self.exp_extract_mass - self.exp_extract_mass.min()) / (self.exp_extract_mass.max() - self.exp_extract_mass.min())) * 256
         self.mz_ratio_normalized     = ((self.exp_mz_ratio - self.exp_mz_ratio.min())         / (self.exp_mz_ratio.max()     - self.exp_mz_ratio.min()))     * 256
         
-        print("\n#Data shape before extract_mass & mz_ratio:", self.data.shape)
+        #print("\n#Data shape before extract_mass & mz_ratio:", self.data.shape)
         
         self.image_data = self.data  # (shape: (148, 15, 128, 128, 1))
         
