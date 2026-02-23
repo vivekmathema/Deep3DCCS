@@ -67,7 +67,35 @@ https://drive.google.com/file/d/1MNw610K_th_XiDDnGqTO2lYfzHZs05V7/view?usp=shari
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
 
 
-## Usage
+## Quick Start guide: Predict Lipid CCS in 3 Dimple Steps
+________________________________________
+
+Follow these quick steps to generate 3D/2D structural data and predict lipid Collision Cross Section (CCS) values.
+
+1. Use the template file to prepare SMILEs data for pre-processing
+  - Locate: Go to the folder ./datasets/template.csv.
+  - Edit: Open the file in any text editor or Excel.
+  - Fill: Paste your lipid information into the designated columns as suggested by the template.
+  - Save: Save it as a new .csv file. If encoding type is available, save in”latin-1” encoding
+
+**2. Load & Pre-process Data**
+
+Open the software and navigate to the Data pre-processor tab.
+   - Upload: Click the SMILES datafile csv upload button **[...]** and select your saved file.
+   - Step 1: **Click Process structure**. This generates the 3D structure datasets. Wait for it to finish for construction of optimized 3D structure dataset.
+   - Step 2: **Click Process 2D projection**. This creates the 2D structure dataset. Wait for it to finish for construction of 2D-projection dataset.
+
+**3. Run Inference & Export**
+
+Switch over to the Inference tab to generate your results.
+   - Select Dataset: Look for the SMILES dataset (.csv) upload button **[...]** and select your original file. The software will automatically link the corresponding 2D projection data.
+   - Select the proper 3DCCS model. By default the trained models are located at: './models/external_val_models' folder
+   - Predict: Click the Inference button. The predicted CCS values will appear in the results table.
+   - Export: Click the Export csv button to save your results. Results are requested to be saved in the ./results folder by default.
+________________________________________
+
+
+## Detailed Usage for both data pre-processing, Training and Inference
 
 ### GUI Interface
 Launch the main application:
