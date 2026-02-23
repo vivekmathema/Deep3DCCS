@@ -346,18 +346,8 @@ cd Deep3DCCS
 Deep3DCCS > run_deep3DCCS_gpu.bat (for windows 64bit GPU/portable version)  |  (linux users are advised to install python environment and then use Deep3DCCS > python3 deep3dcnn_main.py )
 ```
 
-### Core Dependencies
+### Core Dependencies and IU requirments can be installed using 
 ```bash
-pip install tensorflow-gpu==2.6.0
-pip install keras==2.6.0
-pip install scipy==1.4.1
-pip install rdkit-pypi
-pip install pyqt5 matplotlib numpy pandas scikit-learn opencv-python pillow seaborn tqdm colorama termcolor 
-```
-
-### The requirments can be installed uisng
-
-```
 pip install -r requirements-gpu.txt
 ```
 
