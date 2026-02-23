@@ -329,7 +329,7 @@ After users have installed default python environment manually (or run portable 
 
 
 ### Prerequisites
-- **Python ≥ 3.7** (tested with TensorFlow-GPU 2.6.0)
+- **Python ≥ 3.6.8** (tested with TensorFlow-GPU 2.6.0)
 - Supported & recommended OS: **Windows 10/11**, **Users can try on Linux Ubuntu if they can setup similar python environment with Tensorflow and CUDA support**
 - _env (for windows system) will contain all virtual environment required for running Deep3DCCS. the portable version will be all _env embedded. Users are required to install CUDA v11.0-v12.6 and cUDNN 8.5+ for proper running of GPU-version
 
