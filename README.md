@@ -349,7 +349,7 @@ Deep3DCCS > run_deep3DCCS_gpu.bat (for windows 64bit GPU/portable version)  |  (
 ```bash
 pip install -r requirements-gpu.txt
 ```
-## NOTE: Troubleshooting isseus with Tensorflow GPU usage
+## NOTE: Troubleshooting issues with Tensorflow/CUDA/GPU detection/usage
 
 If you are unable to install **requirements-gpu.txt**, or if errors occur during manual installation or CUDA detection—even though the CUDA drivers are already installed on your Windows system—please download the pre-configured Python environment instead. 
 ```
