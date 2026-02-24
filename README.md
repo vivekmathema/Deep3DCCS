@@ -97,9 +97,9 @@ Open the software and navigate to the Data pre-processor tab.
 
 Switch over to the Inference tab to generate your results.
    - Select Dataset: Look for the SMILES dataset (.csv) upload button **[...]** and select your original file. The software will automatically link the corresponding 2D projection data.
-   - Select the proper 3DCCS model. By default the trained models are located at: './models/external_val_models' folder
+   - Select the 3DCCS model under the 3DCCS Model path that matches your adduct type. By default, the trained models are located in **'./models/external_val_models'** folder.
    - Predict: Click the Inference button. The predicted CCS values will appear in the results table.
-   - Export: Click the Export csv button to save your results. Results are requested to be saved in the ./results folder by default.
+   - Export: Click the Export csv button to save your results. Results are requested to be saved in the **'./results folder'** by default.
 ________________________________________
 
 
@@ -198,7 +198,7 @@ The GUI provides:
 - This 2D projection dataset along with the SMILEs dataset file (CSV only) file is used for model training and inference/external validation.
 
 ###  Optimization of Training Models 
-** There is no golden rule to idetify best model training/optimiation parameters in deep learnining/machine learnining. We suggest conducting two step experimentation to: (i) First identlty a potentially suitable parameters using random sampling for model training (ii) Using 4-fold cross-validation with the observed most accurate parameters configuration for model optimization. Finally use thwe optimized model for inference. Additionaly, the optimized model parameteres can be used to train on entire train/test dataset and futher validated on external validation dataset to access the real-world generalization of the optimized model. 
+**There is no golden rule to idetify best model training/optimiation parameters in deep learnining/machine learnining. We suggest conducting two step experimentation to: (i) First identlty a potentially suitable parameters using random sampling for model training (ii) Using 4-fold cross-validation with the observed most accurate parameters configuration for model optimization. Finally use thwe optimized model for inference. Additionaly, the optimized model parameteres can be used to train on entire train/test dataset and futher validated on external validation dataset to access the real-world generalization of the optimized model.** 
 
 ### Experiment 1: Resolution & Rotation Optimization
 - Resolution range: **8×8 to 192×192**
