@@ -55,16 +55,16 @@
 
 ## [Recommended] Portable GPU version release for Windows 64bit systems
 
-A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a 7z compressed file.
+A portable, GPU-enabled, and self-contained version of Deep3DCCS is available for download as a .7z compressed file.
 
 <img src="assets/deep3dccs_download_logo.jpg" width ="500">
 
 
 ```
-https://drive.google.com/file/d/1MNw610K_th_XiDDnGqTO2lYfzHZs05V7/view?usp=sharing
+https://drive.google.com/file/d/1SbfmLMCnK3HpZ2WGimLFXvtYK2sAGapC/view?usp=sharing
 ```
 
-Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run run_deep3DCCS_gpu.bat. All example datasets/models to train/validate are included 
+Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run **run_deep3DCCS_gpu.bat**. All SMILEs template, example datasets, models to train/validate are included 
 
 
 ## Quick Start guide: Predict Lipid CCS in 3 Simple Steps (Recommended for Windows 64 bit Portable version)
