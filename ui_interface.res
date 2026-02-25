@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -3241,6 +3241,12 @@ p, li { white-space: pre-wrap; }
              <width>321</width>
              <height>31</height>
             </rect>
+           </property>
+           <property name="toolTip">
+            <string>Thsi is a base model to use as pre-trained model if users want to start or continue training with a different pre-existing model</string>
+           </property>
+           <property name="statusTip">
+            <string>Thsi is a base model to use as pre-trained model if users want to start or continue training with a different pre-existing model</string>
            </property>
            <property name="horizontalScrollBarPolicy">
             <enum>Qt::ScrollBarAsNeeded</enum>
