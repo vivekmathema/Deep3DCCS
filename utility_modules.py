@@ -151,6 +151,8 @@ class BaseClass(QtWidgets.QMainWindow ):                              #  (QtWidg
         self.lr_decay_epoch     = self.lr_decay_freq.value()
         self.lr_decay_frac      = round(self.lr_decay_perc.value()/100,2)           # convert percentage to frequency
         self.use_lr_decay       = self.use_lr_decay_flag.isChecked()
+        self.train_rpe_flag     = self.flag_train_rpe.isChecked()                   # to check the evkaution
+        self.eval_train_freq    = self.compute_train_rpe.value()                    # tarining evaluation frequency
         #================================================
         self.random_seed        = self.random_seed_slider.value() # 1985            # set the seed for tensoeflow and rnadom np 
         self.use_thresthold_gui = self.use_gui_thresholding_flag.isChecked()        # True by default

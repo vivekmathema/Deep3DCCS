@@ -150,7 +150,7 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
         return None
 
     
-    print("debug: ", filtered_result_df.head())
+    #print("debug: ", filtered_result_df.head())
     result_values = [item.upper() for item in set(filtered_result_df['ID'])] # 4. Extracting unique 'ID' values from filtered result data")
 
     filtered_source_df = source_df[~source_df['ID'].isin(result_values)]     # Filtering source data: Removing rows with 'ID' in result_values")
@@ -1448,7 +1448,7 @@ class MyApp(BaseClass):
         # ============== divide the shuffled self.data based on train, test and validatio samles
         self.train_data            = self.data[:self.num_train_samples]                   # Experimental 2d Projections 
         self.train_exp_ccs         = self.exp_ccs[:self.num_train_samples]                # CCS values from experiment
-        #self.train_extract_mass    = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given (for info only)
+        #self.train_extract_mass   = self.exp_extract_mass[:self.num_train_samples]       # Exact mass computed of given (for info only)
         self.train_exp_mz_ratio    = self.exp_mz_ratio[:self.num_train_samples]           # Train experimenta; mz_ratio values (for infor only)
         
         self.val_data              = self.data[self.num_train_samples:self.num_train_samples + self.num_val_samples]
@@ -1617,7 +1617,7 @@ class MyApp(BaseClass):
             if os.path.isfile(self.model_config):
                 print(colored("#Model history found.Loading model losses..."))
                 self.load_config(self.model_config)
-                self.history_rspe     = []
+                self.history_rpe     = []
 
         else:
             print(colored("\nWARNING! No Optimized model found! Starting fresh model","red"))
@@ -1636,7 +1636,7 @@ class MyApp(BaseClass):
             self.avgabs_per_err_lst = []
             self.history_loss     = []
             self.history_val_loss = []
-            self.history_rspe     = []
+            self.history_rpe     = []
         
             self.relative_percentage_error_lst = []
             self.std_dev_list     = []
@@ -1661,8 +1661,9 @@ class MyApp(BaseClass):
                 ccs3d.avgabs_per_err_lst.append(ccs3d.val_perc_abs_error)                             # (logs['mean_absolute_percentage_error'])
                 print(colored(f"\rEpoch {ccs3d.last_epoch+1}/{ccs3d.train_epoch} - Mean Val. Abs Error : {ccs3d.mean_val_abs_error:.4f} | Mean Perc. Val. Abs Error: {ccs3d.val_perc_abs_error:.2f} %" ,"yellow"), end= "\r")
         
+                #============================================================
 
-                if  (epoch+1) % 50 == 0 and ccs3d.test_percent > 1 : # temporary modeling  (ignore  thsi if no valdiatio nset)
+                if  ((epoch+1) % ccs3d.eval_train_freq == 0 and ccs3d.train_rpe_flag) and ccs3d.test_percent > 0.05  : # temporary modeling  (ignore  thsi if no valdiatio nset)
 
                     truncate   = 1000                    
                     test_data  = ccs3d.test_data[:truncate]               # Assuming ccs3d.test_data is a NumPy array, truncate
@@ -1682,7 +1683,7 @@ class MyApp(BaseClass):
                     predictions = np.concatenate(predictions)              # Combine all slices into a single array
 
                     relative_percentage_error, std_dev, skipped_count, skipped_percentage = percentage_std_error(ccs3d.test_exp_ccs[:truncate], predictions)
-                    ccs3d.history_rspe.append(relative_percentage_error)
+                    ccs3d.history_rpe.append(relative_percentage_error)
                     print(colored("-----------------------------------------------------------------------------","green"))
                     print(colored(f"Relative Std. % Error     : {relative_percentage_error:.4f} | Skipped : {skipped_percentage}% | Skipped items: {skipped_count}", "green"))
                     print(colored(f"Std. deviation %          : {std_dev:.4f}", "blue"))
@@ -1718,7 +1719,7 @@ class MyApp(BaseClass):
         self.curve_loss          = self.plot_loss.plot(pen='r', name='Training Loss')
         self.curve_abs_val_error = self.plot_abs_val_error.plot(pen='b', name='Absolute Validation Error')
         self.curve_mse  = self.plot_mse.plot(pen='g', name='Mean Squared Error')
-        self.curve_rspe = self.plot_rspe.plot(pen='g', name='Average % RSE')
+        self.curve_rpe = self.plot_rspe.plot(pen='g', name='Average % RSE')
         
         # Set axis labels and title
         self.plot_loss.setLabel('left', 'Loss'  )
@@ -1812,7 +1813,7 @@ class MyApp(BaseClass):
         
         # Callback function to update the PyQtGraph plots during training
         class GraphUpdateCallback(tf.keras.callbacks.Callback):
-            def __init__(self, plot_loss, plot_abs_val_error, plot_mse, plot_rsep, curve_loss, curve_abs_val_error, curve_mse, curve_rspe):
+            def __init__(self, plot_loss, plot_abs_val_error, plot_mse, plot_rsep, curve_loss, curve_abs_val_error, curve_mse, curve_rpe):
                 ccs3d.plot_loss           = plot_loss
                 ccs3d.plot_abs_val_error  = plot_abs_val_error
                 ccs3d.plot_mse            = plot_mse
@@ -1821,7 +1822,7 @@ class MyApp(BaseClass):
                 ccs3d.curve_loss          = curve_loss
                 ccs3d.curve_abs_val_error = curve_abs_val_error
                 ccs3d.curve_mse           = curve_mse
-                ccs3d.curve_rspe          = curve_rspe
+                ccs3d.curve_rpe          = curve_rpe
 
             def make_plot(self):
                 if len (ccs3d.val_mae_lst) < 2:
@@ -1859,7 +1860,7 @@ class MyApp(BaseClass):
                 ccs3d.curve_loss.setData(ccs3d.history_loss)
                 ccs3d.curve_abs_val_error.setData(ccs3d.history_mean_val_abs_error)
                 ccs3d.curve_mse.setData(ccs3d.history_mse)
-                ccs3d.curve_rspe.setData(ccs3d.history_rspe)
+                ccs3d.curve_rpe.setData(ccs3d.history_rpe)
                 
                 # Refresh the plots
                 ccs3d.plot_loss.enableAutoRange('y')
@@ -1878,7 +1879,7 @@ class MyApp(BaseClass):
         
         # Create the graph update callback
         self.graph_update_callback = GraphUpdateCallback(self.plot_loss,  self.plot_abs_val_error,  self.plot_mse,   self.plot_rspe,
-                                                         self.curve_loss, self.curve_abs_val_error, self.curve_mse , self.curve_rspe)
+                                                         self.curve_loss, self.curve_abs_val_error, self.curve_mse , self.curve_rpe)
 
         # Create an instance of  3D TrainingPlotter and call the plotting method
         self.ccs3d_plotter = TrainingPlotter(self.plot_abs_val_error, self.plot_mse, self.plot_loss, self.train_epoch)
@@ -1889,6 +1890,8 @@ class MyApp(BaseClass):
 
         self.lr_decay = LearningRateScheduler(self.lr_scheduler) # Create the LearningRateScheduler callback
 
+        if self.test_percent < 0.05:
+            print(colored("WARNING! RPE evaluation on validation set WILL NOT be conducted during training session due to validation | test set < 5% of trainin set", "red"))
         
         #====================================================================================================== main train part
         if (self.train_epoch -self.last_epoch ) >0:
@@ -1906,6 +1909,25 @@ class MyApp(BaseClass):
         
         print(colored("\nStoring trained model backup at training end:", "yellow"))
 
+        '''
+        #======================================= for Debug if the training RPE curve
+        x_rspe = [x for x in self.history_rpe]
+        y_epoch = list(range(len(x_rspe))) 
+
+        #print(self.history_rpe)
+
+        df_rspe = pd.DataFrame({
+                "source_data": self.csv_file_path,
+                "epoch": [x * self.eval_train_freq for x in y_epoch],
+                "rspe": x_rspe
+                })
+
+        print(df_rspe.head())
+        #======================================
+
+        df_rspe.to_csv( os.path.join(self. evaluations_dir,f"rspe_data_bs{self.batch_size}_epoch{self.train_epoch}.csv"), index=False)
+        print ("Training data  stored----")
+        '''
 
         #Store at the final model at end of training regardless of the optimzied weights
 
@@ -1934,11 +1956,12 @@ class MyApp(BaseClass):
 
         #==================
                         
-        if self.test_percent > 0.05:                                    # only do inference for post_train_evalulation if there is validation datsset
+        if self.test_percent > 0.05:                                 # only do inference for post_train_evalulation if there is validation datsset
             self.inference_3dccs(post_train_evalulation = True)      # sliently use infererence on validation data after trainingh 
         else:
             print(colored("#[WARNING] Skipping post train evalulation due to very low (<5%) or No validation samples ", "red"))
         #==================
+
 
 
     #============================ INFERENCE=============================================
@@ -2036,6 +2059,7 @@ class MyApp(BaseClass):
                 plt.savefig(os.path.join(self.evaluations_dir, f'{self.dataset_id}{kfold}_summary_losses_{self.timestamp}.png'))
         
         #====================================================== MODEL EVALUATION =======================================
+
 
         # Evaluate the model on the test set
         mse = self.regression_model.evaluate(self.test_data, self.test_exp_ccs, batch_size=1)

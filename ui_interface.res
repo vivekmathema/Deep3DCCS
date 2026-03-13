@@ -1617,9 +1617,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QSpinBox" name="spinBox_13">
             <property name="geometry">
              <rect>
-              <x>320</x>
+              <x>330</x>
               <y>40</y>
-              <width>81</width>
+              <width>71</width>
               <height>22</height>
              </rect>
             </property>
@@ -1642,9 +1642,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="label_25">
             <property name="geometry">
              <rect>
-              <x>150</x>
+              <x>160</x>
               <y>40</y>
-              <width>71</width>
+              <width>51</width>
               <height>21</height>
              </rect>
             </property>
@@ -1654,13 +1654,13 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="text">
-             <string>per epoch</string>
+             <string>epoch</string>
             </property>
            </widget>
            <widget class="QSpinBox" name="lr_decay_perc">
             <property name="geometry">
              <rect>
-              <x>90</x>
+              <x>105</x>
               <y>40</y>
               <width>51</width>
               <height>22</height>
@@ -1679,9 +1679,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QDoubleSpinBox" name="learning_rate_slider">
             <property name="geometry">
              <rect>
-              <x>320</x>
+              <x>330</x>
               <y>10</y>
-              <width>81</width>
+              <width>71</width>
               <height>24</height>
              </rect>
             </property>
@@ -1694,10 +1694,10 @@ p, li { white-space: pre-wrap; }
              <string>Sets value for model learning rate decay</string>
             </property>
             <property name="decimals">
-             <number>6</number>
+             <number>5</number>
             </property>
             <property name="minimum">
-             <double>0.000001000000000</double>
+             <double>0.000000000000000</double>
             </property>
             <property name="maximum">
              <double>0.100000000000000</double>
@@ -1712,9 +1712,9 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="label_14">
             <property name="geometry">
              <rect>
-              <x>9</x>
+              <x>230</x>
               <y>10</y>
-              <width>301</width>
+              <width>111</width>
               <height>20</height>
              </rect>
             </property>
@@ -1769,12 +1769,82 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>10</x>
               <y>40</y>
-              <width>81</width>
+              <width>91</width>
               <height>21</height>
              </rect>
             </property>
             <property name="text">
-             <string>Decay %</string>
+             <string>Decay% per</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QDoubleSpinBox" name="compute_train_rpe">
+            <property name="geometry">
+             <rect>
+              <x>105</x>
+              <y>10</y>
+              <width>51</width>
+              <height>24</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>Sets value for model learning rate decay</string>
+            </property>
+            <property name="decimals">
+             <number>0</number>
+            </property>
+            <property name="minimum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>5000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>5.000000000000000</double>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_31">
+            <property name="geometry">
+             <rect>
+              <x>160</x>
+              <y>10</y>
+              <width>51</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string> epoch</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="flag_train_rpe">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>91</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Eval. RPE per</string>
             </property>
             <property name="checked">
              <bool>true</bool>
