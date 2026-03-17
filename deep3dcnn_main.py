@@ -929,7 +929,7 @@ class MyApp(BaseClass):
         
             if self.use_multipixel_flag:
                 try:
-                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText.strip().split(",")]
+                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText().strip().split(",")]
                     print(colored(f"\n Batch processing for image dimension(s): {multi_image_dims}", "green" ))
                 except:
                     print(colored(f"\n Multi pixels mode if turned off. Using SINGLE image dimension {self.img_dim}", "red" ))
@@ -1001,10 +1001,10 @@ class MyApp(BaseClass):
         #============================================================== #======@###########################################################################################################
             if self.use_multipixel_flag:
                 try:
-                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText.strip().split(",")]
-                    print(colored(f"\n Batch processing for image dimension(s): {multi_image_dims}", "green" ))
+                    multi_image_dims = [int(pxl) for pxl in self.mult_pixel.toPlainText().strip().split(",")]
+                    print(colored(f"\nBatch processing for image dimension(s): {multi_image_dims}", "green" ))
                 except:
-                    print(colored(f"\n Multi pixels not found. Using single image dimension {self.img_dim}", "red" ))
+                    print(colored(f"\nMulti pixels not found. Using single image dimension {self.img_dim}", "red" ))
                     multi_image_dims = [self.img_dim]
             else:
                 print(colored(f"\nCurrently training single pixel resoultion : {self.img_dim}x{self.img_dim} pixels", "white"))
