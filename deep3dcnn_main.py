@@ -129,7 +129,7 @@ def filterd_source_file(source_file, result_file, output_file, output_trainer, e
     filterd_source_file( source_file="./data/source.csv", result_file="./data/result.csv", output_file="./data/output.csv" )
     """
 
-    if source_file.lower().endswith(".xls") or  source_file.lower().endswith(".xlsx"):  # Load data from the Excel file
+    if source_file.lower().endswith(".xls") or source_file.lower().endswith(".xlsx"):  # Load data from the Excel file
         print("Reading the data as miscrosoft excel file")
         source_df = pd.read_excel(source_file, sheet_name=0, engine='openpyxl')  
     elif source_file.endswith(".csv"):
@@ -922,7 +922,7 @@ class MyApp(BaseClass):
             print(colored(f"\n#---------------------------------------------------------------------", "yellow"))
             cur_file = os.path.join(current_folder,cur_file) if self.train_singlemode_flag.isChecked() == False else cur_file       # for running training
             self.train_msdata.setText(cur_file)
-            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                     # for inference & filter results
+            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".csv")                     # for inference & filter results
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
             print(colored(f"\nCurrently training on : {cur_file}", "white"))
         #============================================================== 
@@ -995,7 +995,7 @@ class MyApp(BaseClass):
             print(colored(f"\n#---------------------------------------------------------------------", "yellow"))
             cur_file = os.path.join(current_folder,cur_file) if self.train_singlemode_flag.isChecked() == False else cur_file       # for running training
             self.train_msdata.setText(cur_file)
-            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".xlsx")                                             # for inference & filter results
+            self.raw_smile_datafile.setText(get_pathname_without_ext(cur_file) +".csv")                                             # for inference & filter results
             self.train_2d_projection_dirpath.setText(os.path.join(get_pathname_without_ext(cur_file) + "_optimized_structure", "2D_projections"))
             print(colored(f"\nCurrently training on : {cur_file}", "white"))
         #============================================================== #======@###########################################################################################################
@@ -2161,8 +2161,11 @@ class MyApp(BaseClass):
 
         if post_train_evalulation ==  True: #=====================SAVE Threshold cutoff source samples only for Post train evaulation
             filtered_output_fname  = os.path.join(self.evaluations_dir, os.path.splitext(os.path.basename(self.SMILE_src_filepath))[0] + "_filtered.csv" )
-            filtered_trainer_fname = os.path.join(self.evaluations_dir, os.path.splitext(os.path.basename(self.SMILE_src_filepath))[0] + "_trainer_filtered.csv" )        
-            filterd_source_file(source_file = self.SMILE_src_filepath, result_file = result_file , output_file =filtered_output_fname , output_trainer = filtered_trainer_fname, error_threshold=3.0)
+            filtered_trainer_fname = os.path.join(self.evaluations_dir, os.path.splitext(os.path.basename(self.SMILE_src_filepath))[0] + "_trainer_filtered.csv" )  
+            # filterd_source_file(source_file = self.SMILE_src_filepath, result_file = result_file , output_file =filtered_output_fname , output_trainer = filtered_trainer_fname, error_threshold=3.0)  
+            print(f"\nDEGUG: {self.SMILE_src_filepath}\n\n")    
+            filterd_source_file(self.SMILE_src_filepath, result_file , filtered_output_fname , filtered_trainer_fname, 3.0)
+            print(f"\nDEGUG: {self.SMILE_src_filepath}\n\n") 
         
 
         #====================================================================================BAR CHART
