@@ -48,7 +48,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -85,7 +85,7 @@
          <string>Loads the model's history for the real-time validation Mean Average Percentage Error (MAPE) </string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideLeft</enum>
@@ -579,7 +579,7 @@ p, li { white-space: pre-wrap; }
              <string>Shows simple 3D skeletal structure preview of the molecule</string>
             </property>
             <property name="text">
-             <string>Adduct Id-based  dataset sorting</string>
+             <string>Adduct Id-based dataset sorting</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -1246,11 +1246,20 @@ p, li { white-space: pre-wrap; }
           <widget class="QTextBrowser" name="mult_pixel">
            <property name="geometry">
             <rect>
-             <x>710</x>
+             <x>690</x>
              <y>2</y>
-             <width>221</width>
+             <width>241</width>
              <height>25</height>
             </rect>
+           </property>
+           <property name="toolTip">
+            <string>Sets different pixels to be run for during batch training. Pixels values should be saparated by comma &quot;,&quot;</string>
+           </property>
+           <property name="statusTip">
+            <string>Sets different pixels to be run during batch training. Pixels values should be saparated by comma &quot;,&quot;</string>
+           </property>
+           <property name="readOnly">
+            <bool>false</bool>
            </property>
            <property name="html">
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1273,7 +1282,7 @@ p, li { white-space: pre-wrap; }
             </rect>
            </property>
            <property name="text">
-            <string>Use batch image dimesnions</string>
+            <string>Use batch image dimensions</string>
            </property>
            <property name="checked">
             <bool>false</bool>
@@ -3649,6 +3658,9 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
           <widget class="QTextBrowser" name="train_2d_projection_dirpath">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="geometry">
             <rect>
              <x>210</x>
@@ -3658,10 +3670,10 @@ p, li { white-space: pre-wrap; }
             </rect>
            </property>
            <property name="toolTip">
-            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile </string>
+            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile. Currenly set automatically</string>
            </property>
            <property name="statusTip">
-            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile </string>
+            <string>The filepath for 2D projection dataset for corrsponding SMILEs training  .csv datafile .Currenly set automatically</string>
            </property>
            <property name="readOnly">
             <bool>false</bool>

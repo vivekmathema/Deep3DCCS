@@ -1281,7 +1281,7 @@ class MyApp(BaseClass):
         results = []
 
         # Define K-Fold
-        n_splits = 4
+        n_splits = 4 # this is fixed
         kf = KFold(n_splits=n_splits, shuffle=True, random_state=abs(self.random_seed))
 
         # Loop folds
@@ -1909,7 +1909,7 @@ class MyApp(BaseClass):
         
         print(colored("\nStoring trained model backup at training end:", "yellow"))
 
-        '''
+
         #======================================= for Debug if the training RPE curve
         x_rspe = [x for x in self.history_rpe]
         y_epoch = list(range(len(x_rspe))) 
@@ -1919,15 +1919,15 @@ class MyApp(BaseClass):
         df_rspe = pd.DataFrame({
                 "source_data": self.csv_file_path,
                 "epoch": [x * self.eval_train_freq for x in y_epoch],
-                "rspe": x_rspe
+                "rpe": x_rspe
                 })
 
         print(df_rspe.head())
         #======================================
 
-        df_rspe.to_csv( os.path.join(self. evaluations_dir,f"rspe_data_bs{self.batch_size}_epoch{self.train_epoch}.csv"), index=False)
+        df_rspe.to_csv( os.path.join(self. evaluations_dir,f"rpe_data_bs{self.batch_size}_epoch{self.train_epoch}.csv"), index=False)
         print ("Training data  stored----")
-        '''
+
 
         #Store at the final model at end of training regardless of the optimzied weights
 
