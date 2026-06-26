@@ -61,7 +61,7 @@ A portable, GPU-enabled, and self-contained version of Deep3DCCS is available fo
 
 
 ```
-https://drive.google.com/file/d/1QwkCLUcTysSpx8nAJkIieKNCSwFJt6iy/view?usp=sharing
+https://drive.google.com/file/d/1qrwHxeAUSD372EfNaaKk1UMtSU4pahFc/view?usp=sharing
 ```
 
 Users need to download the 7zip compressed file, decompress using (7zip or winRAR for win64) and run **run_deep3DCCS_gpu.bat**. All SMILEs template, example datasets, models to train/validate are included 
